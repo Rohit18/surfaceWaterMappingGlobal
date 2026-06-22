@@ -1,7 +1,7 @@
 {
   "s1aef_resnet34": {
-    "status": "placeholder",
-    "google_drive_url": "REPLACE_WITH_GOOGLE_DRIVE_DIRECT_DOWNLOAD_URL",
+    "status": "available",
+    "google_drive_url": "https://drive.google.com/drive/folders/1XglzIDtyI_H7780rkFn3WZRAj0itZjz_?usp=sharing",
     "checkpoint": "models/s1aef_bottleneck_resnet34_best.pth",
     "required_companion_files": [
       "band_stats.npz",
