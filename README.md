@@ -10,6 +10,7 @@ The primary model is a FastAI ResNet34 U-Net. It receives three S1 bands plus 64
 | --- | --- |
 | `src/train.py` | Train or benchmark the S1-only or S1+AEF ResNet34 U-Net. |
 | `src/infer.py` | Tiled, probability-only inference for S1-only or S1+AEF models. |
+| `examples/` | Sample manifest and the data-preparation recipe. |
 | `models/` | Model bundle location. Checkpoints are deliberately ignored by Git. |
 | `models/model_registry.json` | One place to add the Google Drive URL once the model is uploaded. |
 
@@ -35,6 +36,19 @@ data/
 ```
 
 For inference, `--scenes-root` is searched recursively for `s1_YYYY-MM-DD.tif` files. Each must have three S1 bands. `--aef-path` is one 64-band AEF GeoTIFF; it is reprojected to each S1 scene grid when needed.
+
+## Prepare training data
+
+The model does not download source imagery itself. Prepare each training tile as a co-registered S1/AEF/DW triplet, using one fixed projected 10 m grid per tile. The critical rule is that all three rasters have the same CRS, transform, width, height, pixel alignment, and filename.
+
+1. Define an area of interest and a projected output grid (typically the local UTM CRS at 10 m resolution).
+2. Export or preprocess Sentinel-1 GRD to that grid. Stack exactly three float bands in this order: `VV`, `VH`, `angle`.
+3. Export the matching annual AlphaEarth Foundation embedding, retaining all 64 raw embedding bands. Reproject it to the same grid; do not use a PCA-reduced AEF product with the supplied 64-band model.
+4. Export Dynamic World to the same grid and derive a single-band binary target: DW class `0` (water) becomes `1`; every other valid class becomes `0`.
+5. Name all three files identically, for example `tile_0001.tif`, and store them in `data/s1/`, `data/aef/`, and `data/labels/` respectively.
+6. Validate a small set of triplets visually before training. Misaligned rasters are the fastest way to teach a segmentation model surrealist geography.
+
+Use the directory convention above for filename-based matching, or use an explicit manifest as shown in [`examples/training_manifest.csv`](examples/training_manifest.csv). See [`examples/prepare_data.md`](examples/prepare_data.md) for the raster checklist and examples.
 
 ## Train
 

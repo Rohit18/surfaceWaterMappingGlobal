@@ -1,0 +1,3 @@
+sample_id,tile_name,s1_path,aef_path,label_path
+demo_region,tile_0001.tif,/absolute/path/to/data/s1/tile_0001.tif,/absolute/path/to/data/aef/tile_0001.tif,/absolute/path/to/data/labels/tile_0001.tif
+demo_region,tile_0002.tif,/absolute/path/to/data/s1/tile_0002.tif,/absolute/path/to/data/aef/tile_0002.tif,/absolute/path/to/data/labels/tile_0002.tif
