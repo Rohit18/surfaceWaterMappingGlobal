@@ -1,0 +1,13 @@
+{
+  "s1aef_resnet34": {
+    "status": "placeholder",
+    "google_drive_url": "REPLACE_WITH_GOOGLE_DRIVE_DIRECT_DOWNLOAD_URL",
+    "checkpoint": "models/s1aef_bottleneck_resnet34_best.pth",
+    "required_companion_files": [
+      "band_stats.npz",
+      "s1aef_bottleneck_resnet34_eval_summary.json"
+    ],
+    "model": "S1+AEF ResNet34 U-Net with a 64-to-16 AEF bottleneck",
+    "output": "Dynamic World binary water probability"
+  }
+}
