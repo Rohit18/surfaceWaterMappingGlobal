@@ -1,0 +1,26 @@
+{
+  "run_id": "train_53123937",
+  "training_samples": 3742,
+  "validation_samples": 936,
+  "split": "seeded tile-level 80/20",
+  "seed": 42,
+  "loss": "ce_dice",
+  "selection_metric": "water_iou",
+  "aef_projection": "64->16",
+  "checkpoint_sha256": "3b89c5b768be8d8b5a00260693ca5d2a051ec63969234702903677b9e326138f",
+  "band_stats_sha256": "35c28cac98892702999847e721d7e63721056a754a0c1b016a25b641ba32fbaa",
+  "training_validation": {
+    "best_eval_mode": "tta",
+    "best_threshold": 0.75,
+    "water_iou": 0.654311,
+    "dice": 0.887268,
+    "precision": 0.741287,
+    "recall": 0.847946
+  },
+  "paper_independent_evaluation": {
+    "scenes": 53,
+    "threshold": 0.30,
+    "pooled_water_iou": 0.851,
+    "per_scene_mean_water_iou": 0.753
+  }
+}

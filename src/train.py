@@ -46,13 +46,12 @@ from fastai.torch_imports import *
 from fastai.vision.all import *
 
 
-DEFAULT_INPUT_DIR = Path("/pscratch/sd/r/rohit9/S1ML/training_mosaics/s1_multiband")
-DEFAULT_AEF_DIR = Path("/pscratch/sd/r/rohit9/S1ML/training_embeddings/alphaearth_v1_annual_int8")
-DEFAULT_LABEL_DIR = Path("/pscratch/sd/r/rohit9/S1ML/training_mosaics/dw_binary")
-DEFAULT_ARTIFACT_DIR = Path(
-    "/pscratch/sd/r/rohit9/S1ML/training_runs/s1aef_bottleneck_resnet34_crop512"
-)
-DEFAULT_HF_CACHE_DIR = Path("/pscratch/sd/r/rohit9/UFO/model_cache/huggingface")
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_INPUT_DIR = REPOSITORY_ROOT / "data" / "s1"
+DEFAULT_AEF_DIR = REPOSITORY_ROOT / "data" / "aef"
+DEFAULT_LABEL_DIR = REPOSITORY_ROOT / "data" / "labels"
+DEFAULT_ARTIFACT_DIR = REPOSITORY_ROOT / "runs" / "s1aef_resnet34"
+DEFAULT_HF_CACHE_DIR = Path.home() / ".cache" / "huggingface"
 
 SEGFORMER_MODEL_MAP = {
     "segformer_b0": "nvidia/segformer-b0-finetuned-ade-512-512",
@@ -71,6 +70,7 @@ class TripletRecord:
     aef_path: Optional[Path]
     label_path: Path
     sample_id: str = ""
+    group_id: str = ""
 
 
 class CombinedLoss(nn.Module):
@@ -519,6 +519,15 @@ def parse_args() -> argparse.Namespace:
         help="Seed for the train/validation split. Defaults to --seed.",
     )
     parser.add_argument(
+        "--split_mode",
+        choices=("paper_tile", "grouped"),
+        default="paper_tile",
+        help=(
+            "paper_tile reproduces the published seeded tile-level split; grouped keeps "
+            "all rows sharing grid_id/group_id together when a manifest supplies them."
+        ),
+    )
+    parser.add_argument(
         "--train_subset_seed",
         type=int,
         default=None,
@@ -800,6 +809,7 @@ def collect_triplets(
                 s1_path=s1_path,
                 aef_path=aef_path,
                 label_path=label_path,
+                group_id=s1_path.name,
             )
         )
 
@@ -874,6 +884,7 @@ def collect_triplets_from_manifest(
                 aef_path=aef_path.resolve() if aef_path is not None else None,
                 label_path=label_path.resolve(),
                 sample_id=row.get("sample_id", sample_id or ""),
+                group_id=row.get("grid_id") or row.get("group_id") or name,
             )
         )
 
@@ -896,17 +907,58 @@ def collect_triplets_from_manifest(
     return sorted(records, key=lambda record: record.name)
 
 
-def split_triplets(records: Sequence[TripletRecord], valid_pct: float, seed: int) -> Tuple[List[TripletRecord], List[TripletRecord]]:
+def split_triplets(
+    records: Sequence[TripletRecord],
+    valid_pct: float,
+    seed: int,
+    split_mode: str = "paper_tile",
+) -> Tuple[List[TripletRecord], List[TripletRecord]]:
     if not records:
         raise ValueError("Cannot split an empty record list.")
     rng = random.Random(seed)
-    shuffled = list(records)
-    rng.shuffle(shuffled)
-    valid_count = max(1, int(round(len(shuffled) * valid_pct)))
-    valid_records = sorted(shuffled[:valid_count], key=lambda r: r.name)
-    train_records = sorted(shuffled[valid_count:], key=lambda r: r.name)
+
+    if split_mode == "paper_tile":
+        shuffled = list(records)
+        rng.shuffle(shuffled)
+        valid_count = max(1, int(round(len(shuffled) * valid_pct)))
+        valid_records = sorted(shuffled[:valid_count], key=lambda r: r.name)
+        train_records = sorted(shuffled[valid_count:], key=lambda r: r.name)
+        if not train_records:
+            raise ValueError("Train split is empty; reduce --valid_pct.")
+        return train_records, valid_records
+    if split_mode != "grouped":
+        raise ValueError("Unknown split mode: {}".format(split_mode))
+
+    grouped: Dict[str, List[TripletRecord]] = {}
+    for record in records:
+        grouped.setdefault(record.group_id or record.name, []).append(record)
+    if len(grouped) < 2:
+        raise ValueError("At least two independent groups are required for a train/validation split.")
+
+    shuffled_groups = list(grouped.items())
+    rng.shuffle(shuffled_groups)
+    target_valid_count = max(1, int(round(len(records) * valid_pct)))
+    valid_group_ids = set()
+    valid_count = 0
+    for group_id, group_records in shuffled_groups:
+        if valid_count >= target_valid_count:
+            break
+        valid_group_ids.add(group_id)
+        valid_count += len(group_records)
+
+    valid_records = sorted(
+        [record for record in records if (record.group_id or record.name) in valid_group_ids],
+        key=lambda r: r.name,
+    )
+    train_records = sorted(
+        [record for record in records if (record.group_id or record.name) not in valid_group_ids],
+        key=lambda r: r.name,
+    )
     if not train_records:
         raise ValueError("Train split is empty; reduce --valid_pct.")
+    train_group_ids = {record.group_id or record.name for record in train_records}
+    if train_group_ids.intersection(valid_group_ids):
+        raise RuntimeError("Group leakage detected between train and validation splits.")
     return train_records, valid_records
 
 
@@ -932,7 +984,7 @@ def write_split_manifest(
     valid_records: Sequence[TripletRecord],
 ) -> Path:
     split_path = artifact_dir / "triplet_split_manifest.csv"
-    fields = ("split", "sample_id", "name", "s1_path", "aef_path", "label_path")
+    fields = ("split", "sample_id", "group_id", "name", "s1_path", "aef_path", "label_path")
     rows = [("train", record) for record in train_records] + [("valid", record) for record in valid_records]
     with split_path.open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
@@ -942,13 +994,22 @@ def write_split_manifest(
                 {
                     "split": split,
                     "sample_id": record.sample_id,
+                    "group_id": record.group_id or record.name,
                     "name": record.name,
                     "s1_path": str(record.s1_path),
                     "aef_path": "" if record.aef_path is None else str(record.aef_path),
                     "label_path": str(record.label_path),
                 }
             )
-    print({"triplet_split_manifest": str(split_path), "train_tiles": len(train_records), "valid_tiles": len(valid_records)})
+    print(
+        {
+            "triplet_split_manifest": str(split_path),
+            "train_tiles": len(train_records),
+            "valid_tiles": len(valid_records),
+            "train_groups": len({record.group_id or record.name for record in train_records}),
+            "valid_groups": len({record.group_id or record.name for record in valid_records}),
+        }
+    )
     return split_path
 
 
@@ -2206,6 +2267,7 @@ def run_benchmark_mode(
         "tuning_strategy": args.tuning_strategy,
         "force_tiled_validation": bool(args.force_tiled_validation),
         "split_seed": args.seed if args.split_seed is None else args.split_seed,
+        "split_mode": args.split_mode,
         "train_subset_seed": args.seed if args.train_subset_seed is None else args.train_subset_seed,
         "max_train_records": args.max_train_records,
     }
@@ -2322,6 +2384,7 @@ def run_train_mode(
         "tuning_strategy": args.tuning_strategy,
         "force_tiled_validation": bool(args.force_tiled_validation),
         "split_seed": args.seed if args.split_seed is None else args.split_seed,
+        "split_mode": args.split_mode,
         "train_subset_seed": args.seed if args.train_subset_seed is None else args.train_subset_seed,
         "max_train_records": args.max_train_records,
         "train_records_used": len(train_records),
@@ -2361,7 +2424,12 @@ def main() -> None:
         )
     split_seed = args.seed if args.split_seed is None else args.split_seed
     train_subset_seed = args.seed if args.train_subset_seed is None else args.train_subset_seed
-    full_train_records, valid_records = split_triplets(triplets, valid_pct=args.valid_pct, seed=split_seed)
+    full_train_records, valid_records = split_triplets(
+        triplets,
+        valid_pct=args.valid_pct,
+        seed=split_seed,
+        split_mode=args.split_mode,
+    )
     train_records = limit_train_records(
         full_train_records,
         max_records=args.max_train_records,
@@ -2370,6 +2438,7 @@ def main() -> None:
     print(
         {
             "split_seed": split_seed,
+            "split_mode": args.split_mode,
             "train_subset_seed": train_subset_seed,
             "full_train_tiles": len(full_train_records),
             "train_tiles_after_record_cap": len(train_records),

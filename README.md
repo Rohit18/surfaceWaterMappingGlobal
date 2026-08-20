@@ -1,95 +1,68 @@
-# surfaceWaterMappingGlobal
+# Extending Dynamic World Surface Water Mapping to Sentinel-1 with AlphaEarth Embeddings
 
-Global surface-water mapping with co-registered Sentinel-1 (S1) SAR and AlphaEarth Foundations (AEF) annual embeddings. The supplied model predicts a per-pixel Dynamic World (DW) binary water probability.
+Code, model, sample metadata, and reproducibility instructions for the paper
+*Extending Dynamic World Surface Water Mapping to Sentinel-1 with AlphaEarth Embeddings*.
 
-The primary model is a FastAI ResNet34 U-Net. It receives three S1 bands plus 64 AEF bands. A learned 1x1 bottleneck projects the 64 AEF bands to 16 channels before fusion. The training script can also run the S1-only baseline.
+The model predicts a georeferenced per-pixel water probability from a near-real-time
+Sentinel-1 observation and an annual AlphaEarth Foundations (AEF) embedding. Dynamic
+World supplies weak supervision during training only.
 
-## Repository layout
+## What is released
 
-| Path | Purpose |
+- The complete S1-only and S1+AEF training implementation (`src/train.py`).
+- Tiled, four-flip-TTA inference (`src/infer.py`).
+- Dataset validation and sample-index generation utilities (`scripts/`).
+- The exact paper split and reconstruction metadata for every usable training tile
+  (`metadata/training_samples.csv`). No imagery is redistributed.
+- Metadata for the 53 independent GSWD evaluation scenes
+  (`metadata/evaluation_samples.csv`).
+- Paper-level and training-run results (`results/`).
+- One primary trained S1+AEF checkpoint and its normalization statistics on
+  [Hugging Face](https://huggingface.co/rohitm9/surfaceWaterGlobal). The same model
+  is mirrored on Google Drive.
+
+Only the primary AEF model is published. The width, training-size, and seed ablations
+can be retrained from this code; releasing every ablation checkpoint would add storage
+without being necessary to use or reproduce the proposed method.
+
+## Model
+
+| Component | Paper configuration |
 | --- | --- |
-| `src/train.py` | Train or benchmark the S1-only or S1+AEF ResNet34 U-Net. |
-| `src/infer.py` | Tiled, probability-only inference for S1-only or S1+AEF models. |
-| `examples/` | Sample manifest and the data-preparation recipe. |
-| `models/` | Model bundle location. Checkpoints are deliberately ignored by Git. |
-| `models/model_registry.json` | One place to add the Google Drive URL once the model is uploaded. |
+| Dynamic input | Sentinel-1 GRD `VV`, `VH`, incidence angle |
+| Annual context | 64-band AEF v1 annual int8 embedding |
+| AEF projection | Bias-free 1x1 convolution, 64 to 16 channels |
+| Segmentation model | ImageNet-pretrained ResNet-34 U-Net, Mish activations |
+| Loss | Equal-weight cross-entropy + Dice |
+| Optimizer | Ranger (RAdam + Lookahead) |
+| Schedule | Frozen 2 epochs, partial 2, full 12, low-rate tail 10 |
+| Training crop | 512 x 512, batch size 4, seed 42 |
+| Reported map threshold | 0.30 with four-flip TTA |
 
-## Setup
+## Install
 
-Python 3.10+ and a CUDA-capable GPU are recommended. The code also runs on CPU, but inference is substantially slower.
+Python 3.10 or 3.11 and a CUDA-capable GPU are recommended.
 
 ```bash
-conda create -n surface-water python=3.10 -y
+conda create -n surface-water python=3.11 -y
 conda activate surface-water
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-## Data contract
-
-Training pairs must use identical file names in the input directories:
-
-```text
-data/
-  s1/       # 3-band, co-registered GeoTIFFs
-  aef/      # matching 64-band AEF GeoTIFFs
-  labels/   # matching single-band binary DW water masks (0=other, 1=water)
-```
-
-For inference, `--scenes-root` is searched recursively for `s1_YYYY-MM-DD.tif` files. Each must have three S1 bands. `--aef-path` is one 64-band AEF GeoTIFF; it is reprojected to each S1 scene grid when needed.
-
-## Prepare training data
-
-The model does not download source imagery itself. Prepare each training tile as a co-registered S1/AEF/DW triplet, using one fixed projected 10 m grid per tile. The critical rule is that all three rasters have the same CRS, transform, width, height, pixel alignment, and filename.
-
-1. Define an area of interest and a projected output grid (typically the local UTM CRS at 10 m resolution).
-2. Export or preprocess Sentinel-1 GRD to that grid. Stack exactly three float bands in this order: `VV`, `VH`, `angle`.
-3. Export the matching annual AlphaEarth Foundation embedding, retaining all 64 raw embedding bands. Reproject it to the same grid; do not use a PCA-reduced AEF product with the supplied 64-band model.
-4. Export Dynamic World to the same grid and derive a single-band binary target: DW class `0` (water) becomes `1`; every other valid class becomes `0`.
-5. Name all three files identically, for example `tile_0001.tif`, and store them in `data/s1/`, `data/aef/`, and `data/labels/` respectively.
-6. Validate a small set of triplets visually before training. Misaligned rasters are the fastest way to teach a segmentation model surrealist geography.
-
-Use the directory convention above for filename-based matching, or use an explicit manifest as shown in [`examples/training_manifest.csv`](examples/training_manifest.csv). See [`examples/prepare_data.md`](examples/prepare_data.md) for the raster checklist and examples.
-
-## Train
-
-Train the S1+AEF model:
+## Download the released model
 
 ```bash
-python src/train.py \
-  --input_dir data/s1 \
-  --aef_dir data/aef \
-  --label_dir data/labels \
-  --artifact_dir runs/s1aef_resnet34 \
-  --n_s1_bands 3 --n_aef_bands 64 --n_proj_bands 16 \
-  --loss ce_dice --batch_size 4 --crop_size 512
+python scripts/download_model.py --output-dir models/s1aef_resnet34
 ```
 
-For the S1-only baseline, set `--n_aef_bands 0 --n_proj_bands 0` and omit `--aef_dir`. Each run saves its checkpoint to `runs/<run>/models/`, along with `band_stats.npz`, the selected threshold, metric tables, and an evaluation summary. Keep these files together: inference needs both the checkpoint and `band_stats.npz`.
+The downloader obtains only the checkpoint and `band_stats.npz`, then verifies their
+SHA-256 hashes. Inference normalization is checkpoint-specific, so the statistics file
+is required even when the weights are already available elsewhere.
 
-## Use the trained model
+## Inference
 
-The trained-model link is intentionally a placeholder until the checkpoint is uploaded. Update the `google_drive_url` field in [`models/model_registry.json`](models/model_registry.json) with a direct-download Google Drive URL and download the **whole model bundle** into `models/s1aef_resnet34/`:
-
-```text
-models/s1aef_resnet34/
-  models/s1aef_bottleneck_resnet34_best.pth
-  band_stats.npz
-  s1aef_bottleneck_resnet34_eval_summary.json
-```
-
-The recommended checkpoint to upload is:
-
-```text
-/pscratch/sd/r/rohit9/S1ML/training_runs/s1aef_bottleneck_resnet34_crop512/
-  dw_label_water_pm1d_recovered/bestproj16_ce_dice/train_53123937/
-    models/s1aef_bottleneck_resnet34_best.pth
-```
-
-Also copy `band_stats.npz` and `s1aef_bottleneck_resnet34_eval_summary.json` from that same `train_53123937` directory. The checkpoint alone cannot reproduce inference normalization.
-
-## Infer
-
-After placing the bundle above in `models/s1aef_resnet34/`, run:
+Prepare one or more three-band S1 GeoTIFFs named `s1_YYYY-MM-DD.tif` and one 64-band
+AEF GeoTIFF. S1 band order must be `VV`, `VH`, `angle`; AEF bands remain in source order.
 
 ```bash
 python src/infer.py \
@@ -101,8 +74,111 @@ python src/infer.py \
   --tile 512 --overlap 64 --batch-size 4
 ```
 
-This writes georeferenced water-probability GeoTIFFs to `outputs/s1_aef_tta/probabilities/`. By default, four flip test-time augmentation passes are averaged. Add `--no-tta` for faster inference. Add `--validate-only` to check data, model, and normalization files without running the model.
+Outputs are float32 water-probability GeoTIFFs. Apply threshold 0.30 to reproduce the
+paper's primary evaluation protocol. Validate the threshold for operational use in a
+new region.
 
-## Model hosting
+## Recreate the training dataset
 
-Do not commit `.pth` checkpoints to Git. Upload the three-file bundle above to Google Drive, set sharing to allow the intended users to download it, then paste its direct-download link into `models/model_registry.json`. The exact link is then visible in the repository without placing large artifacts in Git history.
+The source imagery is too large and remains subject to the source providers' terms.
+Instead, `metadata/training_samples.csv` records the SWORD node ID, S1 date, AEF year,
+exact raster grid, centroid, and paper split for each tile. This is the most useful
+lightweight release: it preserves *what was sampled* rather than only describing the
+sampling conceptually.
+
+The reconstruction sequence is:
+
+1. Authenticate Google Earth Engine and obtain the S1/Dynamic World pair for each row.
+2. Stack S1 `VV`, `VH`, and incidence angle on the recorded grid.
+3. Convert Dynamic World label class 0 to water=1 and all other valid classes to 0;
+   retain samples with at least 90% valid Dynamic World coverage.
+4. Fetch the specified annual AEF v1 embedding from Source Cooperative and reproject
+   all 64 bands to the same grid using nearest-neighbor resampling.
+5. Preserve the common filename across `s1/`, `aef/`, and `labels/`.
+
+Reconstruct one indexed sample (Earth Engine authentication required):
+
+```bash
+python scripts/reconstruct_sample.py \
+  --tile-name S1_20151004_24280100821.tif \
+  --ee-project YOUR_EARTH_ENGINE_PROJECT \
+  --output-root data
+```
+
+The command records the resolved Earth Engine image IDs, AEF source COG URLs, and
+output checksums in `data/provenance/`. Run it per row or distribute rows across a
+batch system. Source archives can change independently; retain the provenance files.
+
+See [`examples/prepare_data.md`](examples/prepare_data.md) for the complete raster
+contract. Verify a reconstruction before training:
+
+```bash
+python scripts/validate_dataset.py \
+  --s1-dir data/s1 --aef-dir data/aef --label-dir data/labels \
+  --expected-index metadata/training_samples.csv
+```
+
+The released checkpoint's actual input set contains 4,678 triplets. The seeded paper
+split contains 3,742 training and 936 validation tiles. These counts and all validation
+tile names are independently recoverable from the released run artifacts.
+
+AEF v1 annual coverage begins in 2017. The index therefore records `aef_year=2017`
+for the 98 retained S1 samples acquired in 2015-2016; later samples use their
+acquisition year. This behavior is explicit in the metadata and reconstruction code.
+
+## Train the paper model
+
+```bash
+python src/train.py \
+  --input_dir data/s1 \
+  --aef_dir data/aef \
+  --label_dir data/labels \
+  --artifact_dir runs/paper_s1aef_seed42 \
+  --n_s1_bands 3 --n_aef_bands 64 --n_proj_bands 16 \
+  --loss ce_dice --batch_size 4 --crop_size 512 \
+  --seed 42 --split_seed 42 --split_mode paper_tile
+```
+
+`paper_tile` exactly reproduces the published tile-level split. `grouped` is also
+available for future experiments and keeps rows with the same `grid_id`/`group_id` in
+one partition; it is not the protocol used to train the released model.
+
+For the matched S1-only control, omit `--aef_dir` and use
+`--n_aef_bands 0 --n_proj_bands 0`.
+
+## Repository layout
+
+| Path | Purpose |
+| --- | --- |
+| `src/train.py` | Model, losses, augmentation, training schedule, validation, ablations |
+| `src/infer.py` | Geospatial tiled inference and four-flip TTA |
+| `scripts/download_model.py` | Download and checksum the released AEF model bundle |
+| `scripts/build_sample_index.py` | Regenerate the public sample index from local tiles |
+| `scripts/reconstruct_sample.py` | Rebuild an indexed triplet from public source archives |
+| `scripts/validate_dataset.py` | Validate bands, grids, names, and optional sample index |
+| `src/evaluate.py`, `scripts/compare_methods.py` | Pooled/per-scene metrics, bootstrap CIs, paired tests |
+| `metadata/` | Training and independent-evaluation sampling metadata |
+| `results/` | Machine-readable paper and training-run summaries |
+| `models/model_registry.json` | Model locations, filenames, and checksums |
+
+## Data sources
+
+- Sentinel-1 GRD and Dynamic World: Google Earth Engine public collections.
+- AlphaEarth Foundations v1 annual embeddings: Source Cooperative.
+- Training sampling frame: SWORD v16 river nodes.
+- Independent labels: the public Global Surface Water Dataset (GSWD) PlanetScope-based
+  annotations cited in the paper.
+- Comparator: OPERA DSWx-S1 from NASA PO.DAAC.
+
+Source datasets retain their own licenses and terms. This repository does not grant
+rights to redistribute them.
+
+## Citation
+
+Use the metadata in [`CITATION.cff`](CITATION.cff). Please update the DOI and final
+bibliographic fields after publication.
+
+## License
+
+Original code is released under Apache License 2.0. The checkpoint uses the same
+license. Third-party datasets and software retain their original terms.

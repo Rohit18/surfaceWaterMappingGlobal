@@ -9,3 +9,4 @@ models/**/*.pth
 models/**/*.pt
 models/**/*.ckpt
 models/**/*.npz
+manuscripts/
