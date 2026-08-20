@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this code or model, please cite the paper."
+title: "Extending Dynamic World Surface Water Mapping to Sentinel-1 with AlphaEarth Embeddings"
+type: software
+authors:
+  - family-names: Mukherjee
+    given-names: Rohit
+  - family-names: Policelli
+    given-names: Frederick
+  - family-names: Chakraborty
+    given-names: T. C.
+  - family-names: Giezendanner
+    given-names: Jonathan
+  - family-names: Tellman
+    given-names: Beth
+  - family-names: Sullivan
+    given-names: Jon
+  - family-names: Sun
+    given-names: Ning
+repository-code: "https://github.com/Rohit18/surfaceWaterMappingGlobal"
+url: "https://huggingface.co/rohitm9/surfaceWaterGlobal"
+license: Apache-2.0
+version: 1.0.0
+date-released: 2026-08-20

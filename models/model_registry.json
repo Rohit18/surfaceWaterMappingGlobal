@@ -1,13 +1,15 @@
 {
   "s1aef_resnet34": {
     "status": "available",
+    "hugging_face_repo": "rohitm9/surfaceWaterGlobal",
+    "hugging_face_revision": "d57438286a45fd54205c470664f85c7ebb701013",
     "google_drive_url": "https://drive.google.com/drive/folders/1XglzIDtyI_H7780rkFn3WZRAj0itZjz_?usp=sharing",
     "checkpoint": "models/s1aef_bottleneck_resnet34_best.pth",
-    "required_companion_files": [
-      "band_stats.npz",
-      "s1aef_bottleneck_resnet34_eval_summary.json"
-    ],
+    "checkpoint_sha256": "3b89c5b768be8d8b5a00260693ca5d2a051ec63969234702903677b9e326138f",
+    "normalization": "band_stats.npz",
+    "normalization_sha256": "35c28cac98892702999847e721d7e63721056a754a0c1b016a25b641ba32fbaa",
     "model": "S1+AEF ResNet34 U-Net with a 64-to-16 AEF bottleneck",
-    "output": "Dynamic World binary water probability"
+    "output": "Dynamic World-like binary water probability",
+    "paper_threshold": 0.3
   }
 }

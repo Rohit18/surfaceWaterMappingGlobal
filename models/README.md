@@ -1,14 +1,18 @@
-# Model bundle
+# Released model bundle
 
-Place the downloaded S1+AEF model bundle here as `s1aef_resnet34/`. Do not commit model weights or data to this repository.
-
-Required files:
+Run `python scripts/download_model.py --output-dir models/s1aef_resnet34` from the
+repository root. The resulting layout is:
 
 ```text
-s1aef_resnet34/
-  models/s1aef_bottleneck_resnet34_best.pth
+models/s1aef_resnet34/
   band_stats.npz
-  s1aef_bottleneck_resnet34_eval_summary.json
+  models/
+    s1aef_bottleneck_resnet34_best.pth
 ```
 
-Update `model_registry.json` with the Google Drive direct-download URL after uploading the bundle.
+Both files are required. `band_stats.npz` contains the 67 training-band means and
+standard deviations used by inference. The downloader verifies the hashes recorded
+in `model_registry.json`.
+
+The Hugging Face and Google Drive copies are mirrors of the same primary AEF model.
+Do not commit checkpoints to Git.

@@ -2,6 +2,21 @@
 
 This repository intentionally does not distribute imagery, AlphaEarth embeddings, or labels. Use this guide to create compatible GeoTIFF triplets.
 
+For the paper dataset, begin with `metadata/training_samples.csv`. It contains the
+SWORD node ID, acquisition date, AEF year, exact grid, centroid, and seed-42 split for
+all 4,678 usable triplets. `scripts/reconstruct_sample.py` materializes one row from
+Google Earth Engine and Source Cooperative and writes a provenance record.
+
+The source collections are `COPERNICUS/S1_GRD` (IW, dual VV/VH) and
+`GOOGLE/DYNAMICWORLD/V1`. Dynamic World is selected within plus or minus one day of
+the indexed S1 date, converted from label class 0 to water=1, and accepted only when
+at least 90% of the output footprint is valid. AEF uses v1 annual int8 values and
+nearest-neighbor reprojection.
+
+The AEF archive starts in 2017. For the 98 paper samples whose S1 dates fall in
+2015-2016, the prepared dataset uses the 2017 embedding. The `aef_year` column is
+authoritative for reconstruction.
+
 ## Required rasters per training tile
 
 | Raster | Bands | Data type | Meaning |
