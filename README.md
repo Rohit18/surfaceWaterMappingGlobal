@@ -42,8 +42,9 @@ release ships the exact trainer that produced the published weights.
 | AEF projection | Bias-free 1x1 convolution, 64 to 16 channels |
 | Segmentation model | ImageNet-pretrained ResNet-34 U-Net, Mish activations |
 | Loss | Equal-weight cross-entropy + Dice |
-| Optimizer | Ranger (RAdam + Lookahead) |
-| Schedule | Frozen 2 epochs, partial 2, full 12, low-rate tail 10 |
+| Optimizer | Ranger (RAdam + Lookahead; fastai `ranger`), decoupled weight decay 0.01, gradient clipping 1.0, fp16 |
+| Schedule | Four `fit_one_cycle` stages with peak learning rates: encoder frozen, 2 epochs at 1e-4; partial unfreeze, 2 epochs at slice(5e-7, 1e-5); full fine-tuning, 10 epochs at slice(6e-8, 3e-6); tail, 10 epochs at slice(1.5e-7, 1.5e-6). `--finetune_epochs 12` includes the 2 partial-unfreeze epochs |
+| Early stopping and checkpoint | Within each stage, on validation water IoU (patience 4, min_delta 0.001); each stage starts from the previous stage's saved epoch; the checkpoint is the saved epoch of the final stage (see below) |
 | Training crop | 512 x 512, batch size 4, seed 42 |
 | Training target | Dynamic World `label` band, class 0 (water) |
 | Training tiles | 5,278 triplets: 4,222 training, 1,056 validation |
@@ -153,6 +154,9 @@ tile names are independently recoverable from the released run artifacts.
 AEF v1 annual coverage begins in 2017. The index therefore records `aef_year=2017`
 for the 98 retained S1 samples acquired in 2015-2016; later samples use their
 acquisition year. This behavior is explicit in the metadata and reconstruction code.
+The previous-year (t-1) training manifest (5,140 tiles) omits the 137 tiles acquired in
+2015-2017, which have no previous-year embedding, and one tile whose 2021 embedding
+covers less than 90% of it.
 
 ## Train the paper model
 
@@ -166,6 +170,20 @@ python src/train.py \
   --loss ce_dice --batch_size 4 --crop_size 512 \
   --seed 42 --split_seed 42 --split_mode paper_tile
 ```
+
+### Training schedule details
+
+`src/train.py` runs four stages (`build_schedule`), each a separate fastai `fit_one_cycle` call with the
+optimizer state reset. A `slice(a, b)` learning rate is spread geometrically over the three parameter groups
+(encoder stem and layers 1-2; layers 3-4; decoder, head and AEF projection). `SaveModelCallback` and
+`EarlyStoppingCallback` are rebuilt for every stage and both use `min_delta=0.001`, so an epoch is saved only when
+its validation water IoU (argmax) beats the best value of the current stage by more than 0.001. After each stage the
+saved weights are reloaded. The released checkpoint is the saved epoch of the final (tail) stage; it is not
+necessarily the highest validation IoU reached during the run. In the label-class runs, early stopping ended the
+fine-tuning stage in 20 of 33 runs and the tail stage in 30 of 33 (14-24 of 24 planned epochs). The paper runs used
+`--eval_thresholds 0.30 0.50`; every run selects 0.50 (TTA) on the Dynamic World validation split. Training used
+one NVIDIA A100-SXM4-40GB per run (recorded in the job logs), PyTorch 2.6.0+cu124 with cuDNN 9.1.0 and fastai 2.7.19.
+`torch.optim.AdamW` appears only in the batch-size probe of `--mode benchmark`, which the paper runs do not use.
 
 `paper_tile` exactly reproduces the published tile-level split. `grouped` is also
 available for future experiments and keeps rows with the same `grid_id`/`group_id` in
