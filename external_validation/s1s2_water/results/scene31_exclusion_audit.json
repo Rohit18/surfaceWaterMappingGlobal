@@ -1,0 +1,44 @@
+{
+  "scene_id": 31,
+  "metadata_date_s1": "2019-09-09",
+  "metadata_s1_srcids": [],
+  "benchmark_radiometry": {
+    "dtype": "uint16",
+    "vv_min": 0,
+    "vv_max": 364,
+    "vv_percentiles_1_50_99": [145.0, 262.0, 307.0],
+    "vh_min": 0,
+    "vh_max": 264,
+    "vh_percentiles_1_50_99": [72.0, 167.0, 220.0],
+    "documented_dataset_encoding": "int16 Sigma0 dB scaled by 100",
+    "consistent_with_documented_encoding": false
+  },
+  "asf_query": "scene31_grd_candidates_15day.geojson",
+  "candidate_count": 9,
+  "nearest_date_candidate": {
+    "scene_name": "S1B_IW_GRDH_1SDV_20190910T000102_20190910T000137_017968_021D41_5C2F",
+    "fraction_of_benchmark_valid_pixels_within_footprint": 0.048547,
+    "accepted_as_complete_source": false
+  },
+  "maximum_single_candidate_coverage": 0.552216,
+  "minimum_candidate_count_for_at_least_99_percent_union_coverage": 4,
+  "best_four_candidate_union": {
+    "fraction_of_benchmark_valid_pixels_within_union": 0.9999471,
+    "scene_names": [
+      "S1B_IW_GRDH_1SDV_20190916T235330_20190916T235355_018070_022047_5A5A",
+      "S1B_IW_GRDH_1SDV_20190915T000950_20190915T001015_018041_021F68_79C4",
+      "S1B_IW_GRDH_1SDV_20190904T235304_20190904T235329_017895_021AD3_ACA2",
+      "S1B_IW_GRDH_1SDV_20190903T000925_20190903T000950_017866_0219F5_AE25"
+    ],
+    "confirmed_as_source_lineage": false,
+    "reason": "Footprint coverage alone cannot distinguish several near-complete four-product combinations or establish mosaic order."
+  },
+  "upstream_evidence": {
+    "restoration_issue": "https://github.com/MWieland/s1s2_water/issues/6",
+    "open_encoding_issue": "https://github.com/MWieland/s1s2_water/issues/15",
+    "encoding_issue_comment_count_at_audit": 0,
+    "official_repository_commit": "4494bd04998a62600d384ae40bdf410b75e2370d"
+  },
+  "primary_evaluation_status": "unresolved_upstream_provenance_and_encoding",
+  "policy": "Do not assign an exact acquisition, reconstruct an angle band, or include scene 31 in acquisition-dependent primary comparisons until the source lineage and radiometric encoding are confirmed."
+}
