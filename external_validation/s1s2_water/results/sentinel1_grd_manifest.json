@@ -1,0 +1,1015 @@
+{
+  "asf_search_url": "https://api.daac.asf.alaska.edu/services/search/param",
+  "metadata_sources": [
+    {
+      "scene_id": 23,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/23/sentinel12_23_meta.json",
+      "sha256": "482b422a2405c73d58089c7fe8963f70922fb2c09977608a998397dd2eb443f9"
+    },
+    {
+      "scene_id": 25,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/25/sentinel12_25_meta.json",
+      "sha256": "b75414c2947558f938ca8f899ad7a55e6cf63df124d27e331ada7cbbdb0761d7"
+    },
+    {
+      "scene_id": 29,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/29/sentinel12_29_meta.json",
+      "sha256": "6037cac7bc5faf87e28e447792704439ac7fc1736ee21c81facdeda1f6967b4f"
+    },
+    {
+      "scene_id": 31,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/31/sentinel12_31_meta.json",
+      "sha256": "5d3d4c4709af13797c3d57dab0a52b768058eaa88ec5f79dc71be4984813c405"
+    },
+    {
+      "scene_id": 33,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/33/sentinel12_33_meta.json",
+      "sha256": "9fd52fff97770e1d9fa81da38ded086d967d063442fdb07f80c9ea94571950bb"
+    },
+    {
+      "scene_id": 35,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/35/sentinel12_35_meta.json",
+      "sha256": "efd1c579f974b4dbd91796a474731a2f76b0b44fdbc5d9541f47bcf6f3091c50"
+    },
+    {
+      "scene_id": 47,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/47/sentinel12_47_meta.json",
+      "sha256": "44aef2337d0cf96da3461e94cd5a77a04799b2de5bd44bfbc153a7135f1a0df4"
+    },
+    {
+      "scene_id": 53,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/53/sentinel12_53_meta.json",
+      "sha256": "ab4ed81af1e288650156dd934554b7cbffd439cea5bb54077948ad2d8e606bd9"
+    },
+    {
+      "scene_id": 57,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/57/sentinel12_57_meta.json",
+      "sha256": "29f4788f845ad340c8dbac7455a7a6a1e522828b0587eb2770ff905129f07d23"
+    },
+    {
+      "scene_id": 75,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/75/sentinel12_75_meta.json",
+      "sha256": "1ebd7782a241ea33d457648ce7d33104df425acc826f6c95e29c03ccf4276dcf"
+    },
+    {
+      "scene_id": 77,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/77/sentinel12_77_meta.json",
+      "sha256": "2c8d43f6e49bc70b39bb903583eb8d460ce69848d381a47a1d3b8249267e9ff0"
+    },
+    {
+      "scene_id": 78,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/78/sentinel12_78_meta.json",
+      "sha256": "f01ddc0a9a0eede3aa190a12cf3f29a1a5c3df5c0fe7f4e8c535f6731cc1f067"
+    },
+    {
+      "scene_id": 80,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/80/sentinel12_80_meta.json",
+      "sha256": "2d7cf77754d16667557bd94ee0e247205c59e9852419172e11186ab3b8bc84e9"
+    },
+    {
+      "scene_id": 82,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/82/sentinel12_82_meta.json",
+      "sha256": "45dad5e01f6df539194b8e0550c985b9ccfe10a8614b61779be824deedb33729"
+    },
+    {
+      "scene_id": 88,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/88/sentinel12_88_meta.json",
+      "sha256": "4221f8d99f8263e22fc3e97a770c7e4f2d48de74eee7b8101dcc5f2e13ae5c23"
+    },
+    {
+      "scene_id": 89,
+      "path": "/pscratch/sd/r/rohit9/surface_water_validation/data/s1s2_water/metadata/89/sentinel12_89_meta.json",
+      "sha256": "92b69938b43b5aedf5a721ccaef2a9037e1fcedeb85566655268d45d4a6f602e"
+    }
+  ],
+  "records": [
+    {
+      "scene_id": 23,
+      "source_order": 0,
+      "date_s1": "20190818",
+      "product_id": "S1A_IW_GRDH_1SDV_20190818T132656_20190818T132721_028624_033D0F_0EE6",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20190818T132656_20190818T132721_028624_033D0F_0EE6.zip",
+      "file_name": "S1A_IW_GRDH_1SDV_20190818T132656_20190818T132721_028624_033D0F_0EE6.zip",
+      "bytes": 947906328,
+      "md5": "9093449fff2e33749ea484e6d3701be1",
+      "start_time": "2019-08-18T13:26:56Z",
+      "stop_time": "2019-08-18T13:27:21Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 27,
+      "orbit": 28624,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -109.746811,
+              36.013687
+            ],
+            [
+              -109.380219,
+              37.516697
+            ],
+            [
+              -112.271568,
+              37.92001
+            ],
+            [
+              -112.581467,
+              36.418633
+            ],
+            [
+              -109.746811,
+              36.013687
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 23,
+      "source_order": 1,
+      "date_s1": "20190818",
+      "product_id": "S1A_IW_GRDH_1SDV_20190830T132721_20190830T132746_028799_034332_0AB9",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20190830T132721_20190830T132746_028799_034332_0AB9.zip",
+      "file_name": "S1A_IW_GRDH_1SDV_20190830T132721_20190830T132746_028799_034332_0AB9.zip",
+      "bytes": 930018501,
+      "md5": "6edb480553beffb634208919ea903b00",
+      "start_time": "2019-08-30T13:27:21Z",
+      "stop_time": "2019-08-30T13:27:46Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 27,
+      "orbit": 28799,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -110.102585,
+              34.509293
+            ],
+            [
+              -109.746368,
+              36.013611
+            ],
+            [
+              -112.58004,
+              36.418407
+            ],
+            [
+              -112.883598,
+              34.916042
+            ],
+            [
+              -110.102585,
+              34.509293
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 25,
+      "source_order": 0,
+      "date_s1": "20190827",
+      "product_id": "S1B_IW_GRDH_1SDV_20190827T035237_20190827T035302_017766_0216EC_2680",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SB/S1B_IW_GRDH_1SDV_20190827T035237_20190827T035302_017766_0216EC_2680.zip",
+      "file_name": "S1B_IW_GRDH_1SDV_20190827T035237_20190827T035302_017766_0216EC_2680.zip",
+      "bytes": 1016249709,
+      "md5": "7c60de4de2208a6260df2c1063247fb8",
+      "start_time": "2019-08-27T03:52:37Z",
+      "stop_time": "2019-08-27T03:53:02Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 65,
+      "orbit": 17766,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              38.435551,
+              57.054237
+            ],
+            [
+              39.046913,
+              58.539879
+            ],
+            [
+              34.652103,
+              58.961552
+            ],
+            [
+              34.217522,
+              57.469967
+            ],
+            [
+              38.435551,
+              57.054237
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 29,
+      "source_order": 0,
+      "date_s1": "20190902",
+      "product_id": "S1A_IW_GRDH_1SDV_20190902T001042_20190902T001107_028835_034468_3EDC",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20190902T001042_20190902T001107_028835_034468_3EDC.zip",
+      "file_name": "S1A_IW_GRDH_1SDV_20190902T001042_20190902T001107_028835_034468_3EDC.zip",
+      "bytes": 1031144524,
+      "md5": "b50f6e3bd3f0d92d37bdf834c4fc79aa",
+      "start_time": "2019-09-02T00:10:42Z",
+      "stop_time": "2019-09-02T00:11:07Z",
+      "flight_direction": "ASCENDING",
+      "path_number": 63,
+      "orbit": 28835,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -93.669495,
+              31.739677
+            ],
+            [
+              -93.330063,
+              30.233072
+            ],
+            [
+              -90.698814,
+              30.644442
+            ],
+            [
+              -90.995789,
+              32.14859
+            ],
+            [
+              -93.669495,
+              31.739677
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 29,
+      "source_order": 1,
+      "date_s1": "20190902",
+      "product_id": "S1A_IW_GRDH_1SDV_20190902T001107_20190902T001132_028835_034468_3A6E",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20190902T001107_20190902T001132_028835_034468_3A6E.zip",
+      "file_name": "S1A_IW_GRDH_1SDV_20190902T001107_20190902T001132_028835_034468_3A6E.zip",
+      "bytes": 1024340358,
+      "md5": "6be498b116cca91ef71280e939b243e1",
+      "start_time": "2019-09-02T00:11:07Z",
+      "stop_time": "2019-09-02T00:11:32Z",
+      "flight_direction": "ASCENDING",
+      "path_number": 63,
+      "orbit": 28835,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -94.014732,
+              33.24559
+            ],
+            [
+              -93.669518,
+              31.739767
+            ],
+            [
+              -90.994865,
+              32.148815
+            ],
+            [
+              -91.294357,
+              33.652374
+            ],
+            [
+              -94.014732,
+              33.24559
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 29,
+      "source_order": 2,
+      "date_s1": "20190902",
+      "product_id": "S1A_IW_GRDH_1SDV_20190909T000241_20190909T000306_028937_0347F4_21FA",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20190909T000241_20190909T000306_028937_0347F4_21FA.zip",
+      "file_name": "S1A_IW_GRDH_1SDV_20190909T000241_20190909T000306_028937_0347F4_21FA.zip",
+      "bytes": 1035052349,
+      "md5": "595a5780f53b12ff0a73545012ecfb86",
+      "start_time": "2019-09-09T00:02:41Z",
+      "stop_time": "2019-09-09T00:03:06Z",
+      "flight_direction": "ASCENDING",
+      "path_number": 165,
+      "orbit": 28937,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -91.782043,
+              32.474247
+            ],
+            [
+              -91.438065,
+              30.968288
+            ],
+            [
+              -88.78257,
+              31.379036
+            ],
+            [
+              -89.082443,
+              32.882668
+            ],
+            [
+              -91.782043,
+              32.474247
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 33,
+      "source_order": 0,
+      "date_s1": "20190918",
+      "product_id": "S1A_IW_GRDH_1SDV_20190918T224408_20190918T224433_029082_034CFA_75C2",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20190918T224408_20190918T224433_029082_034CFA_75C2.zip",
+      "file_name": "S1A_IW_GRDH_1SDV_20190918T224408_20190918T224433_029082_034CFA_75C2.zip",
+      "bytes": 1018790656,
+      "md5": "c078569bb0f644b7e5281f49cb850ced",
+      "start_time": "2019-09-18T22:44:08Z",
+      "stop_time": "2019-09-18T22:44:33Z",
+      "flight_direction": "ASCENDING",
+      "path_number": 135,
+      "orbit": 29082,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -74.622192,
+              45.954979
+            ],
+            [
+              -74.201027,
+              44.456821
+            ],
+            [
+              -70.937813,
+              44.862301
+            ],
+            [
+              -71.271515,
+              46.36055
+            ],
+            [
+              -74.622192,
+              45.954979
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 33,
+      "source_order": 1,
+      "date_s1": "20190918",
+      "product_id": "S1A_IW_GRDH_1SDV_20190918T224433_20190918T224458_029082_034CFA_5BC8",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20190918T224433_20190918T224458_029082_034CFA_5BC8.zip",
+      "file_name": "S1A_IW_GRDH_1SDV_20190918T224433_20190918T224458_029082_034CFA_5BC8.zip",
+      "bytes": 1036665444,
+      "md5": "a2e5ad5c5951e8d0fe551ee19cfd1f2f",
+      "start_time": "2019-09-18T22:44:33Z",
+      "stop_time": "2019-09-18T22:44:58Z",
+      "flight_direction": "ASCENDING",
+      "path_number": 135,
+      "orbit": 29082,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -75.053436,
+              47.452648
+            ],
+            [
+              -74.622223,
+              45.95507
+            ],
+            [
+              -71.270256,
+              46.360775
+            ],
+            [
+              -71.607018,
+              47.858746
+            ],
+            [
+              -75.053436,
+              47.452648
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 35,
+      "source_order": 0,
+      "date_s1": "20190916",
+      "product_id": "S1A_IW_GRDH_1SDV_20190916T133250_20190916T133315_029047_034BCE_968D",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20190916T133250_20190916T133315_029047_034BCE_968D.zip",
+      "file_name": "S1A_IW_GRDH_1SDV_20190916T133250_20190916T133315_029047_034BCE_968D.zip",
+      "bytes": 977927990,
+      "md5": "19fe6c840e3c21565e51f13b48940d5a",
+      "start_time": "2019-09-16T13:32:50Z",
+      "stop_time": "2019-09-16T13:33:15Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 100,
+      "orbit": 29047,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -109.654907,
+              44.473465
+            ],
+            [
+              -109.218483,
+              45.969337
+            ],
+            [
+              -112.532036,
+              46.369602
+            ],
+            [
+              -112.881706,
+              44.873158
+            ],
+            [
+              -109.654907,
+              44.473465
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 35,
+      "source_order": 1,
+      "date_s1": "20190916",
+      "product_id": "S1A_IW_GRDH_1SDV_20190916T133315_20190916T133340_029047_034BCE_ADC0",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20190916T133315_20190916T133340_029047_034BCE_ADC0.zip",
+      "file_name": "S1A_IW_GRDH_1SDV_20190916T133315_20190916T133340_029047_034BCE_ADC0.zip",
+      "bytes": 976825367,
+      "md5": "9d7bc7c2319450893af13c16727e17bc",
+      "start_time": "2019-09-16T13:33:15Z",
+      "stop_time": "2019-09-16T13:33:40Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 100,
+      "orbit": 29047,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -110.058022,
+              42.973522
+            ],
+            [
+              -109.654945,
+              44.473377
+            ],
+            [
+              -112.880363,
+              44.872917
+            ],
+            [
+              -113.203461,
+              43.373558
+            ],
+            [
+              -110.058022,
+              42.973522
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 47,
+      "source_order": 0,
+      "date_s1": "20190104",
+      "product_id": "S1B_IW_GRDH_1SDV_20190104T104844_20190104T104914_014343_01AB02_B6E3",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SB/S1B_IW_GRDH_1SDV_20190104T104844_20190104T104914_014343_01AB02_B6E3.zip",
+      "file_name": "S1B_IW_GRDH_1SDV_20190104T104844_20190104T104914_014343_01AB02_B6E3.zip",
+      "bytes": 1058652100,
+      "md5": "579203a25e378d4c5399a5fca6e27d70",
+      "start_time": "2019-01-04T10:48:44Z",
+      "stop_time": "2019-01-04T10:49:14Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 142,
+      "orbit": 14343,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -74.229973,
+              9.735059
+            ],
+            [
+              -73.868111,
+              11.49079
+            ],
+            [
+              -76.162071,
+              11.939773
+            ],
+            [
+              -76.509674,
+              10.18859
+            ],
+            [
+              -74.229973,
+              9.735059
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 53,
+      "source_order": 0,
+      "date_s1": "20190416",
+      "product_id": "S1B_IW_GRDH_1SDV_20190416T212056_20190416T212121_015837_01DBD7_EE79",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SB/S1B_IW_GRDH_1SDV_20190416T212056_20190416T212121_015837_01DBD7_EE79.zip",
+      "file_name": "S1B_IW_GRDH_1SDV_20190416T212056_20190416T212121_015837_01DBD7_EE79.zip",
+      "bytes": 999418287,
+      "md5": "ce2baafc76facb98a4190d36432fd22c",
+      "start_time": "2019-04-16T21:20:56Z",
+      "stop_time": "2019-04-16T21:21:21Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 61,
+      "orbit": 15837,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              133.206146,
+              44.829857
+            ],
+            [
+              133.627914,
+              46.328133
+            ],
+            [
+              130.277008,
+              46.730171
+            ],
+            [
+              129.943726,
+              45.2318
+            ],
+            [
+              133.206146,
+              44.829857
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 57,
+      "source_order": 0,
+      "date_s1": "20190617",
+      "product_id": "S1B_IW_GRDH_1SDV_20190617T025826_20190617T025851_016730_01F7DE_0508",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SB/S1B_IW_GRDH_1SDV_20190617T025826_20190617T025851_016730_01F7DE_0508.zip",
+      "file_name": "S1B_IW_GRDH_1SDV_20190617T025826_20190617T025851_016730_01F7DE_0508.zip",
+      "bytes": 855031742,
+      "md5": "b1737ee12f4c7d6e798a9c689be91e7b",
+      "start_time": "2019-06-17T02:58:26Z",
+      "stop_time": "2019-06-17T02:58:51Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 79,
+      "orbit": 16730,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              48.750591,
+              44.51746
+            ],
+            [
+              49.170208,
+              46.015724
+            ],
+            [
+              45.904892,
+              46.40984
+            ],
+            [
+              45.570633,
+              44.911514
+            ],
+            [
+              48.750591,
+              44.51746
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 75,
+      "source_order": 0,
+      "date_s1": "20190911",
+      "product_id": "S1A_IW_GRDH_1SDV_20190911T033207_20190911T033232_028968_034906_A399",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20190911T033207_20190911T033232_028968_034906_A399.zip",
+      "file_name": "S1A_IW_GRDH_1SDV_20190911T033207_20190911T033232_028968_034906_A399.zip",
+      "bytes": 983533207,
+      "md5": "84ba3b3968fffe9970262bf0cb1fc22a",
+      "start_time": "2019-09-11T03:32:07Z",
+      "stop_time": "2019-09-11T03:32:32Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 21,
+      "orbit": 28968,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              40.582874,
+              44.540722
+            ],
+            [
+              41.006577,
+              46.038506
+            ],
+            [
+              37.666363,
+              46.442101
+            ],
+            [
+              37.330032,
+              44.944149
+            ],
+            [
+              40.582874,
+              44.540722
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 77,
+      "source_order": 0,
+      "date_s1": "20190918",
+      "product_id": "S1B_IW_GRDH_1SDV_20190918T235521_20190918T235546_018099_02213B_F7D3",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SB/S1B_IW_GRDH_1SDV_20190918T235521_20190918T235546_018099_02213B_F7D3.zip",
+      "file_name": "S1B_IW_GRDH_1SDV_20190918T235521_20190918T235546_018099_02213B_F7D3.zip",
+      "bytes": 1034841511,
+      "md5": "f5626adca001dade3c1903c3e484bd79",
+      "start_time": "2019-09-18T23:55:21Z",
+      "stop_time": "2019-09-18T23:55:46Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 48,
+      "orbit": 18099,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              96.305244,
+              52.215168
+            ],
+            [
+              96.808304,
+              53.707886
+            ],
+            [
+              92.980446,
+              54.108753
+            ],
+            [
+              92.606865,
+              52.613495
+            ],
+            [
+              96.305244,
+              52.215168
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 78,
+      "source_order": 0,
+      "date_s1": "20190916",
+      "product_id": "S1B_IW_GRDH_1SDV_20190916T004542_20190916T004611_018056_021FE0_0944",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SB/S1B_IW_GRDH_1SDV_20190916T004542_20190916T004611_018056_021FE0_0944.zip",
+      "file_name": "S1B_IW_GRDH_1SDV_20190916T004542_20190916T004611_018056_021FE0_0944.zip",
+      "bytes": 1018899521,
+      "md5": "2a746e16365dd0ed4e108b3d98d14dba",
+      "start_time": "2019-09-16T00:45:42Z",
+      "stop_time": "2019-09-16T00:46:11Z",
+      "flight_direction": "ASCENDING",
+      "path_number": 5,
+      "orbit": 18056,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -104.320663,
+              42.023563
+            ],
+            [
+              -103.871132,
+              40.280109
+            ],
+            [
+              -100.898216,
+              40.675842
+            ],
+            [
+              -101.267151,
+              42.418182
+            ],
+            [
+              -104.320663,
+              42.023563
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 80,
+      "source_order": 0,
+      "date_s1": "20191014",
+      "product_id": "S1B_IW_GRDH_1SDV_20191014T091408_20191014T091433_018469_022CC5_5839",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SB/S1B_IW_GRDH_1SDV_20191014T091408_20191014T091433_018469_022CC5_5839.zip",
+      "file_name": "S1B_IW_GRDH_1SDV_20191014T091408_20191014T091433_018469_022CC5_5839.zip",
+      "bytes": 1008606741,
+      "md5": "4595cfcc0fac1b5880198c4c12b7ebae",
+      "start_time": "2019-10-14T09:14:08Z",
+      "stop_time": "2019-10-14T09:14:33Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 68,
+      "orbit": 18469,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -58.028267,
+              -34.176556
+            ],
+            [
+              -57.559784,
+              -32.685028
+            ],
+            [
+              -60.291256,
+              -32.030861
+            ],
+            [
+              -60.802425,
+              -33.511665
+            ],
+            [
+              -58.028267,
+              -34.176556
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 80,
+      "source_order": 1,
+      "date_s1": "20191014",
+      "product_id": "S1B_IW_GRDH_1SDV_20191014T091433_20191014T091458_018469_022CC5_659B",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SB/S1B_IW_GRDH_1SDV_20191014T091433_20191014T091458_018469_022CC5_659B.zip",
+      "file_name": "S1B_IW_GRDH_1SDV_20191014T091433_20191014T091458_018469_022CC5_659B.zip",
+      "bytes": 990393522,
+      "md5": "2590537038c817bbc21236e68e7cd467",
+      "start_time": "2019-10-14T09:14:33Z",
+      "stop_time": "2019-10-14T09:14:58Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 68,
+      "orbit": 18469,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -58.513447,
+              -35.665817
+            ],
+            [
+              -58.028294,
+              -34.176643
+            ],
+            [
+              -60.804413,
+              -33.511257
+            ],
+            [
+              -61.33527,
+              -34.989079
+            ],
+            [
+              -58.513447,
+              -35.665817
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 82,
+      "source_order": 0,
+      "date_s1": "20190926",
+      "product_id": "S1B_IW_GRDH_1SDV_20190926T213455_20190926T213522_018214_0224BF_179E",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SB/S1B_IW_GRDH_1SDV_20190926T213455_20190926T213522_018214_0224BF_179E.zip",
+      "file_name": "S1B_IW_GRDH_1SDV_20190926T213455_20190926T213522_018214_0224BF_179E.zip",
+      "bytes": 946942026,
+      "md5": "089280a3f93724a1d5bba7988a179d90",
+      "start_time": "2019-09-26T21:34:55Z",
+      "stop_time": "2019-09-26T21:35:22Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 163,
+      "orbit": 18214,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              116.519348,
+              -35.077343
+            ],
+            [
+              117.030167,
+              -33.469475
+            ],
+            [
+              114.338554,
+              -32.824928
+            ],
+            [
+              113.7808,
+              -34.42123
+            ],
+            [
+              116.519348,
+              -35.077343
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 88,
+      "source_order": 0,
+      "date_s1": "20201124",
+      "product_id": "S1B_IW_GRDH_1SDV_20201124T155420_20201124T155445_024409_02E6AF_0390",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SB/S1B_IW_GRDH_1SDV_20201124T155420_20201124T155445_024409_02E6AF_0390.zip",
+      "file_name": "S1B_IW_GRDH_1SDV_20201124T155420_20201124T155445_024409_02E6AF_0390.zip",
+      "bytes": 964980854,
+      "md5": "6cc29d9c51cd980d9ed2e1e4dfc7dbc2",
+      "start_time": "2020-11-24T15:54:20Z",
+      "stop_time": "2020-11-24T15:54:45Z",
+      "flight_direction": "ASCENDING",
+      "path_number": 58,
+      "orbit": 24409,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              31.419621,
+              24.224298
+            ],
+            [
+              31.738899,
+              22.714521
+            ],
+            [
+              34.166428,
+              23.134691
+            ],
+            [
+              33.875725,
+              24.641335
+            ],
+            [
+              31.419621,
+              24.224298
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 88,
+      "source_order": 1,
+      "date_s1": "20201124",
+      "product_id": "S1B_IW_GRDH_1SDV_20201124T155351_20201124T155420_024409_02E6AF_1704",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SB/S1B_IW_GRDH_1SDV_20201124T155351_20201124T155420_024409_02E6AF_1704.zip",
+      "file_name": "S1B_IW_GRDH_1SDV_20201124T155351_20201124T155420_024409_02E6AF_1704.zip",
+      "bytes": 1080887050,
+      "md5": "b219fae3d262424c6bacb0a2d35c51c1",
+      "start_time": "2020-11-24T15:53:51Z",
+      "stop_time": "2020-11-24T15:54:20Z",
+      "flight_direction": "ASCENDING",
+      "path_number": 58,
+      "orbit": 24409,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              31.738916,
+              22.714432
+            ],
+            [
+              32.114799,
+              20.962631
+            ],
+            [
+              34.511208,
+              21.38632
+            ],
+            [
+              34.165867,
+              23.134506
+            ],
+            [
+              31.738916,
+              22.714432
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "scene_id": 89,
+      "source_order": 0,
+      "date_s1": "20200410",
+      "product_id": "S1A_IW_GRDH_1SDV_20200410T023157_20200410T023222_032059_03B460_9EB7",
+      "url": "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20200410T023157_20200410T023222_032059_03B460_9EB7.zip",
+      "file_name": "S1A_IW_GRDH_1SDV_20200410T023157_20200410T023222_032059_03B460_9EB7.zip",
+      "bytes": 847955304,
+      "md5": "c3456b85a54352e2bb393efd9b8fc667",
+      "start_time": "2020-04-10T02:31:57Z",
+      "stop_time": "2020-04-10T02:32:22Z",
+      "flight_direction": "DESCENDING",
+      "path_number": 137,
+      "orbit": 32059,
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              52.160957,
+              23.996647
+            ],
+            [
+              52.485409,
+              25.505421
+            ],
+            [
+              49.969231,
+              25.925215
+            ],
+            [
+              49.675842,
+              24.419472
+            ],
+            [
+              52.160957,
+              23.996647
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    }
+  ],
+  "record_count": 22,
+  "unresolved_scenes": [
+    31
+  ]
+}

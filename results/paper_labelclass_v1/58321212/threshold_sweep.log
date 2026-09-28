@@ -1,0 +1,14 @@
+run set: labelclass_v1
+  /pscratch/sd/r/rohit9/S1ML/intercomparison_s1aef/predictions/paper_labelclass_v1/openwater/58321212
+  /pscratch/sd/r/rohit9/S1ML/intercomparison_s1aef/predictions/paper_labelclass_v1/tminus1/58321217
+
+S1-only (k0, seed42)
+  optimal thr=0.02800 IoU=0.696463  at 0.30 IoU=0.558462  at 0.01 IoU=0.670084
+S1+AEF(t) (k16, seed42)
+  optimal thr=0.58000 IoU=0.854539  at 0.30 IoU=0.850797  at 0.01 IoU=0.776920
+S1+AEF(t-1) swap (k16, seed42)
+  optimal thr=0.58000 IoU=0.844965  at 0.30 IoU=0.839748  at 0.01 IoU=0.769895
+S1+AEF(t-1) trained (k16, seed42)
+  optimal thr=0.58000 IoU=0.845978  at 0.30 IoU=0.839392  at 0.01 IoU=0.743442
+
+wrote results/paper_labelclass_v1/58321212/threshold_sweep.json

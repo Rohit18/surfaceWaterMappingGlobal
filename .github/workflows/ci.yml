@@ -12,6 +12,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Install test dependencies
+        # The audit tests import scripts that read rasters and vector geometry. Torch and the Earth
+        # Engine client are not needed, so requirements.txt is deliberately not installed here.
+        run: python -m pip install --upgrade pip numpy affine rasterio shapely pyshp requests pandas
       - name: Compile Python sources
         run: python -m compileall -q src scripts tests
       - name: Validate release metadata

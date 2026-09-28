@@ -1,0 +1,81 @@
+{
+  "dataset": {
+    "total": 5278,
+    "train": 4222,
+    "valid": 1056,
+    "new": 600
+  },
+  "thresholds": {
+    "main_table": 0.3,
+    "ablations": 0.5
+  },
+  "bootstrap": {
+    "replicates": 10000,
+    "seed": 42,
+    "unit": "evaluation scene"
+  },
+  "main_evaluation_sources": {
+    "s1": "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k0_seed42_current_tta_paper030/width_k0_seed42_current_tta_paper030_confusion_summary.json",
+    "current": "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k16_seed42_current_tta_paper030/width_k16_seed42_current_tta_paper030_confusion_summary.json",
+    "previous": "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k16_seed42_tminus1_tta/width_k16_seed42_tminus1_tta_confusion_summary.json"
+  },
+  "ablation_evaluation_sources": {
+    "width_0": [
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k0_seed42_current_tta/width_k0_seed42_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k0_seed43_current_tta/width_k0_seed43_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k0_seed44_current_tta/width_k0_seed44_current_tta_confusion_summary.json"
+    ],
+    "width_1": [
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k1_seed42_current_tta/width_k1_seed42_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k1_seed43_current_tta/width_k1_seed43_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k1_seed44_current_tta/width_k1_seed44_current_tta_confusion_summary.json"
+    ],
+    "width_2": [
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k2_seed42_current_tta/width_k2_seed42_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k2_seed43_current_tta/width_k2_seed43_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k2_seed44_current_tta/width_k2_seed44_current_tta_confusion_summary.json"
+    ],
+    "width_3": [
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k3_seed42_current_tta/width_k3_seed42_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k3_seed43_current_tta/width_k3_seed43_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k3_seed44_current_tta/width_k3_seed44_current_tta_confusion_summary.json"
+    ],
+    "width_4": [
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k4_seed42_current_tta/width_k4_seed42_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k4_seed43_current_tta/width_k4_seed43_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k4_seed44_current_tta/width_k4_seed44_current_tta_confusion_summary.json"
+    ],
+    "width_8": [
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k8_seed42_current_tta/width_k8_seed42_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k8_seed43_current_tta/width_k8_seed43_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k8_seed44_current_tta/width_k8_seed44_current_tta_confusion_summary.json"
+    ],
+    "width_16": [
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k16_seed42_current_tta/width_k16_seed42_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k16_seed43_current_tta/width_k16_seed43_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/width_k16_seed44_current_tta/width_k16_seed44_current_tta_confusion_summary.json"
+    ],
+    "training_1000": [
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/train1000_k16_seed42_current_tta/train1000_k16_seed42_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/train1000_k16_seed43_current_tta/train1000_k16_seed43_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/train1000_k16_seed44_current_tta/train1000_k16_seed44_current_tta_confusion_summary.json"
+    ],
+    "training_2000": [
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/train2000_k16_seed42_current_tta/train2000_k16_seed42_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/train2000_k16_seed43_current_tta/train2000_k16_seed43_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/train2000_k16_seed44_current_tta/train2000_k16_seed44_current_tta_confusion_summary.json"
+    ],
+    "training_3000": [
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/train3000_k16_seed42_current_tta/train3000_k16_seed42_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/train3000_k16_seed43_current_tta/train3000_k16_seed43_current_tta_confusion_summary.json",
+      "/pscratch/sd/r/rohit9/S1ML/training_runs/paper_labelclass_v1/openwater/reports/58321212/evaluation/train3000_k16_seed44_current_tta/train3000_k16_seed44_current_tta_confusion_summary.json"
+    ]
+  },
+  "opera_comparator": {
+    "status": "recomputed from source; no longer copied from the previous paper table",
+    "summary_path": "/pscratch/sd/r/rohit9/S1ML/intercomparison_opera/grouped/sid_permanent_water_summary.json",
+    "per_sample_path": "/pscratch/sd/r/rohit9/S1ML/intercomparison_opera/grouped/sid_permanent_water_per_sample_metrics.csv",
+    "note": "OPERA DSWx-S1 ships a binary B01_WTR water layer, so the 0.30 threshold column does not apply to this row. Valid-pixel coverage also differs from the model rows because each product carries its own no-data mask; see opera_valid_pixels and the matched-mask check in completion_results.md.",
+    "opera_valid_pixels": 52651510
+  }
+}

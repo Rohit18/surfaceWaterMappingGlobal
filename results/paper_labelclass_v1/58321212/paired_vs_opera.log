@@ -1,0 +1,11 @@
+run set: labelclass_v1
+  /pscratch/sd/r/rohit9/S1ML/intercomparison_s1aef/predictions/paper_labelclass_v1/openwater/58321212
+  /pscratch/sd/r/rohit9/S1ML/intercomparison_s1aef/predictions/paper_labelclass_v1/tminus1/58321217
+
+comparison                            wins  losses  ties    median      mean          p
+S1+AEF(t) vs OPERA                   51/53       1     1   +0.1323   +0.1652   1.32e-09
+S1+AEF(t-1) swap vs OPERA            48/53       4     1   +0.1227   +0.1504   1.55e-08
+S1+AEF(t-1) trained vs OPERA         48/53       4     1   +0.1018   +0.1515   1.19e-08
+S1-only vs OPERA                     18/53      33     2   -0.0923   -0.1471   0.000582
+
+wrote results/paper_labelclass_v1/58321212/paired_vs_opera.json

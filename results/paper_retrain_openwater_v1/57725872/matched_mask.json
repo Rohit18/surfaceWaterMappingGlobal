@@ -1,0 +1,76 @@
+{
+  "threshold": 0.3,
+  "common_valid_pixels": 51897488,
+  "total_pixels": 55574528,
+  "methods": {
+    "S1-only": {
+      "pooled_water_iou": 0.6112010322217079,
+      "per_scene_mean": 0.4852009978930527,
+      "tp": 8208230,
+      "fp": 644652,
+      "fn": 4576791
+    },
+    "S1+AEF(t)": {
+      "pooled_water_iou": 0.8509667864149107,
+      "per_scene_mean": 0.747897598451931,
+      "tp": 11811379,
+      "fp": 1094932,
+      "fn": 973642
+    },
+    "S1+AEF(t-1) swap": {
+      "pooled_water_iou": 0.8423420257660174,
+      "per_scene_mean": 0.7338473723834652,
+      "tp": 11757800,
+      "fp": 1173442,
+      "fn": 1027221
+    },
+    "S1+AEF(t-1) trained": {
+      "pooled_water_iou": 0.8419191770490703,
+      "per_scene_mean": 0.7375087221650757,
+      "tp": 11809751,
+      "fp": 1242158,
+      "fn": 975270
+    },
+    "OPERA DSWx-S1": {
+      "pooled_water_iou": 0.746826114835205,
+      "per_scene_mean": 0.5912097486833301,
+      "tp": 10884255,
+      "fp": 1788994,
+      "fn": 1900766
+    }
+  },
+  "paired_vs_opera": {
+    "S1+AEF(t) vs OPERA": {
+      "wins": 50,
+      "losses": 1,
+      "ties": 2,
+      "median_diff": 0.1227972660939711,
+      "mean_diff": 0.15668784976860078,
+      "wilcoxon_p": 1.3225524535196487e-09
+    },
+    "S1+AEF(t-1) swap vs OPERA": {
+      "wins": 49,
+      "losses": 3,
+      "ties": 1,
+      "median_diff": 0.10198183684535711,
+      "mean_diff": 0.14263762370013516,
+      "wilcoxon_p": 1.2569015388789593e-08
+    },
+    "S1+AEF(t-1) trained vs OPERA": {
+      "wins": 48,
+      "losses": 4,
+      "ties": 1,
+      "median_diff": 0.08779214941179225,
+      "mean_diff": 0.1462989734817456,
+      "wilcoxon_p": 1.0147158704532841e-08
+    },
+    "S1-only vs OPERA": {
+      "wins": 23,
+      "losses": 29,
+      "ties": 1,
+      "median_diff": -0.028993591900642213,
+      "mean_diff": -0.10600875079027741,
+      "wilcoxon_p": 0.009958775220056646
+    }
+  }
+}

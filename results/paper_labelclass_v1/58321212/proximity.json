@@ -1,0 +1,62 @@
+{
+  "counts": {
+    "within_5km": {
+      "total": 5,
+      "legacy": 5,
+      "supplement": 0
+    },
+    "within_11km": {
+      "total": 8,
+      "legacy": 8,
+      "supplement": 0
+    },
+    "within_20km": {
+      "total": 10,
+      "legacy": 10,
+      "supplement": 0
+    }
+  },
+  "scenes_within_11km": [
+    "SID17",
+    "SID21",
+    "SID53",
+    "SID64",
+    "SID78",
+    "SID79",
+    "SID98",
+    "SID99"
+  ],
+  "closest_supplement_km": 27.913345100917297,
+  "exclusion_recomputation": {
+    "S1-only": {
+      "pooled_53": 0.558461794831915,
+      "pooled_45": 0.5724940791714219,
+      "per_scene_53": 0.44342601886792454,
+      "per_scene_45": 0.4492753333333333
+    },
+    "S1+AEF(t)": {
+      "pooled_53": 0.8507973180329922,
+      "pooled_45": 0.8532040377340913,
+      "per_scene_53": 0.7557532452830189,
+      "per_scene_45": 0.7651936666666667
+    },
+    "S1+AEF(t-1) swap": {
+      "pooled_53": 0.839748444928907,
+      "pooled_45": 0.8411599430362057,
+      "per_scene_53": 0.7408944339622641,
+      "per_scene_45": 0.7495864666666667
+    },
+    "S1+AEF(t-1) trained": {
+      "pooled_53": 0.8393921322593805,
+      "pooled_45": 0.8410629897447824,
+      "per_scene_53": 0.7420355471698111,
+      "per_scene_45": 0.7502341555555554
+    },
+    "OPERA DSWx-S1": {
+      "pooled_53": 0.7461125734430243,
+      "pooled_45": 0.7435663243023275,
+      "per_scene_53": 0.5905278113207547,
+      "per_scene_45": 0.5946523333333333
+    }
+  }
+}
