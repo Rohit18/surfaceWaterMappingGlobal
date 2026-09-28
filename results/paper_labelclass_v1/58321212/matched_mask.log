@@ -1,0 +1,20 @@
+run set: labelclass_v1
+  /pscratch/sd/r/rohit9/S1ML/intercomparison_s1aef/predictions/paper_labelclass_v1/openwater/58321212
+  /pscratch/sd/r/rohit9/S1ML/intercomparison_s1aef/predictions/paper_labelclass_v1/tminus1/58321217
+
+common valid pixels: 51,897,488 of 55,574,528 (93.38%)
+
+method                  pooled IoU   per-scene
+S1-only                     0.5668      0.4490
+S1+AEF(t)                   0.8528      0.7577
+S1+AEF(t-1) swap            0.8418      0.7427
+S1+AEF(t-1) trained         0.8415      0.7439
+OPERA DSWx-S1               0.7468      0.5912
+
+paired comparison                      wins    median           p
+S1+AEF(t) vs OPERA                    51/53   +0.1323    1.25e-09
+S1+AEF(t-1) swap vs OPERA             48/53   +0.1219    1.26e-08
+S1+AEF(t-1) trained vs OPERA          48/53   +0.1018    8.18e-09
+S1-only vs OPERA                      19/53   -0.0885    0.000876
+
+wrote results/paper_labelclass_v1/58321212/matched_mask.json

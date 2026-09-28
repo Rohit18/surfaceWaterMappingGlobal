@@ -1,0 +1,5 @@
+method,input,threshold,precision,recall,dice,pooled_water_iou,per_scene_mean_water_iou,ci95_low,ci95_high
+S1 only,S1,0.3,0.933377,0.581648,0.716683,0.558462,0.443426,0.354555,0.532611
+S1+AEF (t-1),S1 + previous-year AEF,0.3,0.882159,0.94585,0.912895,0.839748,0.740894,0.672329,0.803297
+S1+AEF (t),S1 + acquisition-year AEF,0.3,0.892125,0.948362,0.919385,0.850797,0.755753,0.688743,0.816403
+OPERA DSWx-S1,S1 binary 30 m,0.3,0.857628,0.85159,0.854598,0.746113,0.590528,0.508065,0.669592

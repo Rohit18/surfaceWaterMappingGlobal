@@ -1,0 +1,19 @@
+run set: labelclass_v1
+  /pscratch/sd/r/rohit9/S1ML/intercomparison_s1aef/predictions/paper_labelclass_v1/openwater/58321212
+  /pscratch/sd/r/rohit9/S1ML/intercomparison_s1aef/predictions/paper_labelclass_v1/tminus1/58321217
+
+within  5 km: {'total': 5, 'legacy': 5, 'supplement': 0}
+within 11 km: {'total': 8, 'legacy': 8, 'supplement': 0}
+within 20 km: {'total': 10, 'legacy': 10, 'supplement': 0}
+
+scenes within 11 km (8): ['SID17', 'SID21', 'SID53', 'SID64', 'SID78', 'SID79', 'SID98', 'SID99']
+closest supplement sample to any evaluation scene: 27.9 km
+
+configuration             pooled/53  pooled/45  per-scene/53  per-scene/45
+S1-only                      0.5585     0.5725        0.4434        0.4493
+S1+AEF(t)                    0.8508     0.8532        0.7558        0.7652
+S1+AEF(t-1) swap             0.8397     0.8412        0.7409        0.7496
+S1+AEF(t-1) trained          0.8394     0.8411        0.7420        0.7502
+OPERA DSWx-S1                0.7461     0.7436        0.5905        0.5947
+
+wrote results/paper_labelclass_v1/58321212/proximity.json

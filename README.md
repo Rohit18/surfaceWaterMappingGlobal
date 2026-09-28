@@ -12,18 +12,26 @@ World supplies weak supervision during training only.
 - The complete S1-only and S1+AEF training implementation (`src/train.py`).
 - Tiled, four-flip-TTA inference (`src/infer.py`).
 - Dataset validation and sample-index generation utilities (`scripts/`).
-- The exact paper split and reconstruction metadata for every usable training tile
+- The exact paper split and raster-grid metadata for every usable training tile
   (`metadata/training_samples.csv`). No imagery is redistributed.
 - Metadata for the 53 independent GSWD evaluation scenes
   (`metadata/evaluation_samples.csv`).
 - Paper-level and training-run results (`results/`).
-- One primary trained S1+AEF checkpoint and its normalization statistics on
-  [Hugging Face](https://huggingface.co/rohitm9/surfaceWaterGlobal). The same model
-  is mirrored on Google Drive.
+- Three trained checkpoints with their normalization statistics, validation summaries and
+  thresholds on [Hugging Face](https://huggingface.co/rohitm9/surfaceWaterGlobal), tag
+  `v2-labelclass`: the primary S1+AEF model, the matched S1-only control, and the
+  previous-year AEF model.
+- The independent S1S2-Water evaluation against OPERA DSWx-S1
+  (`external_validation/s1s2_water/`).
 
-Only the primary AEF model is published. The width, training-size, and seed ablations
-can be retrained from this code; releasing every ablation checkpoint would add storage
-without being necessary to use or reproduce the proposed method.
+The width, training-size and seed ablations are not published as checkpoints; they can be
+retrained from this code. The checkpoints released in August 2026 were trained on a mixture
+of two Dynamic World water products; they remain available at tag `v1-mixed-labels` and are
+superseded by `v2-labelclass`, which uses the DW `label` class only.
+
+Note on the trainer: `src/train.py` here has advanced since the released checkpoints were
+produced (it gained ignore-index handling for partially observed labels). The Hugging Face
+release ships the exact trainer that produced the published weights.
 
 ## Model
 
@@ -37,7 +45,10 @@ without being necessary to use or reproduce the proposed method.
 | Optimizer | Ranger (RAdam + Lookahead) |
 | Schedule | Frozen 2 epochs, partial 2, full 12, low-rate tail 10 |
 | Training crop | 512 x 512, batch size 4, seed 42 |
+| Training target | Dynamic World `label` band, class 0 (water) |
+| Training tiles | 5,278 triplets: 4,222 training, 1,056 validation |
 | Reported map threshold | 0.30 with four-flip TTA |
+| Validation-selected threshold | 0.50 with four-flip TTA (of 0.30 and 0.50) |
 
 ## Install
 
@@ -53,6 +64,8 @@ python -m pip install -r requirements.txt
 
 ```bash
 python scripts/download_model.py --output-dir models/s1aef_resnet34
+python scripts/download_model.py --variant s1_only --output-dir models/s1_only_control
+python scripts/download_model.py --variant fused_previous_year --output-dir models/s1aef_previous_year
 ```
 
 The downloader obtains only the checkpoint and `band_stats.npz`, then verifies their
@@ -81,14 +94,27 @@ new region.
 ## Recreate the training dataset
 
 The source imagery is too large and remains subject to the source providers' terms.
-Instead, `metadata/training_samples.csv` records the SWORD node ID, S1 date, AEF year,
+Instead, `metadata/training_samples.csv` records the SWORD node ID, legacy indexed date, AEF year,
 exact raster grid, centroid, and paper split for each tile. This is the most useful
 lightweight release: it preserves *what was sampled* rather than only describing the
 sampling conceptually.
 
+The legacy indexed date came from the original filename and does not, by itself,
+identify the exact Sentinel-1 source scene. Use a generation provenance manifest when
+exact acquisition timing matters. If the original raster still exists,
+`scripts/recover_s1_raster_provenance.py` can instead verify its source scene by exact
+VV/VH/angle pixel matching. A catalog lookup by date alone is an inference and is not
+equivalent to recorded or raster-matched provenance.
+
+For the footprint coverage inventory (SWORD sampling frame, SWOT PLD lake overlap,
+JRC water persistence, GSHHG coastal proximity, and S1/Dynamic World timing), see
+[`docs/sample_inventory_audit.md`](docs/sample_inventory_audit.md) and the audit
+commands in [`examples/prepare_data.md`](examples/prepare_data.md).
+
 The reconstruction sequence is:
 
-1. Authenticate Google Earth Engine and obtain the S1/Dynamic World pair for each row.
+1. Authenticate Google Earth Engine and obtain an S1/Dynamic World pair on the recorded
+   grid. Exact reconstruction additionally requires the original scene provenance.
 2. Stack S1 `VV`, `VH`, and incidence angle on the recorded grid.
 3. Convert Dynamic World label class 0 to water=1 and all other valid classes to 0;
    retain samples with at least 90% valid Dynamic World coverage.
@@ -105,9 +131,11 @@ python scripts/reconstruct_sample.py \
   --output-root data
 ```
 
-The command records the resolved Earth Engine image IDs, AEF source COG URLs, and
-output checksums in `data/provenance/`. Run it per row or distribute rows across a
-batch system. Source archives can change independently; retain the provenance files.
+The command performs date-based catalog inference, then records the resolved Earth
+Engine image IDs, AEF source COG URLs, and output checksums in `data/provenance/`.
+It can fail when the legacy date has no same-day S1 acquisition, and a result should
+not be described as an exact historical reconstruction without source-scene records.
+Source archives can change independently; retain all new provenance files.
 
 See [`examples/prepare_data.md`](examples/prepare_data.md) for the complete raster
 contract. Verify a reconstruction before training:
@@ -146,6 +174,69 @@ one partition; it is not the protocol used to train the released model.
 For the matched S1-only control, omit `--aef_dir` and use
 `--n_aef_bands 0 --n_proj_bands 0`.
 
+### Retrain with the open-water supplement
+
+`outputs/audit/supplement_samples.csv` defines 600 additional lake, reservoir,
+coastal/estuarine, and seasonal-water grids with exact Sentinel-1 and Dynamic World
+scene IDs. The supplement is not materialized until the export workflow is run.
+
+On NERSC, the complete paper-refresh dependency chain is:
+
+```bash
+scripts/submit_paper_retrain.sh
+```
+
+The workflow exports and validates the 600 new S1/Dynamic World/AEF triplets, builds
+an immutable 5,278-tile manifest, preserves the existing 4,678-tile split, and adds
+480/120 new train/validation tiles. It then runs the matched three-seed AEF-width and
+training-size experiments, reruns the 53-scene independent evaluation for S1-only,
+acquisition-year AEF, and previous-year AEF, and writes manuscript-facing result
+tables under `results/paper_retrain_openwater_v1/`.
+
+Training consumes `triplets.csv` with `--triplet_manifest` and `fixed_split.csv` with
+`--fixed_split_manifest`; this prevents a retrain from silently reshuffling the
+published validation population.
+
+### Label-class rerun
+
+The runs behind `results/paper_retrain_openwater_v1/` resolved about 65% of their tiles to a
+binarized Dynamic World water probability rather than the `label` band. All 33 runs were repeated
+with the `label` class only, keeping the same chips, split, seeds and hyperparameters, and those
+runs produce the released checkpoints and every number in `results/paper_labelclass_v1/58321212/`.
+The analyses accept either run set:
+
+```bash
+python scripts/complete_paper_analyses.py sweep --run-set labelclass_v1 --out results/.../threshold_sweep.json
+python scripts/complete_paper_analyses.py paired --run-set mixed_v1 --out /tmp/paired_old.json
+python scripts/make_figure3_iou_distribution.py --run-set labelclass_v1 --out-dir results/.../figures
+```
+
+## Results
+
+Independent 53-scene PlanetScope reference set, threshold 0.30
+(`results/paper_labelclass_v1/58321212/paper_metrics.csv`):
+
+| Method | Precision | Recall | Pooled water IoU | Per-scene mean [95% CI] |
+| --- | ---: | ---: | ---: | --- |
+| S1 + AEF (acquisition year) | 0.892 | 0.948 | 0.851 | 0.756 [0.689, 0.816] |
+| S1 + AEF (previous year) | 0.882 | 0.946 | 0.840 | 0.741 [0.672, 0.803] |
+| S1 only | 0.933 | 0.582 | 0.558 | 0.443 [0.355, 0.533] |
+| OPERA DSWx-S1 | 0.858 | 0.852 | 0.746 | 0.591 [0.508, 0.670] |
+
+`results/paper_labelclass_v1/58321212/completion_results.md` documents every number, including the
+threshold sweep, the train/evaluation proximity screen, the matched-valid-mask comparison, the paired
+tests against OPERA and the WorldCover error analysis. `results/paper_retrain_openwater_v1/57725872/`
+holds the superseded mixed-label results.
+
+Independent S1S2-Water benchmark, 15 test scenes, 30 m grid, mean over three seeds
+(`external_validation/s1s2_water/`):
+
+| Method | Pooled water IoU, threshold 0.50 | Threshold 0.30 |
+| --- | ---: | ---: |
+| S1 + AEF | 0.953 | 0.941 |
+| OPERA DSWx-S1 (v1.2 with the upstream boundary fix) | 0.869 | 0.869 |
+| S1 only | 0.822 | 0.794 |
+
 ## Repository layout
 
 | Path | Purpose |
@@ -157,6 +248,10 @@ For the matched S1-only control, omit `--aef_dir` and use
 | `scripts/reconstruct_sample.py` | Rebuild an indexed triplet from public source archives |
 | `scripts/validate_dataset.py` | Validate bands, grids, names, and optional sample index |
 | `src/evaluate.py`, `scripts/compare_methods.py` | Pooled/per-scene metrics, bootstrap CIs, paired tests |
+| `scripts/complete_paper_analyses.py` | Threshold sweep, proximity screen, matched mask, paired tests vs OPERA |
+| `scripts/make_figure3_iou_distribution.py` | Per-scene IoU distribution figure |
+| `external_validation/s1s2_water/` | Independent S1S2-Water evaluation against OPERA DSWx-S1 |
+| `jobs/` | Slurm job scripts for the training, inference and evaluation chain |
 | `metadata/` | Training and independent-evaluation sampling metadata |
 | `results/` | Machine-readable paper and training-run summaries |
 | `models/model_registry.json` | Model locations, filenames, and checksums |

@@ -1,0 +1,42 @@
+{
+  "threshold": 0.3,
+  "mask": "each product's own valid mask",
+  "paired_vs_opera": {
+    "S1+AEF(t) vs OPERA": {
+      "scenes": 53,
+      "wins": 51,
+      "losses": 1,
+      "ties": 1,
+      "median_diff": 0.13234099999999993,
+      "mean_diff": 0.16522543396226416,
+      "wilcoxon_p": 1.317841958320611e-09
+    },
+    "S1+AEF(t-1) swap vs OPERA": {
+      "scenes": 53,
+      "wins": 48,
+      "losses": 4,
+      "ties": 1,
+      "median_diff": 0.12265200000000001,
+      "mean_diff": 0.1503666226415094,
+      "wilcoxon_p": 1.5548801104374436e-08
+    },
+    "S1+AEF(t-1) trained vs OPERA": {
+      "scenes": 53,
+      "wins": 48,
+      "losses": 4,
+      "ties": 1,
+      "median_diff": 0.10175000000000001,
+      "mean_diff": 0.15150773584905658,
+      "wilcoxon_p": 1.191556586020942e-08
+    },
+    "S1-only vs OPERA": {
+      "scenes": 53,
+      "wins": 18,
+      "losses": 33,
+      "ties": 2,
+      "median_diff": -0.09227,
+      "mean_diff": -0.14710179245283017,
+      "wilcoxon_p": 0.0005815802095909655
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "threshold": 0.3,
+  "bootstrap_replicates": 10000,
+  "seed": 42,
+  "methods": [
+    {
+      "method": "S1 only",
+      "scenes": 53,
+      "per_scene_mean_water_iou": 0.477729,
+      "ci95_low": 0.388208,
+      "ci95_high": 0.566431
+    },
+    {
+      "method": "OPERA DSWx-S1",
+      "scenes": 53,
+      "per_scene_mean_water_iou": 0.590528,
+      "ci95_low": 0.508065,
+      "ci95_high": 0.669592
+    },
+    {
+      "method": "S1 + AEF (t-1), swap",
+      "scenes": 53,
+      "per_scene_mean_water_iou": 0.731986,
+      "ci95_low": 0.659983,
+      "ci95_high": 0.797948
+    },
+    {
+      "method": "S1 + AEF (t-1), trained",
+      "scenes": 53,
+      "per_scene_mean_water_iou": 0.735671,
+      "ci95_low": 0.664728,
+      "ci95_high": 0.800502
+    },
+    {
+      "method": "S1 + AEF (t)",
+      "scenes": 53,
+      "per_scene_mean_water_iou": 0.746008,
+      "ci95_low": 0.675997,
+      "ci95_high": 0.810301
+    }
+  ]
+}
