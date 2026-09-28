@@ -3,7 +3,6 @@
     "status": "available",
     "hugging_face_repo": "rohitm9/surfaceWaterGlobal",
     "hugging_face_revision": "v2-labelclass",
-    "google_drive_url": "https://drive.google.com/drive/folders/1XglzIDtyI_H7780rkFn3WZRAj0itZjz_?usp=sharing",
     "checkpoint": "models/s1aef_bottleneck_resnet34_best.pth",
     "checkpoint_sha256": "dd0252e2d08c693e3f88949a0a34a846f91dc7ab1668d91ba7ac0ddb688b06ec",
     "normalization": "band_stats.npz",
@@ -46,7 +45,9 @@
     "s1aef_resnet34_mixed_labels": {
       "hugging_face_revision": "v1-mixed-labels",
       "checkpoint_sha256": "3b89c5b768be8d8b5a00260693ca5d2a051ec63969234702903677b9e326138f",
-      "reason": "trained on a mixture of binarized Dynamic World water probability and the DW label class"
+      "reason": "trained on a mixture of binarized Dynamic World water probability and the DW label class",
+      "google_drive_mirror": "https://drive.google.com/drive/folders/1XglzIDtyI_H7780rkFn3WZRAj0itZjz_?usp=sharing",
+      "note": "The Google Drive mirror holds the v1 checkpoint; it has not been updated to v2."
     }
   }
 }
