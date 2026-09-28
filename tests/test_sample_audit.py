@@ -22,7 +22,11 @@ from annotate_dw_label_manifests import summarize as summarize_labels  # noqa: E
 from assess_sample_balance import assess  # noqa: E402
 from sample_water_feature_supplement import select_rows  # noqa: E402
 from materialize_supplement_samples import matching_aef_urls, parse_ids  # noqa: E402
-from train import TripletRecord, split_triplets_from_manifest  # noqa: E402
+try:  # src/train.py imports torch and fastai, which the metadata CI job does not install
+    from train import TripletRecord, split_triplets_from_manifest  # noqa: E402
+    HAVE_TRAINING_STACK = True
+except ModuleNotFoundError:
+    HAVE_TRAINING_STACK = False
 from shapely.geometry import LineString, Polygon, mapping  # noqa: E402
 from shapely.strtree import STRtree  # noqa: E402
 
@@ -190,6 +194,7 @@ class SampleAuditTest(unittest.TestCase):
             ["preferred"],
         )
 
+    @unittest.skipUnless(HAVE_TRAINING_STACK, "torch and fastai are not installed")
     def test_fixed_split_manifest_is_immutable(self) -> None:
         records = [
             TripletRecord("a.tif", Path("a"), None, Path("la")),
