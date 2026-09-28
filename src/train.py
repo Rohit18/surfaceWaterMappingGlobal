@@ -73,20 +73,94 @@ class TripletRecord:
     group_id: str = ""
 
 
+IGNORE_INDEX = 255
+
+
+def valid_target_mask(targ: torch.Tensor) -> torch.Tensor:
+    """True where Dynamic World observed the pixel (label is 0 or 1)."""
+    return targ != IGNORE_INDEX
+
+
+def sanitized_target(targ: torch.Tensor, valid: torch.Tensor) -> torch.Tensor:
+    """Replace ignored labels with 0 so one-hot/indexing stays in range."""
+    return torch.where(valid, targ, torch.zeros_like(targ))
+
+
+def masked_mean(per_pixel: torch.Tensor, valid: torch.Tensor) -> torch.Tensor:
+    weight = valid.float()
+    return (per_pixel * weight).sum() / weight.sum().clamp(min=1.0)
+
+
+def masked_cross_entropy(pred, targ, valid, gamma=None):
+    """Cross-entropy (optionally focal) averaged over observed pixels only.
+
+    With no ignored pixels this equals the fastai CrossEntropyLossFlat /
+    FocalLossFlat it replaces, so runs on older labels are unaffected.
+    """
+    target = sanitized_target(targ.long(), valid)
+    per_pixel = F.cross_entropy(pred.float(), target, reduction="none")
+    if gamma is not None:
+        p_t = torch.exp(-per_pixel)
+        per_pixel = torch.pow(1.0 - p_t, gamma) * per_pixel
+    return masked_mean(per_pixel, valid)
+
+
+def masked_dice_loss(pred, targ, valid, axis=1, smooth=1.0, reduction="sum"):
+    """Dice over observed pixels only.
+
+    fastai's DiceLoss one-hots the target, so a raw 255 raises IndexError, and it
+    has no ignore support. Zeroing logits does not work either: softmax(0, 0) is
+    0.5, so ignored pixels would still contribute. Zero the probabilities and the
+    one-hot target instead. The reduction matches fastai's default, so with no
+    ignored pixels this is numerically identical to the loss it replaces.
+    """
+    probability = F.softmax(pred.float(), dim=axis)
+    n_classes = probability.shape[axis]
+    target = sanitized_target(targ.long(), valid)
+    one_hot = F.one_hot(target, n_classes).permute(0, 3, 1, 2).float()
+    weight = valid.unsqueeze(1).float()
+    probability = probability * weight
+    one_hot = one_hot * weight
+    sum_dims = list(range(2, probability.ndim))
+    intersection = torch.sum(probability * one_hot, dim=sum_dims)
+    union = torch.sum(probability + one_hot, dim=sum_dims)
+    dice_score = (2.0 * intersection + smooth) / (union + smooth)
+    loss = 1.0 - dice_score
+    return loss.sum() if reduction == "sum" else loss.mean()
+
+
+def binarize_label_array(data):
+    """0 = dry, 1 = water, IGNORE_INDEX = not observed.
+
+    Non-finite values are treated as unobserved rather than dry, so a gap never
+    becomes a training negative.
+    """
+    values = np.asarray(data)
+    mask = np.full(values.shape, IGNORE_INDEX, dtype=np.int64)
+    observed = values != IGNORE_INDEX
+    if np.issubdtype(values.dtype, np.floating):
+        observed &= np.isfinite(values)
+    mask[observed] = (values[observed] > 0.5).astype(np.int64)
+    return mask
+
+
 class CombinedLoss(nn.Module):
     """Focal + Dice, carried over from the working baseline."""
 
-    def __init__(self, axis=1, smooth=1.0, alpha=1.0):
+    def __init__(self, axis=1, smooth=1.0, alpha=1.0, gamma=2.0):
         super().__init__()
         self.axis = axis
         self.alpha = alpha
-        self.focal_loss = FocalLossFlat(axis=axis)
-        self.dice_loss = DiceLoss(axis, smooth)
+        self.smooth = smooth
+        self.gamma = gamma
 
     def forward(self, pred, targ):
         pred = pred.float()
         targ = targ.long()
-        return self.focal_loss(pred, targ) + (self.alpha * self.dice_loss(pred, targ))
+        valid = valid_target_mask(targ)
+        focal = masked_cross_entropy(pred, targ, valid, gamma=self.gamma)
+        dice = masked_dice_loss(pred, targ, valid, axis=self.axis, smooth=self.smooth)
+        return focal + (self.alpha * dice)
 
     def decodes(self, x):
         return x.argmax(dim=self.axis)
@@ -140,6 +214,9 @@ class LovaszSoftmaxLoss(nn.Module):
         _, num_classes, _, _ = probas.shape
         probas_flat = probas.permute(0, 2, 3, 1).reshape(-1, num_classes)
         targ_flat = targ.long().reshape(-1)
+        keep = targ_flat != IGNORE_INDEX
+        probas_flat = probas_flat[keep]
+        targ_flat = targ_flat[keep]
         return _lovasz_softmax_flat(probas_flat, targ_flat, classes="present")
 
     def decodes(self, x: torch.Tensor) -> torch.Tensor:
@@ -156,19 +233,67 @@ class CrossEntropyDiceLoss(nn.Module):
         super().__init__()
         self.axis = axis
         self.alpha = alpha
-        self.cross_entropy = CrossEntropyLossFlat(axis=axis)
-        self.dice_loss = DiceLoss(axis, smooth)
+        self.smooth = smooth
 
     def forward(self, pred: torch.Tensor, targ: torch.Tensor) -> torch.Tensor:
         pred = pred.float()
         targ = targ.long()
-        return self.cross_entropy(pred, targ) + (self.alpha * self.dice_loss(pred, targ))
+        valid = valid_target_mask(targ)
+        cross_entropy = masked_cross_entropy(pred, targ, valid)
+        dice = masked_dice_loss(pred, targ, valid, axis=self.axis, smooth=self.smooth)
+        return cross_entropy + (self.alpha * dice)
 
     def decodes(self, x: torch.Tensor) -> torch.Tensor:
         return x.argmax(dim=self.axis)
 
     def activation(self, x: torch.Tensor) -> torch.Tensor:
         return F.softmax(x, dim=self.axis)
+
+
+class MaskedDice(Metric):
+    """fastai Dice restricted to observed pixels.
+
+    The stock fastai Dice/JaccardCoeff multiply and add raw target values, so a
+    label of 255 corrupts both the intersection and the union.
+    """
+
+    def __init__(self, axis: int = 1):
+        self.axis = axis
+        self.reset()
+
+    def reset(self):
+        self.inter = 0.0
+        self.union = 0.0
+
+    def accumulate(self, learn):
+        pred = learn.pred.argmax(dim=self.axis)
+        targ = learn.y
+        valid = targ != IGNORE_INDEX
+        water_pred = (pred == 1) & valid
+        water_targ = (targ == 1) & valid
+        self.inter += (water_pred & water_targ).float().sum().item()
+        self.union += water_pred.float().sum().item() + water_targ.float().sum().item()
+
+    @property
+    def value(self):
+        return 2.0 * self.inter / self.union if self.union > 0 else None
+
+    @property
+    def name(self):
+        return "dice"
+
+
+class MaskedJaccardCoeff(MaskedDice):
+    """fastai JaccardCoeff restricted to observed pixels."""
+
+    @property
+    def value(self):
+        denominator = self.union - self.inter
+        return self.inter / denominator if denominator > 0 else None
+
+    @property
+    def name(self):
+        return "jaccard_coeff"
 
 
 class WaterIoU(Metric):
@@ -185,8 +310,9 @@ class WaterIoU(Metric):
     def accumulate(self, learn):
         pred = learn.pred.argmax(dim=1)
         targ = learn.y
-        water_pred = pred == 1
-        water_targ = targ == 1
+        valid = targ != IGNORE_INDEX
+        water_pred = (pred == 1) & valid
+        water_targ = (targ == 1) & valid
         self.inter += (water_pred & water_targ).float().sum().item()
         self.union += (water_pred | water_targ).float().sum().item()
 
@@ -469,6 +595,12 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Optional sample_id filter for --triplet_manifest. Required when it contains multiple labels.",
     )
+    parser.add_argument(
+        "--fixed_split_manifest",
+        type=Path,
+        default=None,
+        help="CSV with tile_name and immutable train/valid membership for the full population.",
+    )
     parser.add_argument("--artifact_dir", type=Path, default=DEFAULT_ARTIFACT_DIR)
     parser.add_argument(
         "--warm_start_run_dir",
@@ -646,6 +778,8 @@ def parse_args() -> argparse.Namespace:
     args.label_dir = args.label_dir.expanduser().resolve()
     if args.triplet_manifest is not None:
         args.triplet_manifest = args.triplet_manifest.expanduser().resolve()
+    if args.fixed_split_manifest is not None:
+        args.fixed_split_manifest = args.fixed_split_manifest.expanduser().resolve()
     args.artifact_dir = args.artifact_dir.expanduser().resolve()
     if args.warm_start_run_dir is not None:
         args.warm_start_run_dir = args.warm_start_run_dir.expanduser().resolve()
@@ -962,6 +1096,52 @@ def split_triplets(
     return train_records, valid_records
 
 
+def split_triplets_from_manifest(
+    records: Sequence[TripletRecord], manifest_path: Path
+) -> Tuple[List[TripletRecord], List[TripletRecord]]:
+    """Apply immutable train/validation membership by tile name."""
+    if not manifest_path.exists():
+        raise FileNotFoundError("Fixed split manifest does not exist: {}".format(manifest_path))
+    with manifest_path.open(newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    required = {"split", "tile_name"}
+    missing = required.difference(rows[0] if rows else {})
+    if missing:
+        raise ValueError("Fixed split manifest is missing columns: {}".format(", ".join(sorted(missing))))
+    assignments: Dict[str, str] = {}
+    for row in rows:
+        name, split = row["tile_name"].strip(), row["split"].strip().lower()
+        split = "valid" if split == "validation" else split
+        if split not in {"train", "valid"}:
+            raise ValueError("Unknown split {!r} for {}".format(split, name))
+        if name in assignments:
+            raise ValueError("Duplicate tile in fixed split manifest: {}".format(name))
+        assignments[name] = split
+    records_by_name = {record.name: record for record in records}
+    if len(records_by_name) != len(records):
+        raise ValueError("Training records contain duplicate tile names")
+    missing_records = sorted(set(assignments).difference(records_by_name))
+    unassigned_records = sorted(set(records_by_name).difference(assignments))
+    if missing_records or unassigned_records:
+        raise ValueError(
+            "Fixed split population mismatch: missing={}, unassigned={}, examples={}".format(
+                len(missing_records), len(unassigned_records),
+                (missing_records + unassigned_records)[:5],
+            )
+        )
+    train_records = sorted(
+        [records_by_name[name] for name, split in assignments.items() if split == "train"],
+        key=lambda record: record.name,
+    )
+    valid_records = sorted(
+        [records_by_name[name] for name, split in assignments.items() if split == "valid"],
+        key=lambda record: record.name,
+    )
+    if not train_records or not valid_records:
+        raise ValueError("Fixed split manifest must contain train and valid tiles")
+    return train_records, valid_records
+
+
 def limit_train_records(
     records: Sequence[TripletRecord],
     max_records: Optional[int],
@@ -1029,11 +1209,10 @@ def open_geotiff_float(path: Path) -> torch.Tensor:
 
 
 def open_mask_binary(path: Path) -> torch.Tensor:
+    """0 = dry, 1 = water, IGNORE_INDEX = Dynamic World did not observe."""
     with rio.open(str(path)) as src:
         data = src.read(1).astype(np.float32)
-    data = np.nan_to_num(data, nan=0.0, posinf=0.0, neginf=0.0)
-    mask = (data > 0.5).astype(np.int64)
-    return torch.from_numpy(mask)
+    return torch.from_numpy(binarize_label_array(data))
 
 
 def load_triplet_tensors(record: TripletRecord) -> Tuple[torch.Tensor, torch.Tensor]:
@@ -1515,7 +1694,7 @@ def build_learner(args: argparse.Namespace, dls: DataLoaders) -> Learner:
             dls,
             wrapped_model,
             loss_func=loss_func,
-            metrics=[JaccardCoeff(), Dice(), WaterIoU()],
+            metrics=[MaskedJaccardCoeff(), MaskedDice(), WaterIoU()],
             opt_func=ranger,
             splitter=build_segformer_splitter(),
             path=args.artifact_dir,
@@ -1531,7 +1710,7 @@ def build_learner(args: argparse.Namespace, dls: DataLoaders) -> Learner:
             normalize=False,
             n_in=n_model_in,
             n_out=len(args.codes),
-            metrics=[JaccardCoeff(), Dice(), WaterIoU()],
+            metrics=[MaskedJaccardCoeff(), MaskedDice(), WaterIoU()],
             loss_func=loss_func,
             opt_func=ranger,
             act_cls=Mish,
@@ -1842,10 +2021,11 @@ def validate_model(
             pred = logits.argmax(dim=1)
             total_loss += batch_loss
             batch_count += 1
-            tp += int(((pred == 1) & (yb == 1)).sum().item())
-            fp += int(((pred == 1) & (yb != 1)).sum().item())
-            tn += int(((pred != 1) & (yb != 1)).sum().item())
-            fn += int(((pred != 1) & (yb == 1)).sum().item())
+            observed = yb != IGNORE_INDEX
+            tp += int(((pred == 1) & (yb == 1) & observed).sum().item())
+            fp += int(((pred == 1) & (yb != 1) & observed).sum().item())
+            tn += int(((pred != 1) & (yb != 1) & observed).sum().item())
+            fn += int(((pred != 1) & (yb == 1) & observed).sum().item())
     learn.model.train(was_training)
 
     metric_summary = metrics_from_binary_confusion(tp=tp, fp=fp, tn=tn, fn=fn)
@@ -1900,10 +2080,11 @@ def evaluate_threshold_sweep(
             use_tiled = use_tiled or used_tiled_now
             pred = probs.unsqueeze(0) >= threshold_tensor
             targ = (yb == 1).unsqueeze(0)
-            counts["tp"] += (pred & targ).sum(dim=(1, 2, 3)).cpu()
-            counts["fp"] += (pred & ~targ).sum(dim=(1, 2, 3)).cpu()
-            counts["tn"] += ((~pred) & ~targ).sum(dim=(1, 2, 3)).cpu()
-            counts["fn"] += ((~pred) & targ).sum(dim=(1, 2, 3)).cpu()
+            observed = (yb != IGNORE_INDEX).unsqueeze(0)
+            counts["tp"] += (pred & targ & observed).sum(dim=(1, 2, 3)).cpu()
+            counts["fp"] += (pred & ~targ & observed).sum(dim=(1, 2, 3)).cpu()
+            counts["tn"] += ((~pred) & ~targ & observed).sum(dim=(1, 2, 3)).cpu()
+            counts["fn"] += ((~pred) & targ & observed).sum(dim=(1, 2, 3)).cpu()
     learn.model.train(was_training)
 
     records: List[dict] = []
@@ -1964,10 +2145,11 @@ def evaluate_tiles_at_threshold(
             )
             pred = probs >= threshold
             targ = yb == 1
-            tp = int((pred & targ).sum().item())
-            fp = int((pred & ~targ).sum().item())
-            tn = int(((~pred) & ~targ).sum().item())
-            fn = int(((~pred) & targ).sum().item())
+            observed = yb != IGNORE_INDEX
+            tp = int((pred & targ & observed).sum().item())
+            fp = int((pred & ~targ & observed).sum().item())
+            tn = int(((~pred) & ~targ & observed).sum().item())
+            fn = int(((~pred) & targ & observed).sum().item())
             metrics = metrics_from_binary_confusion(tp=tp, fp=fp, tn=tn, fn=fn)
             rows.append(
                 {
@@ -2424,12 +2606,18 @@ def main() -> None:
         )
     split_seed = args.seed if args.split_seed is None else args.split_seed
     train_subset_seed = args.seed if args.train_subset_seed is None else args.train_subset_seed
-    full_train_records, valid_records = split_triplets(
-        triplets,
-        valid_pct=args.valid_pct,
-        seed=split_seed,
-        split_mode=args.split_mode,
-    )
+    if args.fixed_split_manifest is not None:
+        full_train_records, valid_records = split_triplets_from_manifest(
+            triplets, args.fixed_split_manifest
+        )
+        args.split_mode = "fixed_manifest"
+    else:
+        full_train_records, valid_records = split_triplets(
+            triplets,
+            valid_pct=args.valid_pct,
+            seed=split_seed,
+            split_mode=args.split_mode,
+        )
     train_records = limit_train_records(
         full_train_records,
         max_records=args.max_train_records,

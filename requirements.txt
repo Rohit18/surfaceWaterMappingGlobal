@@ -8,3 +8,5 @@ requests>=2.31,<3
 huggingface-hub>=0.34,<2
 earthengine-api>=1.5,<2
 scipy>=1.10,<2
+shapely>=2,<3
+pyshp>=2.3,<3

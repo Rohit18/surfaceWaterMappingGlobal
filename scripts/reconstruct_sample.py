@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import fcntl
 import hashlib
 import io
 import json
@@ -57,10 +58,14 @@ def polygon(bounds: tuple[float, float, float, float]) -> dict:
 def initialize_ee(project: str | None):
     try:
         import ee
+        ee.deprecation.deprecated_assets = {"__skip_optional_catalog__": None}
         ee.Initialize(project=project)
         return ee
     except Exception as exc:
-        raise SystemExit("Earth Engine is not ready. Run `earthengine authenticate`: {}".format(exc)) from exc
+        raise SystemExit(
+            "Earth Engine is not ready. On a remote shell without gcloud, run "
+            "`earthengine authenticate --auth_mode=notebook --force`: {}".format(exc)
+        ) from exc
 
 
 def collection_ids(collection, collection_name: str) -> list[tuple[int, str]]:
@@ -143,11 +148,26 @@ def download_ee(image, output: Path, crs: str, affine: Affine, width: int, heigh
 
 def download_aef_index(cache_dir: Path, timeout: int) -> Path:
     path = cache_dir / "aef_index.csv"
-    if not path.exists():
-        path.parent.mkdir(parents=True, exist_ok=True)
-        response = requests.get(AEF_INDEX_URL, timeout=timeout)
-        response.raise_for_status()
-        path.write_bytes(response.content)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lock_path = path.with_suffix(path.suffix + ".lock")
+    with lock_path.open("w") as lock:
+        fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+        if path.exists() and path.stat().st_size > 100_000_000:
+            return path
+        with requests.get(AEF_INDEX_URL, timeout=timeout, stream=True) as response:
+            response.raise_for_status()
+            with tempfile.NamedTemporaryFile("wb", dir=path.parent, delete=False) as temporary:
+                temporary_path = Path(temporary.name)
+                for chunk in response.iter_content(chunk_size=8 * 1024 * 1024):
+                    if chunk:
+                        temporary.write(chunk)
+        try:
+            if temporary_path.stat().st_size <= 100_000_000:
+                raise RuntimeError("Downloaded AEF index is unexpectedly small")
+            temporary_path.replace(path)
+        finally:
+            if temporary_path.exists():
+                temporary_path.unlink()
     return path
 
 
