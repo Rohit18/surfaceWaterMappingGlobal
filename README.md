@@ -12,8 +12,10 @@ World supplies weak supervision during training only.
 - The complete S1-only and S1+AEF training implementation (`src/train.py`).
 - Tiled, four-flip-TTA inference (`src/infer.py`).
 - Dataset validation and sample-index generation utilities (`scripts/`).
-- The exact paper split and raster-grid metadata for every usable training tile
-  (`metadata/training_samples.csv`). No imagery is redistributed.
+- The split and raster-grid metadata for the 4,678 tiles of the original training sample
+  (`metadata/training_samples.csv`). No imagery is redistributed. The released checkpoints
+  were trained on 5,278 tiles; the metadata for the 600-tile open-water supplement is not
+  yet in this repository (see [Recreate the training dataset](#recreate-the-training-dataset)).
 - Metadata for the 53 independent GSWD evaluation scenes
   (`metadata/evaluation_samples.csv`).
 - The 10 m evaluation protocol of the paper: input export, inference wrappers, scoring,
@@ -73,9 +75,33 @@ python scripts/download_model.py --variant s1_only --output-dir models/s1_only_c
 python scripts/download_model.py --variant fused_previous_year --output-dir models/s1aef_previous_year
 ```
 
-The downloader obtains only the checkpoint and `band_stats.npz`, then verifies their
-SHA-256 hashes. Inference normalization is checkpoint-specific, so the statistics file
-is required even when the weights are already available elsewhere.
+The downloader obtains only the checkpoint and `band_stats.npz` from the Hugging Face tag
+`v2-labelclass` (commit `472736653d5450ae3d47b6198f1411ed507628ad`), then verifies their
+SHA-256 hashes. The hashes in `scripts/download_model.py` are the same as those in
+[`models/model_registry.json`](models/model_registry.json); `tests/test_release_metadata.py`
+checks this. Inference normalization is
+checkpoint-specific, so the statistics file is required even when the weights are already
+available elsewhere. The variants keep their Hugging Face paths, so their `--run-dir` for
+`src/infer.py` is the `variants/...` subdirectory of the output directory:
+
+| `--variant` | Model | Training run (job / task) | Training tiles (train / valid) | `--run-dir` after the commands above | Checkpoint SHA-256 |
+| --- | --- | --- | --- | --- | --- |
+| `fused_current` (default) | S1 + acquisition-year AEF, k=16 | `58321212` / `width_k16_seed42` | 5,278 (4,222 / 1,056) | `models/s1aef_resnet34` | `dd0252e2…688b06ec` |
+| `s1_only` | Matched S1-only control, k=0 | `58321212` / `width_k0_seed42` | 5,278 (4,222 / 1,056) | `models/s1_only_control/variants/s1_only_k0_seed42` | `a5eab4f0…a57b6e68` |
+| `fused_previous_year` | S1 + previous-year AEF, k=16 | `58321217` / `width_k16_seed42` | 5,140 (4,119 / 1,021) | `models/s1aef_previous_year/variants/s1_aef_previous_year_k16_seed42` | `5bd31240…d6fb2717` |
+
+Hashes are abbreviated; the full checkpoint and `band_stats.npz` hashes are in `models/model_registry.json`.
+
+All three are seed 42 of the label-class runs described in [Label-class rerun](#label-class-rerun),
+trained with the configuration in [Model](#model). The same Hugging Face tag also holds, for each
+model, `validation_eval_summary.json` and `validation_threshold_sweep.csv`; for the primary model it
+also holds `MODEL_INFO.json` (inputs, band order, thresholds, hashes), `aef_bottleneck_report.json`,
+and the exact `src/train.py` that produced the weights (SHA-1
+`cd991e7424ae8d74c4737bd339f1ca66e563e506`). Download them with `huggingface_hub` or from the
+Hugging Face web page. The evaluation tables and numbers on the Hugging Face tag come from the
+earlier 3 m-input protocol; the manuscript's numbers are in `results/paper_v11_10m/`.
+The `v1-mixed-labels` checkpoint (training run `train_53123937`,
+`results/released_model_training.json`) is superseded and is not used for any number in the paper.
 
 ## Inference
 
@@ -105,7 +131,8 @@ the manifest-driven wrappers in `scripts/eval_10m/runtime/` as described in
 
 The source imagery is too large and remains subject to the source providers' terms.
 Instead, `metadata/training_samples.csv` records the SWORD node ID, legacy indexed date, AEF year,
-exact raster grid, centroid, and paper split for each tile. This is the most useful
+exact raster grid, centroid, and paper split for each of the 4,678 tiles of the original
+sample (the 600 supplement tiles are described below). This is the most useful
 lightweight release: it preserves *what was sampled* rather than only describing the
 sampling conceptually.
 
@@ -156,9 +183,12 @@ python scripts/validate_dataset.py \
   --expected-index metadata/training_samples.csv
 ```
 
-The released checkpoint's actual input set contains 4,678 triplets. The seeded paper
-split contains 3,742 training and 936 validation tiles. These counts and all validation
-tile names are independently recoverable from the released run artifacts.
+`metadata/training_samples.csv` covers the original 4,678 triplets (3,742 training, 936
+validation), which the superseded `v1-mixed-labels` checkpoint was trained on. The released
+`v2-labelclass` checkpoints were trained on these 4,678 tiles, with their split unchanged, plus
+the 600-tile open-water supplement (480 training, 120 validation), giving 5,278 tiles (4,222 /
+1,056). The supplement's sample metadata and the 5,278-tile split file are not yet published
+here.
 
 AEF v1 annual coverage begins in 2017. The index therefore records `aef_year=2017`
 for the 98 retained S1 samples acquired in 2015-2016; later samples use their
@@ -194,6 +224,11 @@ fine-tuning stage in 20 of 33 runs and the tail stage in 30 of 33 (14-24 of 24 p
 one NVIDIA A100-SXM4-40GB per run (recorded in the job logs), PyTorch 2.6.0+cu124 with cuDNN 9.1.0 and fastai 2.7.19.
 `torch.optim.AdamW` appears only in the batch-size probe of `--mode benchmark`, which the paper runs do not use.
 
+This command trains on the 4,678 tiles of `metadata/training_samples.csv`. The released
+`v2-labelclass` models were instead trained from the 5,278-tile manifest with
+`--triplet_manifest` and `--fixed_split_manifest` (see
+[Retrain with the open-water supplement](#retrain-with-the-open-water-supplement)).
+
 `paper_tile` exactly reproduces the published tile-level split. `grouped` is also
 available for future experiments and keeps rows with the same `grid_id`/`group_id` in
 one partition; it is not the protocol used to train the released model.
@@ -205,7 +240,9 @@ For the matched S1-only control, omit `--aef_dir` and use
 
 `outputs/audit/supplement_samples.csv` defines 600 additional lake, reservoir,
 coastal/estuarine, and seasonal-water grids with exact Sentinel-1 and Dynamic World
-scene IDs. The supplement is not materialized until the export workflow is run.
+scene IDs. It is written by `scripts/sample_water_feature_supplement.py` and is not
+tracked in this repository; the copy used for the released models is not yet published.
+The supplement is not materialized until the export workflow is run.
 
 On NERSC, the complete paper-refresh dependency chain is:
 
@@ -334,7 +371,7 @@ variables they need, are in [`scripts/eval_10m/README.md`](scripts/eval_10m/READ
 | --- | --- |
 | `src/train.py` | Model, losses, augmentation, training schedule, validation, ablations |
 | `src/infer.py` | Geospatial tiled inference and four-flip TTA |
-| `scripts/download_model.py` | Download and checksum the released AEF model bundle |
+| `scripts/download_model.py` | Download and checksum a released checkpoint and its `band_stats.npz` |
 | `scripts/build_sample_index.py` | Regenerate the public sample index from local tiles |
 | `scripts/reconstruct_sample.py` | Rebuild an indexed triplet from public source archives |
 | `scripts/validate_dataset.py` | Validate bands, grids, names, and optional sample index |
@@ -368,5 +405,5 @@ bibliographic fields after publication.
 
 ## License
 
-Original code is released under Apache License 2.0. The checkpoint uses the same
+Original code is released under Apache License 2.0. The checkpoints use the same
 license. Third-party datasets and software retain their original terms.

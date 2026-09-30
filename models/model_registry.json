@@ -9,6 +9,16 @@
     "normalization_sha256": "35c28cac98892702999847e721d7e63721056a754a0c1b016a25b641ba32fbaa",
     "model": "S1+AEF ResNet34 U-Net with a 64-to-16 AEF bottleneck, acquisition-year embedding",
     "training_target": "Dynamic World label band, class 0 (water)",
+    "training_run": {
+      "slurm_job": "58321212",
+      "task": "width_k16_seed42",
+      "seed": 42,
+      "aef_embedding_year": "acquisition-year",
+      "training_tiles": 5278,
+      "train_tiles": 4222,
+      "valid_tiles": 1056,
+      "trainer": "src/train.py at the Hugging Face tag (SHA-1 cd991e7424ae8d74c4737bd339f1ca66e563e506)"
+    },
     "output": "Dynamic World-like binary water probability",
     "paper_threshold": 0.3,
     "validation_selected_threshold": 0.5
@@ -23,6 +33,16 @@
     "normalization_sha256": "5e8aa167a4447887ca49fd1dac257e4df6911136277bf72e81ab9ef74b67c54d",
     "model": "Matched S1-only ResNet34 U-Net control",
     "training_target": "Dynamic World label band, class 0 (water)",
+    "training_run": {
+      "slurm_job": "58321212",
+      "task": "width_k0_seed42",
+      "seed": 42,
+      "aef_embedding_year": null,
+      "training_tiles": 5278,
+      "train_tiles": 4222,
+      "valid_tiles": 1056,
+      "trainer": "src/train.py at the Hugging Face tag (SHA-1 cd991e7424ae8d74c4737bd339f1ca66e563e506)"
+    },
     "output": "Dynamic World-like binary water probability",
     "paper_threshold": 0.3,
     "validation_selected_threshold": 0.5
@@ -37,6 +57,16 @@
     "normalization_sha256": "fd15d29aefbab433ca3e02939822ef611ee4e213c871f26ed825e5ba6c2f7f6f",
     "model": "S1+AEF ResNet34 U-Net trained with previous-year embeddings",
     "training_target": "Dynamic World label band, class 0 (water)",
+    "training_run": {
+      "slurm_job": "58321217",
+      "task": "width_k16_seed42",
+      "seed": 42,
+      "aef_embedding_year": "previous-year",
+      "training_tiles": 5140,
+      "train_tiles": 4119,
+      "valid_tiles": 1021,
+      "trainer": "src/train.py at the Hugging Face tag (SHA-1 cd991e7424ae8d74c4737bd339f1ca66e563e506)"
+    },
     "output": "Dynamic World-like binary water probability",
     "paper_threshold": 0.3,
     "validation_selected_threshold": 0.5
