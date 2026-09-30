@@ -39,6 +39,34 @@ class ReleaseMetadataTest(unittest.TestCase):
         self.assertEqual(len(model["checkpoint_sha256"]), 64)
         self.assertEqual(model["paper_threshold"], 0.3)
 
+    def test_training_centroids(self) -> None:
+        collection = json.loads((ROOT / "metadata" / "training_sample_centroids.geojson").read_text())
+        features = collection["features"]
+        props = [feature["properties"] for feature in features]
+        self.assertEqual(len(props), 5278)
+        self.assertEqual(len({p["tile_name"] for p in props}), 5278)
+        self.assertEqual(Counter(p["split"] for p in props), {"train": 4222, "valid": 1056})
+        self.assertEqual(
+            Counter((p["sample_set"], p["split"]) for p in props),
+            {
+                ("sword_river_node", "train"): 3742,
+                ("sword_river_node", "valid"): 936,
+                ("open_water_supplement", "train"): 480,
+                ("open_water_supplement", "valid"): 120,
+            },
+        )
+        self.assertEqual(sum(p["in_previous_year_model"] for p in props), 5140)
+        with (ROOT / "metadata" / "training_samples.csv").open(newline="") as handle:
+            index = {row["tile_name"]: row for row in csv.DictReader(handle)}
+        for feature in features:
+            row = index.get(feature["properties"]["tile_name"])
+            if row is None:
+                continue
+            self.assertEqual(feature["properties"]["split"], row["split"])
+            lon, lat = feature["geometry"]["coordinates"]
+            self.assertAlmostEqual(lon, float(row["centroid_lon"]), delta=1e-6)
+            self.assertAlmostEqual(lat, float(row["centroid_lat"]), delta=1e-6)
+
     def test_registry_matches_downloader(self) -> None:
         registry = json.loads((ROOT / "models" / "model_registry.json").read_text())
         tree = ast.parse((ROOT / "scripts" / "download_model.py").read_text())

@@ -13,9 +13,11 @@ World supplies weak supervision during training only.
 - Tiled, four-flip-TTA inference (`src/infer.py`).
 - Dataset validation and sample-index generation utilities (`scripts/`).
 - The split and raster-grid metadata for the 4,678 tiles of the original training sample
-  (`metadata/training_samples.csv`). No imagery is redistributed. The released checkpoints
-  were trained on 5,278 tiles; the metadata for the 600-tile open-water supplement is not
-  yet in this repository (see [Recreate the training dataset](#recreate-the-training-dataset)).
+  (`metadata/training_samples.csv`). No imagery is redistributed.
+- The centroid, split, sampling frame, S1 date and AEF year of all 5,278 training tiles of
+  the released checkpoints, including the 600-tile open-water supplement, as GeoJSON points
+  (`metadata/training_sample_centroids.geojson`). The raster grids of the supplement tiles
+  are not published.
 - Metadata for the 53 independent GSWD evaluation scenes
   (`metadata/evaluation_samples.csv`).
 - The 10 m evaluation protocol of the paper: input export, inference wrappers, scoring,
@@ -132,7 +134,7 @@ the manifest-driven wrappers in `scripts/eval_10m/runtime/` as described in
 The source imagery is too large and remains subject to the source providers' terms.
 Instead, `metadata/training_samples.csv` records the SWORD node ID, legacy indexed date, AEF year,
 exact raster grid, centroid, and paper split for each of the 4,678 tiles of the original
-sample (the 600 supplement tiles are described below). This is the most useful
+sample (see [Training sample centroids](#training-sample-centroids) for all 5,278 tiles). This is the most useful
 lightweight release: it preserves *what was sampled* rather than only describing the
 sampling conceptually.
 
@@ -187,8 +189,31 @@ python scripts/validate_dataset.py \
 validation), which the superseded `v1-mixed-labels` checkpoint was trained on. The released
 `v2-labelclass` checkpoints were trained on these 4,678 tiles, with their split unchanged, plus
 the 600-tile open-water supplement (480 training, 120 validation), giving 5,278 tiles (4,222 /
-1,056). The supplement's sample metadata and the 5,278-tile split file are not yet published
-here.
+1,056).
+
+### Training sample centroids
+
+`metadata/training_sample_centroids.geojson` has one point per tile for all 5,278 tiles
+(RFC 7946, WGS 84 longitude/latitude, 6 decimal places). The point is the centre of the
+tile's raster grid; tiles are 10.5-11.5 km on a side (supplement tiles 11 km) at 10 m. Properties:
+
+| Property | Content |
+| --- | --- |
+| `tile_name` | Tile filename, shared by the S1, AEF and label rasters |
+| `sample_set` | `sword_river_node` (4,678 original tiles) or `open_water_supplement` (600) |
+| `sampling_frame` | `SWORD_v16`, `SWOT_PLD_2.02` (200), `JRC_GSW1.4` (150), `GDW_v1.0` (125) or `GSHHG_2.3.7` (125) |
+| `primary_target` | `river_targeted`, `non_river_natural_lake`, `high_water_seasonal_or_ephemeral`, `confirmed_reservoir` or `coastal_or_estuarine` |
+| `source_feature_id` | Feature ID in the sampling frame (SWORD node ID for the original tiles) |
+| `s1_date` | Sentinel-1 date |
+| `s1_date_basis` | `legacy_indexed_date` for the original tiles (the filename date; see the caveat above) or `s1_acquisition_utc` for the supplement, whose scene IDs were recorded |
+| `aef_year` | Year of the AEF embedding used by the acquisition-year models |
+| `split` | `train` or `valid`, identical in all released models |
+| `in_previous_year_model` | Whether the tile is in the 5,140-tile previous-year training set (which uses `aef_year` - 1) |
+
+`scripts/build_training_centroids.py` writes the file from `metadata/training_samples.csv`,
+the supplement table and the two training manifests. The 4,678 original tiles have the same
+split and centroids as `metadata/training_samples.csv`; `tests/test_release_metadata.py`
+checks this and the counts above.
 
 AEF v1 annual coverage begins in 2017. The index therefore records `aef_year=2017`
 for the 98 retained S1 samples acquired in 2015-2016; later samples use their
@@ -241,7 +266,9 @@ For the matched S1-only control, omit `--aef_dir` and use
 `outputs/audit/supplement_samples.csv` defines 600 additional lake, reservoir,
 coastal/estuarine, and seasonal-water grids with exact Sentinel-1 and Dynamic World
 scene IDs. It is written by `scripts/sample_water_feature_supplement.py` and is not
-tracked in this repository; the copy used for the released models is not yet published.
+tracked in this repository. The centroids, split and dates of the 600 tiles used for the
+released models are in `metadata/training_sample_centroids.geojson`; their full table
+(scene IDs, raster grids) is not published.
 The supplement is not materialized until the export workflow is run.
 
 On NERSC, the complete paper-refresh dependency chain is:
@@ -382,6 +409,7 @@ variables they need, are in [`scripts/eval_10m/README.md`](scripts/eval_10m/READ
 | `external_validation/s1s2_water/` | Independent S1S2-Water evaluation against OPERA DSWx-S1 |
 | `jobs/` | Slurm job scripts for the training, inference and evaluation chain |
 | `metadata/` | Training and independent-evaluation sampling metadata |
+| `scripts/build_training_centroids.py` | Write `metadata/training_sample_centroids.geojson` |
 | `results/paper_v11_10m/` | Machine-readable values of manuscript v11 |
 | `results/` | Earlier (superseded) paper and training-run summaries; see `results/README.md` |
 | `models/model_registry.json` | Model locations, filenames, and checksums |
