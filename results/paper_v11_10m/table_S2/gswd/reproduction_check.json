@@ -1,0 +1,105 @@
+{
+  "expected_vs_computed": {
+    "S1-only": {
+      "computed": {
+        "pooled_water_iou": 0.7677316076543266,
+        "precision": 0.8834085363688576,
+        "recall": 0.8542923785576887,
+        "per_scene_mean": 0.6173743568613779,
+        "ci": [
+          0.5273872821836092,
+          0.701824390783475
+        ]
+      },
+      "expected": {
+        "pooled_water_iou": 0.768,
+        "precision": 0.883,
+        "recall": 0.854,
+        "per_scene_mean": 0.617,
+        "ci": [
+          0.527,
+          0.702
+        ]
+      },
+      "match_3dp": true
+    },
+    "S1+AEF(t)": {
+      "computed": {
+        "pooled_water_iou": 0.851253611826087,
+        "precision": 0.8908590766775372,
+        "recall": 0.9503661354955929,
+        "per_scene_mean": 0.741053961912172,
+        "ci": [
+          0.6693029010334622,
+          0.8058355278761477
+        ]
+      },
+      "expected": {
+        "pooled_water_iou": 0.851,
+        "precision": 0.891,
+        "recall": 0.95,
+        "per_scene_mean": 0.741,
+        "ci": [
+          0.669,
+          0.806
+        ]
+      },
+      "match_3dp": true
+    },
+    "OPERA": {
+      "computed": {
+        "pooled_water_iou": 0.746826114835205,
+        "precision": 0.8588369880525507,
+        "recall": 0.851328675956027,
+        "per_scene_mean": 0.5912097486833301,
+        "ci": [
+          0.5084503163891334,
+          0.6702743789443925
+        ]
+      },
+      "expected": {
+        "pooled_water_iou": 0.747,
+        "precision": 0.859,
+        "recall": 0.851,
+        "per_scene_mean": 0.591,
+        "ci": [
+          0.508,
+          0.67
+        ]
+      },
+      "match_3dp": true
+    }
+  },
+  "wins": {
+    "S1+AEF(t) vs OPERA": {
+      "wins": 48,
+      "losses": 4,
+      "ties": 1,
+      "wilcoxon_p": 7.447552938613255e-10,
+      "expected_wins": 48,
+      "match": true
+    },
+    "S1+AEF(t) vs S1-only": {
+      "wins": 44,
+      "losses": 9,
+      "ties": 0,
+      "wilcoxon_p": 8.368841806613401e-07,
+      "expected_wins": 44,
+      "match": true
+    },
+    "S1-only vs OPERA": {
+      "wins": 36,
+      "losses": 16,
+      "ties": 1,
+      "wilcoxon_p": 0.015034507470400228,
+      "expected_wins": 36,
+      "match": true,
+      "expected_p": 0.015
+    }
+  },
+  "exact_counts_vs_29sep": {
+    "rows_compared": 742,
+    "rows_identical": 742
+  },
+  "passed": true
+}

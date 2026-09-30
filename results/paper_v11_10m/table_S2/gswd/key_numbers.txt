@@ -1,0 +1,20 @@
+thr 030 g3_retention {'g3_3m_common_over_paper_common': 0.9241, 'g3_3m_water_over_paper_common_water': 0.8548, 'g3_30m_common_over_g1_average_common': 0.9314, 'g3_30m_water_over_g1_average_common_water': 0.8577, 'pure_blocks_over_all_blocks': 0.9333} trim 433328 paper_rule_common 51897719
+paper                    n=53 px=51897488 frac=0.9338 IoU 0.7677/0.8513/0.7468 A-O +0.1044 ps +0.1498 | S-O +0.0209 ps +0.0262 | seedmean A-O +0.1036±0.0008 S-O +0.0168±0.0051 | empty [] 0
+g1_average               n=53 px=514989 frac=0.9339 IoU 0.7671/0.8548/0.7491 A-O +0.1057 ps +0.1465 | S-O +0.0180 ps +0.0225 | seedmean A-O +0.1048±0.0008 S-O +0.0136±0.0050 | empty [] 0
+g1_bilinear              n=53 px=514901 frac=0.9338 IoU 0.7656/0.8518/0.7490 A-O +0.1028 ps +0.1417 | S-O +0.0166 ps +0.0202 | seedmean A-O +0.1019±0.0008 S-O +0.0120±0.0051 | empty [] 0
+g2                       n=53 px=51499144 frac=0.9267 IoU 0.7611/0.8414/0.7467 A-O +0.0946 ps +0.1328 | S-O +0.0144 ps +0.0166 | seedmean A-O +0.0937±0.0008 S-O +0.0102±0.0048 | empty [] 0
+g3_3m                    n=53 px=47959706 frac=0.8630 IoU 0.8357/0.9145/0.8204 A-O +0.0941 ps +0.1654 | S-O +0.0153 ps +0.0258 | seedmean A-O +0.0930±0.0009 S-O +0.0088±0.0064 | empty [] 0
+g3_30m                   n=53 px=479658 frac=0.8699 IoU 0.8371/0.9160/0.8246 A-O +0.0914 ps +0.1703 | S-O +0.0125 ps +0.0223 | seedmean A-O +0.0903±0.0010 S-O +0.0058±0.0064 | empty [] 0
+g4                       n=46 px=449425 frac=0.9488 IoU 0.7642/0.8538/0.7505 A-O +0.1033 ps +0.1531 | S-O +0.0137 ps +0.0222 | seedmean A-O +0.1026±0.0006 S-O +0.0092±0.0056 | empty [] 0
+g1_average_on_g4_scenes  n=46 px=453988 frac=0.9486 IoU 0.7638/0.8544/0.7489 A-O +0.1055 ps +0.1562 | S-O +0.0149 ps +0.0239 | seedmean A-O +0.1045±0.0009 S-O +0.0105±0.0054 | empty [] 0
+paper_on_g4_scenes       n=46 px=45758316 frac=0.9487 IoU 0.7645/0.8506/0.7469 A-O +0.1037 ps +0.1589 | S-O +0.0176 ps +0.0274 | seedmean A-O +0.1028±0.0008 S-O +0.0136±0.0056 | empty [] 0
+thr 050 g3_retention {'g3_3m_common_over_paper_common': 0.9241, 'g3_3m_water_over_paper_common_water': 0.8548, 'g3_30m_common_over_g1_average_common': 0.9314, 'g3_30m_water_over_g1_average_common_water': 0.8577, 'pure_blocks_over_all_blocks': 0.9333} trim 433328 paper_rule_common 51897719
+paper                    n=53 px=51897488 frac=0.9338 IoU 0.7683/0.8564/0.7468 A-O +0.1095 ps +0.1543 | S-O +0.0214 ps +0.0192 | seedmean A-O +0.1089±0.0005 S-O +0.0206±0.0064 | empty [] 0
+g1_average               n=53 px=514989 frac=0.9339 IoU 0.7696/0.8631/0.7491 A-O +0.1140 ps +0.1567 | S-O +0.0205 ps +0.0186 | seedmean A-O +0.1138±0.0003 S-O +0.0199±0.0069 | empty [] 0
+g1_bilinear              n=53 px=514901 frac=0.9338 IoU 0.7692/0.8626/0.7490 A-O +0.1136 ps +0.1552 | S-O +0.0202 ps +0.0175 | seedmean A-O +0.1133±0.0002 S-O +0.0195±0.0069 | empty [] 0
+g2                       n=53 px=51499144 frac=0.9267 IoU 0.7629/0.8484/0.7467 A-O +0.1017 ps +0.1389 | S-O +0.0162 ps +0.0103 | seedmean A-O +0.1013±0.0004 S-O +0.0157±0.0066 | empty [] 0
+g3_3m                    n=53 px=47959706 frac=0.8630 IoU 0.8379/0.9196/0.8204 A-O +0.0993 ps +0.1713 | S-O +0.0176 ps +0.0206 | seedmean A-O +0.0985±0.0007 S-O +0.0149±0.0066 | empty [] 0
+g3_30m                   n=53 px=479658 frac=0.8699 IoU 0.8412/0.9234/0.8246 A-O +0.0988 ps +0.1720 | S-O +0.0166 ps +0.0201 | seedmean A-O +0.0980±0.0007 S-O +0.0141±0.0066 | empty [] 0
+g4                       n=46 px=449425 frac=0.9488 IoU 0.7664/0.8623/0.7505 A-O +0.1118 ps +0.1656 | S-O +0.0158 ps +0.0159 | seedmean A-O +0.1113±0.0007 S-O +0.0152±0.0074 | empty [] 0
+g1_average_on_g4_scenes  n=46 px=453988 frac=0.9486 IoU 0.7655/0.8622/0.7489 A-O +0.1133 ps +0.1679 | S-O +0.0166 ps +0.0171 | seedmean A-O +0.1130±0.0004 S-O +0.0161±0.0075 | empty [] 0
+paper_on_g4_scenes       n=46 px=45758316 frac=0.9487 IoU 0.7645/0.8555/0.7469 A-O +0.1086 ps +0.1643 | S-O +0.0176 ps +0.0179 | seedmean A-O +0.1080±0.0006 S-O +0.0170±0.0069 | empty [] 0

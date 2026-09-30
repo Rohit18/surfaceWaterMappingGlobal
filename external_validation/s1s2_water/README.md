@@ -45,13 +45,25 @@ inspected.
 
 ## Results
 
-30 m grid, common valid pixels of all methods, pooled water IoU (mean over three training seeds):
+30 m grid, common valid pixels of all methods, pooled water IoU, mean +/- SD over three training seeds. The paper
+reports threshold 0.30 (its operating point on the GSWD scenes) as the primary value and 0.50 as the secondary
+value:
 
-| Method | Threshold 0.50 | Threshold 0.30 |
+| Method | Threshold 0.30 | Threshold 0.50 |
 | --- | ---: | ---: |
-| S1 + AEF | 0.953 | 0.941 |
+| S1 + AEF | 0.941 +/- 0.001 | 0.953 +/- 0.001 |
+| S1-only | 0.794 +/- 0.026 | 0.822 +/- 0.024 |
 | OPERA DSWx-S1 (corrected) | 0.869 | 0.869 |
-| S1-only | 0.822 | 0.794 |
 
-Per-scene values are in `results/s1s2water_supplementary_table.csv`; all methods and both thresholds are in
+Source: `results/s1s2water_summary.json` (`models.s1_aef_t030`, `models.s1_only_t030` for 0.30; `models.s1_aef`,
+`models.s1_only` for 0.50; `opera`; `sd` is the sample SD). Per-scene values are in
+`results/s1s2water_supplementary_table.csv`; all methods and both thresholds are in
 `results/s1s2water_per_scene_all_methods.csv`.
+
+The resolution-matched rescoring (Supplementary Table S2; scripts in `scripts/eval_10m/s1s2_rescore.py` and
+`s1s2_summary.py`) is in `results/paper_v11_10m/table_S2/s1s2water/`. It also records two details of the OPERA
+products used here: the DSWx-S1 outputs are on MGRS tiles offset by 0, 10 or 20 m from the frozen grid (only the
+RTC-S1 products are on the frozen grid), and overlapping DSWx-S1 tiles are combined in sorted file order, each
+covered pixel overwriting the previous value (`evaluation/evaluate_intercomparison.py`, `opera_prediction`), not by
+union. The two rules give the same valid pixels and differ in water class at 21,981 of 185 M pixels (pooled OPERA
+IoU 0.8690 by overwrite, 0.8687 by union).

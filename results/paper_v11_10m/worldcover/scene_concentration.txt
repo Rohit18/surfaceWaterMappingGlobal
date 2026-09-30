@@ -1,0 +1,8 @@
+reproduction_3m aef_fixes_s1_fn total 4,768,895; top-5 share 0.490: SID46 535,116, SID15 506,776, SID06 480,868, SID53 433,599, SID55 382,450
+reproduction_3m aef_fixes_s1_fp total 404,341; top-5 share 0.615: SID92 93,949, SID26 61,312, SID27 38,233, SID98 27,528, SID79 27,481
+reproduction_3m aef_adds_fp total 1,345,461; top-5 share 0.646: SID55 340,725, SID28 223,813, SID15 107,399, SID46 99,660, SID53 97,418
+reproduction_3m net changed-error pixels (fixed - added): 3756288
+inference_10m aef_fixes_s1_fn total 1,381,513; top-5 share 0.572: SID46 335,572, SID33 139,325, SID23 118,318, SID55 100,420, SID97 96,088
+inference_10m aef_fixes_s1_fp total 843,583; top-5 share 0.663: SID93 280,967, SID92 138,791, SID99 69,761, SID63 41,508, SID27 28,115
+inference_10m aef_adds_fp total 814,357; top-5 share 0.667: SID55 208,882, SID28 144,146, SID46 72,937, SID53 61,578, SID15 55,352
+inference_10m net changed-error pixels (fixed - added): 1278279

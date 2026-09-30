@@ -1,0 +1,54 @@
+{
+  "width_k0_seed42_current_tta": {
+    "native_10m_max_abs_diff": 0.0,
+    "native_10m_identical_fraction": 1.0,
+    "thr0.30": {
+      "40GB": {
+        "pooled_iou": 0.7677316076543266,
+        "per_scene_mean": 0.6173743568613779
+      },
+      "80GB": {
+        "pooled_iou": 0.7677316076543266,
+        "per_scene_mean": 0.6173743568613779
+      },
+      "max_scene_abs_diff": 0.0
+    },
+    "thr0.50": {
+      "40GB": {
+        "pooled_iou": 0.7682736306285326,
+        "per_scene_mean": 0.6104291711255341
+      },
+      "80GB": {
+        "pooled_iou": 0.7682736306285326,
+        "per_scene_mean": 0.6104291711255341
+      },
+      "max_scene_abs_diff": 0.0
+    }
+  },
+  "width_k16_seed42_current_tta": {
+    "native_10m_max_abs_diff": 0.0,
+    "native_10m_identical_fraction": 1.0,
+    "thr0.30": {
+      "40GB": {
+        "pooled_iou": 0.851253611826087,
+        "per_scene_mean": 0.7410539619121721
+      },
+      "80GB": {
+        "pooled_iou": 0.851253611826087,
+        "per_scene_mean": 0.7410539619121721
+      },
+      "max_scene_abs_diff": 0.0
+    },
+    "thr0.50": {
+      "40GB": {
+        "pooled_iou": 0.8563683198956168,
+        "per_scene_mean": 0.745489344637302
+      },
+      "80GB": {
+        "pooled_iou": 0.8563683198956168,
+        "per_scene_mean": 0.745489344637302
+      },
+      "max_scene_abs_diff": 0.0
+    }
+  }
+}

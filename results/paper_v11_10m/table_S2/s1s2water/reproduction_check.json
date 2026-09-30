@@ -1,0 +1,83 @@
+{
+  "supplement_csv": "/pscratch/sd/r/rohit9/manuscript_update_20260922/4_results_s1s2water/supplement/s1s2water_per_scene_all_methods.csv",
+  "rows_compared": 195,
+  "rows_identical": 195,
+  "table_iii": {
+    "pooled_iou S1-only": {
+      "computed": [
+        0.7939253109357652,
+        0.026296496243353076
+      ],
+      "expected": [
+        0.794,
+        0.026
+      ],
+      "match": true
+    },
+    "pooled_iou S1+AEF": {
+      "computed": [
+        0.9414913517810625,
+        0.0013371049465831881
+      ],
+      "expected": [
+        0.941,
+        0.001
+      ],
+      "match": true
+    },
+    "pooled_iou OPERA": {
+      "computed": [
+        0.8690019584074019
+      ],
+      "expected": [
+        0.869
+      ],
+      "match": true
+    },
+    "per_scene_mean S1-only": {
+      "computed": [
+        0.7232026801211543,
+        0.019357896230559727
+      ],
+      "expected": [
+        0.723,
+        0.019
+      ],
+      "match": true
+    },
+    "per_scene_mean S1+AEF": {
+      "computed": [
+        0.862445542677976,
+        0.002152948585827964
+      ],
+      "expected": [
+        0.862,
+        0.002
+      ],
+      "match": true
+    },
+    "per_scene_mean OPERA": {
+      "computed": [
+        0.7634069841438639
+      ],
+      "expected": [
+        0.763
+      ],
+      "match": true
+    },
+    "S1+AEF > OPERA wins per seed": {
+      "computed": [
+        12,
+        12,
+        12
+      ],
+      "expected": [
+        12,
+        12,
+        12
+      ],
+      "match": true
+    }
+  },
+  "passed": true
+}

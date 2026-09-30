@@ -1,0 +1,345 @@
+{
+  "dir": "worldcover_10m/inference_10m",
+  "thresholds": {
+    "s1": 0.3,
+    "s1aef": 0.3
+  },
+  "sample_count": 53,
+  "chip_groups": {
+    "neutral": 26,
+    "aef_helps": 24,
+    "aef_hurts": 3
+  },
+  "chip_iou": {
+    "mean_s1_water_iou": 0.6112208552771825,
+    "mean_s1aef_water_iou": 0.739043837518001,
+    "mean_delta_iou": 0.1278229822408183,
+    "median_delta_iou": 0.03506979807983912
+  },
+  "changed_error_totals": {
+    "aef_fixes_s1_fn": 1381513,
+    "aef_fixes_s1_fp": 843583,
+    "aef_adds_fn": 132460,
+    "aef_adds_fp": 814357
+  },
+  "categories": {
+    "aef_fixes_s1_fn": {
+      "name": "corrected false negatives",
+      "total_pixels": 1381513,
+      "classes": [
+        {
+          "class": "Permanent water",
+          "code": 80,
+          "pixels": 1067274,
+          "share_pct": 77.25399616217871,
+          "scenes": 49
+        },
+        {
+          "class": "Mangroves",
+          "code": 95,
+          "pixels": 182789,
+          "share_pct": 13.23107346800211,
+          "scenes": 5
+        },
+        {
+          "class": "Bare / sparse vegetation",
+          "code": 60,
+          "pixels": 52715,
+          "share_pct": 3.815744042944221,
+          "scenes": 31
+        },
+        {
+          "class": "Tree cover",
+          "code": 10,
+          "pixels": 30618,
+          "share_pct": 2.2162657897536975,
+          "scenes": 34
+        },
+        {
+          "class": "Grassland",
+          "code": 30,
+          "pixels": 17579,
+          "share_pct": 1.2724454999699604,
+          "scenes": 33
+        },
+        {
+          "class": "Cropland",
+          "code": 40,
+          "pixels": 14050,
+          "share_pct": 1.0170009257965724,
+          "scenes": 12
+        },
+        {
+          "class": "Herbaceous wetland",
+          "code": 90,
+          "pixels": 8056,
+          "share_pct": 0.5831287870617214,
+          "scenes": 13
+        },
+        {
+          "class": "Shrubland",
+          "code": 20,
+          "pixels": 5797,
+          "share_pct": 0.4196124104514398,
+          "scenes": 9
+        },
+        {
+          "class": "Built-up",
+          "code": 50,
+          "pixels": 2106,
+          "share_pct": 0.15244156225819083,
+          "scenes": 11
+        },
+        {
+          "class": "Snow and ice",
+          "code": 70,
+          "pixels": 527,
+          "share_pct": 0.03814658276831271,
+          "scenes": 1
+        },
+        {
+          "class": "Moss and lichen",
+          "code": 100,
+          "pixels": 2,
+          "share_pct": 0.0001447688150600103,
+          "scenes": 2
+        }
+      ]
+    },
+    "aef_fixes_s1_fp": {
+      "name": "corrected false positives",
+      "total_pixels": 843583,
+      "classes": [
+        {
+          "class": "Bare / sparse vegetation",
+          "code": 60,
+          "pixels": 500358,
+          "share_pct": 59.31342855415531,
+          "scenes": 27
+        },
+        {
+          "class": "Tree cover",
+          "code": 10,
+          "pixels": 169470,
+          "share_pct": 20.08930952852298,
+          "scenes": 36
+        },
+        {
+          "class": "Grassland",
+          "code": 30,
+          "pixels": 83665,
+          "share_pct": 9.91781484453812,
+          "scenes": 42
+        },
+        {
+          "class": "Permanent water",
+          "code": 80,
+          "pixels": 34314,
+          "share_pct": 4.067649537745545,
+          "scenes": 36
+        },
+        {
+          "class": "Shrubland",
+          "code": 20,
+          "pixels": 23887,
+          "share_pct": 2.8316123013384575,
+          "scenes": 15
+        },
+        {
+          "class": "Cropland",
+          "code": 40,
+          "pixels": 10154,
+          "share_pct": 1.2036752755804705,
+          "scenes": 16
+        },
+        {
+          "class": "Herbaceous wetland",
+          "code": 90,
+          "pixels": 9949,
+          "share_pct": 1.1793741694652453,
+          "scenes": 13
+        },
+        {
+          "class": "Built-up",
+          "code": 50,
+          "pixels": 8204,
+          "share_pct": 0.9725184125332066,
+          "scenes": 20
+        },
+        {
+          "class": "Moss and lichen",
+          "code": 100,
+          "pixels": 2358,
+          "share_pct": 0.27952199131561445,
+          "scenes": 4
+        },
+        {
+          "class": "Mangroves",
+          "code": 95,
+          "pixels": 1224,
+          "share_pct": 0.1450953848050518,
+          "scenes": 4
+        }
+      ]
+    },
+    "aef_adds_fn": {
+      "name": "added false negatives",
+      "total_pixels": 132460,
+      "classes": [
+        {
+          "class": "Bare / sparse vegetation",
+          "code": 60,
+          "pixels": 64357,
+          "share_pct": 48.58598822285973,
+          "scenes": 13
+        },
+        {
+          "class": "Grassland",
+          "code": 30,
+          "pixels": 29205,
+          "share_pct": 22.048165483919675,
+          "scenes": 26
+        },
+        {
+          "class": "Permanent water",
+          "code": 80,
+          "pixels": 22877,
+          "share_pct": 17.27087422618149,
+          "scenes": 30
+        },
+        {
+          "class": "Tree cover",
+          "code": 10,
+          "pixels": 6902,
+          "share_pct": 5.210629624037446,
+          "scenes": 24
+        },
+        {
+          "class": "Shrubland",
+          "code": 20,
+          "pixels": 5231,
+          "share_pct": 3.949116714479843,
+          "scenes": 6
+        },
+        {
+          "class": "Herbaceous wetland",
+          "code": 90,
+          "pixels": 3271,
+          "share_pct": 2.4694247319945646,
+          "scenes": 12
+        },
+        {
+          "class": "Moss and lichen",
+          "code": 100,
+          "pixels": 278,
+          "share_pct": 0.20987467914842217,
+          "scenes": 4
+        },
+        {
+          "class": "Built-up",
+          "code": 50,
+          "pixels": 210,
+          "share_pct": 0.15853842669485127,
+          "scenes": 8
+        },
+        {
+          "class": "Cropland",
+          "code": 40,
+          "pixels": 106,
+          "share_pct": 0.08002415823644873,
+          "scenes": 5
+        },
+        {
+          "class": "Mangroves",
+          "code": 95,
+          "pixels": 23,
+          "share_pct": 0.01736373244753133,
+          "scenes": 2
+        }
+      ]
+    },
+    "aef_adds_fp": {
+      "name": "added false positives",
+      "total_pixels": 814357,
+      "classes": [
+        {
+          "class": "Permanent water",
+          "code": 80,
+          "pixels": 502584,
+          "share_pct": 61.71543929750711,
+          "scenes": 47
+        },
+        {
+          "class": "Mangroves",
+          "code": 95,
+          "pixels": 109635,
+          "share_pct": 13.462768785679991,
+          "scenes": 5
+        },
+        {
+          "class": "Tree cover",
+          "code": 10,
+          "pixels": 63590,
+          "share_pct": 7.808614649349118,
+          "scenes": 38
+        },
+        {
+          "class": "Bare / sparse vegetation",
+          "code": 60,
+          "pixels": 59737,
+          "share_pct": 7.335480630730748,
+          "scenes": 34
+        },
+        {
+          "class": "Grassland",
+          "code": 30,
+          "pixels": 22404,
+          "share_pct": 2.751127576726178,
+          "scenes": 40
+        },
+        {
+          "class": "Cropland",
+          "code": 40,
+          "pixels": 18730,
+          "share_pct": 2.2999740899875607,
+          "scenes": 19
+        },
+        {
+          "class": "Shrubland",
+          "code": 20,
+          "pixels": 16662,
+          "share_pct": 2.0460314088292972,
+          "scenes": 14
+        },
+        {
+          "class": "Herbaceous wetland",
+          "code": 90,
+          "pixels": 15888,
+          "share_pct": 1.9509870977961754,
+          "scenes": 17
+        },
+        {
+          "class": "Built-up",
+          "code": 50,
+          "pixels": 3601,
+          "share_pct": 0.4421893592122374,
+          "scenes": 16
+        },
+        {
+          "class": "Snow and ice",
+          "code": 70,
+          "pixels": 1468,
+          "share_pct": 0.18026492066747138,
+          "scenes": 1
+        },
+        {
+          "class": "Moss and lichen",
+          "code": 100,
+          "pixels": 58,
+          "share_pct": 0.0071221835141099055,
+          "scenes": 3
+        }
+      ]
+    }
+  }
+}
