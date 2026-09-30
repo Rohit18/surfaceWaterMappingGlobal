@@ -16,7 +16,11 @@ World supplies weak supervision during training only.
   (`metadata/training_samples.csv`). No imagery is redistributed.
 - Metadata for the 53 independent GSWD evaluation scenes
   (`metadata/evaluation_samples.csv`).
-- Paper-level and training-run results (`results/`).
+- The 10 m evaluation protocol of the paper: input export, inference wrappers, scoring,
+  ablations, figures and the resolution-matched OPERA comparison (`scripts/eval_10m/`,
+  `jobs/eval_10m/`).
+- Paper-level and training-run results (`results/`). The manuscript's numbers are in
+  `results/paper_v11_10m/`.
 - Three trained checkpoints with their normalization statistics, validation summaries and
   thresholds on [Hugging Face](https://huggingface.co/rohitm9/surfaceWaterGlobal), tag
   `v2-labelclass`: the primary S1+AEF model, the matched S1-only control, and the
@@ -88,9 +92,14 @@ python src/infer.py \
   --tile 512 --overlap 64 --batch-size 4
 ```
 
-Outputs are float32 water-probability GeoTIFFs. Apply threshold 0.30 to reproduce the
-paper's primary evaluation protocol. Validate the threshold for operational use in a
-new region.
+Outputs are float32 water-probability GeoTIFFs on the grid of the S1 input. The model was
+trained on 10 m inputs; provide S1 and AEF on a 10 m grid. The paper reports water at
+probability >= 0.30. Validate the threshold for operational use in a new region.
+
+`src/infer.py` shares its tiling, TTA and normalisation code with the inference wrappers
+used for the paper, but it was not used for any paper number. To reproduce the paper, use
+the manifest-driven wrappers in `scripts/eval_10m/runtime/` as described in
+[Reproducing the paper](#reproducing-the-paper).
 
 ## Recreate the training dataset
 
@@ -219,9 +228,10 @@ published validation population.
 
 The runs behind `results/paper_retrain_openwater_v1/` resolved about 65% of their tiles to a
 binarized Dynamic World water probability rather than the `label` band. All 33 runs were repeated
-with the `label` class only, keeping the same chips, split, seeds and hyperparameters, and those
-runs produce the released checkpoints and every number in `results/paper_labelclass_v1/58321212/`.
-The analyses accept either run set:
+with the `label` class only, keeping the same chips, split, seeds and hyperparameters. Those runs
+produced the released checkpoints. `results/paper_labelclass_v1/58321212/` holds their evaluation under
+the earlier 3 m-input protocol, which is superseded by the 10 m protocol of manuscript v11 (see
+[Results](#results)). The 3 m-input analyses accept either run set:
 
 ```bash
 python scripts/complete_paper_analyses.py sweep --run-set labelclass_v1 --out results/.../threshold_sweep.json
@@ -231,29 +241,92 @@ python scripts/make_figure3_iou_distribution.py --run-set labelclass_v1 --out-di
 
 ## Results
 
-Independent 53-scene PlanetScope reference set, threshold 0.30
-(`results/paper_labelclass_v1/58321212/paper_metrics.csv`):
+All values are from manuscript v11 (29 September 2026). Every number, and the file and field it comes
+from, is listed in [`results/paper_v11_10m/README.md`](results/paper_v11_10m/README.md).
 
-| Method | Precision | Recall | Pooled water IoU | Per-scene mean [95% CI] |
+Independent 53-scene PlanetScope (GSWD) reference set. Inference at 10 m, probabilities resampled
+bilinearly to the 3 m reference grid, threshold 0.30, seed 42, common valid pixels (valid in the
+reference, every model run and OPERA; 51,897,488 pixels, 93.4% of the reference pixels):
+
+| Method | Precision | Recall | Dice | Pooled IoU | Per-scene mean [95% CI] |
+| --- | ---: | ---: | ---: | ---: | --- |
+| S1 only | 0.883 | 0.854 | 0.869 | 0.768 | 0.617 [0.527, 0.702] |
+| S1 + AEF (t) | 0.891 | 0.950 | 0.920 | 0.851 | 0.741 [0.669, 0.806] |
+| OPERA DSWx-S1 | 0.859 | 0.851 | 0.855 | 0.747 | 0.591 [0.508, 0.670] |
+
+Seeds 42-44, pooled IoU (mean +/- sample SD): 0.764 +/- 0.005 (S1 only), 0.850 +/- 0.001 (S1 + AEF).
+Per-scene wins out of 53 scenes: S1 + AEF > S1 only in 44, S1 + AEF > OPERA in 48, S1 only > OPERA
+in 36 (Wilcoxon signed-rank p = 8.4e-7, 7.4e-10 and 0.015).
+
+**Embedding year.** With the previous year's embedding, AEF(t-1), at inference the pooled IoU is 0.846
+(per-scene 0.732 [0.662, 0.797]). A model trained and applied with AEF(t-1) reaches 0.848
+(0.734 [0.663, 0.800]).
+
+**Ablations** (Table II; per-scene IoU, threshold 0.30, common valid pixels, mean +/- sample SD over
+three seeds; `results/paper_v11_10m/table_II/`):
+
+| AEF width k | 0 (S1 only) | 1 | 2 | 3 | 4 | 8 | 16 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Per-scene IoU | 0.624 +/- 0.007 | 0.730 +/- 0.006 | 0.737 +/- 0.002 | 0.741 +/- 0.004 | 0.741 +/- 0.002 | 0.743 +/- 0.001 | 0.741 +/- 0.001 |
+
+| Training tiles (k = 16) | 1,000 | 2,000 | 3,000 | 4,222 |
+| --- | ---: | ---: | ---: | ---: |
+| Per-scene IoU | 0.666 +/- 0.011 | 0.740 +/- 0.001 | 0.742 +/- 0.002 | 0.741 +/- 0.001 |
+
+The `*_std` fields and `.tex` tables in that folder use the population SD, which is lower in the third
+decimal for k = 0, k = 1 and 1,000 tiles; see its README.
+
+Independent S1S2-Water benchmark, 15 test scenes, 30 m grid, pooled water IoU, mean +/- SD over three
+seeds (`external_validation/s1s2_water/`):
+
+| Method | Threshold 0.30 | Threshold 0.50 |
+| --- | ---: | ---: |
+| S1 + AEF | 0.941 +/- 0.001 | 0.953 +/- 0.001 |
+| S1 only | 0.794 +/- 0.026 | 0.822 +/- 0.024 |
+| OPERA DSWx-S1 (v1.2 with the upstream boundary fix) | 0.869 | 0.869 |
+
+**Resolution-matched comparison with OPERA** (Supplementary Table S2). OPERA DSWx-S1 is a 30 m product.
+On the 53 GSWD scenes the S1 + AEF - OPERA difference in pooled IoU is 0.104 under the paper's scoring,
+0.106 with both scored at 30 m (model probabilities area-averaged from 10 m), 0.095 when the model is
+given OPERA's treatment (a binary 30 m map scored at 3 m), 0.091 on 30 m cells that are entirely water
+or entirely land, and 0.103 on OPERA's native grid (46 scenes). Values and the per-scene OPERA grid
+offsets are in `results/paper_v11_10m/table_S2/`.
+
+### Superseded (3 m-input protocol)
+
+Earlier versions of the manuscript ran the networks on the 3 m reference grid (inputs resampled to 3 m)
+and scored each method on its own valid pixels. Those values are kept as provenance for earlier versions
+and are not the paper's results:
+
+| Method (superseded, 3 m inputs, threshold 0.30) | Precision | Recall | Pooled water IoU | Per-scene mean [95% CI] |
 | --- | ---: | ---: | ---: | --- |
 | S1 + AEF (acquisition year) | 0.892 | 0.948 | 0.851 | 0.756 [0.689, 0.816] |
 | S1 + AEF (previous year) | 0.882 | 0.946 | 0.840 | 0.741 [0.672, 0.803] |
 | S1 only | 0.933 | 0.582 | 0.558 | 0.443 [0.355, 0.533] |
 | OPERA DSWx-S1 | 0.858 | 0.852 | 0.746 | 0.591 [0.508, 0.670] |
 
-`results/paper_labelclass_v1/58321212/completion_results.md` documents every number, including the
-threshold sweep, the train/evaluation proximity screen, the matched-valid-mask comparison, the paired
-tests against OPERA and the WorldCover error analysis. `results/paper_retrain_openwater_v1/57725872/`
-holds the superseded mixed-label results.
+Source: `results/paper_labelclass_v1/58321212/` (`paper_metrics.csv`, `completion_results.md`).
+`results/paper_retrain_openwater_v1/57725872/` holds the older mixed-label results. The top-level
+`results/paper_metrics.csv` and `results/ablation_metrics.csv` are from the first release (20 August
+2026; mixed-label models, 3,742 training tiles) and are also superseded; they are kept unchanged. See
+[`results/README.md`](results/README.md).
 
-Independent S1S2-Water benchmark, 15 test scenes, 30 m grid, mean over three seeds
-(`external_validation/s1s2_water/`):
+## Reproducing the paper
 
-| Method | Pooled water IoU, threshold 0.50 | Threshold 0.30 |
-| --- | ---: | ---: |
-| S1 + AEF | 0.953 | 0.941 |
-| OPERA DSWx-S1 (v1.2 with the upstream boundary fix) | 0.869 | 0.869 |
-| S1 only | 0.822 | 0.794 |
+The protocol is: 10 m inference -> bilinear resampling of the probabilities to the 3 m reference grid ->
+threshold 0.30 -> scoring on the common valid mask. The commands, in order, with the environment
+variables they need, are in [`scripts/eval_10m/README.md`](scripts/eval_10m/README.md):
+
+1. Export the 10 m S1 and AEF inputs and write the inference manifests (`build_10m_inputs.py`,
+   `verify_10m_inputs.py`, `make_10m_manifests.py`).
+2. Run inference with the paper's wrappers (`jobs/eval_10m/submit_10m_inference.sh`,
+   `jobs/eval_10m/submit_ablation_10m_inference.sh`). S1-only uses
+   `runtime/infer_intercomparison_s1_tiles.py`, S1 + AEF uses `runtime/infer_pnw_s1aef_tiles.py`.
+3. Resample and score: `score_10m.py` (Table I and paired tests), `score_ablations.py`,
+   `aggregate_ablations.py` and `make_table_ii.py` (Table II).
+4. Figures and analyses: `export_53_scene_layers_10m.py` and `make_figure1b_10m.py` (Fig. 1B), the
+   WorldCover error analysis, and `g0_inventory.py`, `gswd_rescore.py`, `gswd_summary.py`,
+   `s1s2_rescore.py`, `s1s2_summary.py` (Supplementary Table S2).
 
 ## Repository layout
 
@@ -266,12 +339,14 @@ Independent S1S2-Water benchmark, 15 test scenes, 30 m grid, mean over three see
 | `scripts/reconstruct_sample.py` | Rebuild an indexed triplet from public source archives |
 | `scripts/validate_dataset.py` | Validate bands, grids, names, and optional sample index |
 | `src/evaluate.py`, `scripts/compare_methods.py` | Pooled/per-scene metrics, bootstrap CIs, paired tests |
-| `scripts/complete_paper_analyses.py` | Threshold sweep, proximity screen, matched mask, paired tests vs OPERA |
-| `scripts/make_figure3_iou_distribution.py` | Per-scene IoU distribution figure |
+| `scripts/eval_10m/`, `jobs/eval_10m/` | 10 m evaluation protocol of the paper: inputs, inference, scoring, ablations, figures, resolution-matched OPERA comparison |
+| `scripts/complete_paper_analyses.py` | Threshold sweep, proximity screen, matched mask, paired tests vs OPERA (3 m-input protocol) |
+| `scripts/make_figure3_iou_distribution.py` | Per-scene IoU distribution figure (3 m-input protocol) |
 | `external_validation/s1s2_water/` | Independent S1S2-Water evaluation against OPERA DSWx-S1 |
 | `jobs/` | Slurm job scripts for the training, inference and evaluation chain |
 | `metadata/` | Training and independent-evaluation sampling metadata |
-| `results/` | Machine-readable paper and training-run summaries |
+| `results/paper_v11_10m/` | Machine-readable values of manuscript v11 |
+| `results/` | Earlier (superseded) paper and training-run summaries; see `results/README.md` |
 | `models/model_registry.json` | Model locations, filenames, and checksums |
 
 ## Data sources
