@@ -1,0 +1,277 @@
+scope,category,validation_group,chip_group,worldcover_code,worldcover_class,pixel_count,pixel_fraction,chip_count,chip_fraction
+changed_errors,aef_adds_fn,all,aef_helps,10,Tree cover,4576,0.04321180014542433,13,0.18309859154929578
+changed_errors,aef_adds_fn,all,aef_helps,20,Shrubland,5162,0.04874547909761372,3,0.04225352112676056
+changed_errors,aef_adds_fn,all,aef_helps,30,Grassland,21362,0.20172431702503377,16,0.22535211267605634
+changed_errors,aef_adds_fn,all,aef_helps,40,Cropland,86,0.0008121098803554397,3,0.04225352112676056
+changed_errors,aef_adds_fn,all,aef_helps,50,Built-up,35,0.0003305098350283766,4,0.056338028169014086
+changed_errors,aef_adds_fn,all,aef_helps,60,Bare / sparse vegetation,61763,0.5832365411673608,9,0.1267605633802817
+changed_errors,aef_adds_fn,all,aef_helps,80,Permanent water,10544,0.09956844858683438,16,0.22535211267605634
+changed_errors,aef_adds_fn,all,aef_helps,90,Herbaceous wetland,2205,0.020822119606787728,5,0.07042253521126761
+changed_errors,aef_adds_fn,all,aef_helps,100,Moss and lichen,164,0.0015486746555615361,2,0.028169014084507043
+changed_errors,aef_adds_fn,all,all,10,Tree cover,6902,0.05210629624037445,24,0.18461538461538463
+changed_errors,aef_adds_fn,all,all,20,Shrubland,5231,0.03949116714479843,6,0.046153846153846156
+changed_errors,aef_adds_fn,all,all,30,Grassland,29205,0.22048165483919674,26,0.2
+changed_errors,aef_adds_fn,all,all,40,Cropland,106,0.0008002415823644874,5,0.038461538461538464
+changed_errors,aef_adds_fn,all,all,50,Built-up,210,0.0015853842669485128,8,0.06153846153846154
+changed_errors,aef_adds_fn,all,all,60,Bare / sparse vegetation,64357,0.48585988222859733,13,0.1
+changed_errors,aef_adds_fn,all,all,80,Permanent water,22877,0.17270874226181487,30,0.23076923076923078
+changed_errors,aef_adds_fn,all,all,90,Herbaceous wetland,3271,0.024694247319945645,12,0.09230769230769231
+changed_errors,aef_adds_fn,all,all,95,Mangroves,23,0.0001736373244753133,2,0.015384615384615385
+changed_errors,aef_adds_fn,all,all,100,Moss and lichen,278,0.0020987467914842218,4,0.03076923076923077
+changed_errors,aef_adds_fn,all,neutral,10,Tree cover,2326,0.08756541053344878,11,0.1864406779661017
+changed_errors,aef_adds_fn,all,neutral,20,Shrubland,69,0.002597598162858111,3,0.05084745762711865
+changed_errors,aef_adds_fn,all,neutral,30,Grassland,7843,0.2952603245115386,10,0.1694915254237288
+changed_errors,aef_adds_fn,all,neutral,40,Cropland,20,0.0007529270037269887,2,0.03389830508474576
+changed_errors,aef_adds_fn,all,neutral,50,Built-up,175,0.00658811128261115,4,0.06779661016949153
+changed_errors,aef_adds_fn,all,neutral,60,Bare / sparse vegetation,2594,0.09765463238339044,4,0.06779661016949153
+changed_errors,aef_adds_fn,all,neutral,80,Permanent water,12333,0.46429243684824756,14,0.23728813559322035
+changed_errors,aef_adds_fn,all,neutral,90,Herbaceous wetland,1066,0.0401310092986485,7,0.11864406779661017
+changed_errors,aef_adds_fn,all,neutral,95,Mangroves,23,0.000865866054286037,2,0.03389830508474576
+changed_errors,aef_adds_fn,all,neutral,100,Moss and lichen,114,0.004291683921243836,2,0.03389830508474576
+changed_errors,aef_adds_fn,permanent_water,aef_helps,10,Tree cover,4576,0.04321180014542433,13,0.18309859154929578
+changed_errors,aef_adds_fn,permanent_water,aef_helps,20,Shrubland,5162,0.04874547909761372,3,0.04225352112676056
+changed_errors,aef_adds_fn,permanent_water,aef_helps,30,Grassland,21362,0.20172431702503377,16,0.22535211267605634
+changed_errors,aef_adds_fn,permanent_water,aef_helps,40,Cropland,86,0.0008121098803554397,3,0.04225352112676056
+changed_errors,aef_adds_fn,permanent_water,aef_helps,50,Built-up,35,0.0003305098350283766,4,0.056338028169014086
+changed_errors,aef_adds_fn,permanent_water,aef_helps,60,Bare / sparse vegetation,61763,0.5832365411673608,9,0.1267605633802817
+changed_errors,aef_adds_fn,permanent_water,aef_helps,80,Permanent water,10544,0.09956844858683438,16,0.22535211267605634
+changed_errors,aef_adds_fn,permanent_water,aef_helps,90,Herbaceous wetland,2205,0.020822119606787728,5,0.07042253521126761
+changed_errors,aef_adds_fn,permanent_water,aef_helps,100,Moss and lichen,164,0.0015486746555615361,2,0.028169014084507043
+changed_errors,aef_adds_fn,permanent_water,all,10,Tree cover,6902,0.05210629624037445,24,0.18461538461538463
+changed_errors,aef_adds_fn,permanent_water,all,20,Shrubland,5231,0.03949116714479843,6,0.046153846153846156
+changed_errors,aef_adds_fn,permanent_water,all,30,Grassland,29205,0.22048165483919674,26,0.2
+changed_errors,aef_adds_fn,permanent_water,all,40,Cropland,106,0.0008002415823644874,5,0.038461538461538464
+changed_errors,aef_adds_fn,permanent_water,all,50,Built-up,210,0.0015853842669485128,8,0.06153846153846154
+changed_errors,aef_adds_fn,permanent_water,all,60,Bare / sparse vegetation,64357,0.48585988222859733,13,0.1
+changed_errors,aef_adds_fn,permanent_water,all,80,Permanent water,22877,0.17270874226181487,30,0.23076923076923078
+changed_errors,aef_adds_fn,permanent_water,all,90,Herbaceous wetland,3271,0.024694247319945645,12,0.09230769230769231
+changed_errors,aef_adds_fn,permanent_water,all,95,Mangroves,23,0.0001736373244753133,2,0.015384615384615385
+changed_errors,aef_adds_fn,permanent_water,all,100,Moss and lichen,278,0.0020987467914842218,4,0.03076923076923077
+changed_errors,aef_adds_fn,permanent_water,neutral,10,Tree cover,2326,0.08756541053344878,11,0.1864406779661017
+changed_errors,aef_adds_fn,permanent_water,neutral,20,Shrubland,69,0.002597598162858111,3,0.05084745762711865
+changed_errors,aef_adds_fn,permanent_water,neutral,30,Grassland,7843,0.2952603245115386,10,0.1694915254237288
+changed_errors,aef_adds_fn,permanent_water,neutral,40,Cropland,20,0.0007529270037269887,2,0.03389830508474576
+changed_errors,aef_adds_fn,permanent_water,neutral,50,Built-up,175,0.00658811128261115,4,0.06779661016949153
+changed_errors,aef_adds_fn,permanent_water,neutral,60,Bare / sparse vegetation,2594,0.09765463238339044,4,0.06779661016949153
+changed_errors,aef_adds_fn,permanent_water,neutral,80,Permanent water,12333,0.46429243684824756,14,0.23728813559322035
+changed_errors,aef_adds_fn,permanent_water,neutral,90,Herbaceous wetland,1066,0.0401310092986485,7,0.11864406779661017
+changed_errors,aef_adds_fn,permanent_water,neutral,95,Mangroves,23,0.000865866054286037,2,0.03389830508474576
+changed_errors,aef_adds_fn,permanent_water,neutral,100,Moss and lichen,114,0.004291683921243836,2,0.03389830508474576
+changed_errors,aef_adds_fp,all,aef_helps,10,Tree cover,23411,0.0976394044292447,19,0.16964285714285715
+changed_errors,aef_adds_fp,all,aef_helps,20,Shrubland,7666,0.031972306794010925,6,0.05357142857142857
+changed_errors,aef_adds_fp,all,aef_helps,30,Grassland,12156,0.05069858614505568,21,0.1875
+changed_errors,aef_adds_fp,all,aef_helps,40,Cropland,15373,0.06411561079367728,10,0.08928571428571429
+changed_errors,aef_adds_fp,all,aef_helps,50,Built-up,991,0.004133127580598073,7,0.0625
+changed_errors,aef_adds_fp,all,aef_helps,60,Bare / sparse vegetation,33573,0.14002168745047336,18,0.16071428571428573
+changed_errors,aef_adds_fp,all,aef_helps,80,Permanent water,95918,0.4000417066355257,22,0.19642857142857142
+changed_errors,aef_adds_fp,all,aef_helps,90,Herbaceous wetland,1936,0.00807440463777787,7,0.0625
+changed_errors,aef_adds_fp,all,aef_helps,95,Mangroves,48741,0.20328231221587353,1,0.008928571428571428
+changed_errors,aef_adds_fp,all,aef_helps,100,Moss and lichen,5,2.085331776285607e-05,1,0.008928571428571428
+changed_errors,aef_adds_fp,all,aef_hurts,10,Tree cover,8277,0.050951375508621166,3,0.2
+changed_errors,aef_adds_fp,all,aef_hurts,20,Shrubland,2872,0.01767939476389513,3,0.2
+changed_errors,aef_adds_fp,all,aef_hurts,30,Grassland,2739,0.01686067627378439,3,0.2
+changed_errors,aef_adds_fp,all,aef_hurts,40,Cropland,4,2.4623112484533608e-05,1,0.06666666666666667
+changed_errors,aef_adds_fp,all,aef_hurts,60,Bare / sparse vegetation,6759,0.04160690432074066,2,0.13333333333333333
+changed_errors,aef_adds_fp,all,aef_hurts,80,Permanent water,141798,0.8728770260204741,3,0.2
+changed_errors,aef_adds_fp,all,all,10,Tree cover,63590,0.07808614649349119,38,0.1623931623931624
+changed_errors,aef_adds_fp,all,all,20,Shrubland,16662,0.020460314088292974,14,0.05982905982905983
+changed_errors,aef_adds_fp,all,all,30,Grassland,22404,0.027511275767261777,40,0.17094017094017094
+changed_errors,aef_adds_fp,all,all,40,Cropland,18730,0.022999740899875606,19,0.0811965811965812
+changed_errors,aef_adds_fp,all,all,50,Built-up,3601,0.004421893592122374,16,0.06837606837606838
+changed_errors,aef_adds_fp,all,all,60,Bare / sparse vegetation,59737,0.07335480630730748,34,0.1452991452991453
+changed_errors,aef_adds_fp,all,all,70,Snow and ice,1468,0.001802649206674714,1,0.004273504273504274
+changed_errors,aef_adds_fp,all,all,80,Permanent water,502584,0.6171543929750711,47,0.20085470085470086
+changed_errors,aef_adds_fp,all,all,90,Herbaceous wetland,15888,0.019509870977961755,17,0.07264957264957266
+changed_errors,aef_adds_fp,all,all,95,Mangroves,109635,0.1346276878567999,5,0.021367521367521368
+changed_errors,aef_adds_fp,all,all,100,Moss and lichen,58,7.122183514109905e-05,3,0.01282051282051282
+changed_errors,aef_adds_fp,all,neutral,10,Tree cover,31902,0.07740611154516205,16,0.14953271028037382
+changed_errors,aef_adds_fp,all,neutral,20,Shrubland,6124,0.014859100592519981,5,0.04672897196261682
+changed_errors,aef_adds_fp,all,neutral,30,Grassland,7509,0.018219625465256784,16,0.14953271028037382
+changed_errors,aef_adds_fp,all,neutral,40,Cropland,3353,0.00813562447529711,8,0.07476635514018691
+changed_errors,aef_adds_fp,all,neutral,50,Built-up,2610,0.006332830265590651,9,0.08411214953271028
+changed_errors,aef_adds_fp,all,neutral,60,Bare / sparse vegetation,19405,0.04708374379455425,14,0.1308411214953271
+changed_errors,aef_adds_fp,all,neutral,70,Snow and ice,1468,0.003561913727926083,1,0.009345794392523364
+changed_errors,aef_adds_fp,all,neutral,80,Permanent water,264868,0.6426682324852355,22,0.205607476635514
+changed_errors,aef_adds_fp,all,neutral,90,Herbaceous wetland,13952,0.0338527386457934,10,0.09345794392523364
+changed_errors,aef_adds_fp,all,neutral,95,Mangroves,60894,0.14775148129995294,4,0.037383177570093455
+changed_errors,aef_adds_fp,all,neutral,100,Moss and lichen,53,0.0001285977027112278,2,0.018691588785046728
+changed_errors,aef_adds_fp,permanent_water,aef_helps,10,Tree cover,23411,0.0976394044292447,19,0.16964285714285715
+changed_errors,aef_adds_fp,permanent_water,aef_helps,20,Shrubland,7666,0.031972306794010925,6,0.05357142857142857
+changed_errors,aef_adds_fp,permanent_water,aef_helps,30,Grassland,12156,0.05069858614505568,21,0.1875
+changed_errors,aef_adds_fp,permanent_water,aef_helps,40,Cropland,15373,0.06411561079367728,10,0.08928571428571429
+changed_errors,aef_adds_fp,permanent_water,aef_helps,50,Built-up,991,0.004133127580598073,7,0.0625
+changed_errors,aef_adds_fp,permanent_water,aef_helps,60,Bare / sparse vegetation,33573,0.14002168745047336,18,0.16071428571428573
+changed_errors,aef_adds_fp,permanent_water,aef_helps,80,Permanent water,95918,0.4000417066355257,22,0.19642857142857142
+changed_errors,aef_adds_fp,permanent_water,aef_helps,90,Herbaceous wetland,1936,0.00807440463777787,7,0.0625
+changed_errors,aef_adds_fp,permanent_water,aef_helps,95,Mangroves,48741,0.20328231221587353,1,0.008928571428571428
+changed_errors,aef_adds_fp,permanent_water,aef_helps,100,Moss and lichen,5,2.085331776285607e-05,1,0.008928571428571428
+changed_errors,aef_adds_fp,permanent_water,aef_hurts,10,Tree cover,8277,0.050951375508621166,3,0.2
+changed_errors,aef_adds_fp,permanent_water,aef_hurts,20,Shrubland,2872,0.01767939476389513,3,0.2
+changed_errors,aef_adds_fp,permanent_water,aef_hurts,30,Grassland,2739,0.01686067627378439,3,0.2
+changed_errors,aef_adds_fp,permanent_water,aef_hurts,40,Cropland,4,2.4623112484533608e-05,1,0.06666666666666667
+changed_errors,aef_adds_fp,permanent_water,aef_hurts,60,Bare / sparse vegetation,6759,0.04160690432074066,2,0.13333333333333333
+changed_errors,aef_adds_fp,permanent_water,aef_hurts,80,Permanent water,141798,0.8728770260204741,3,0.2
+changed_errors,aef_adds_fp,permanent_water,all,10,Tree cover,63590,0.07808614649349119,38,0.1623931623931624
+changed_errors,aef_adds_fp,permanent_water,all,20,Shrubland,16662,0.020460314088292974,14,0.05982905982905983
+changed_errors,aef_adds_fp,permanent_water,all,30,Grassland,22404,0.027511275767261777,40,0.17094017094017094
+changed_errors,aef_adds_fp,permanent_water,all,40,Cropland,18730,0.022999740899875606,19,0.0811965811965812
+changed_errors,aef_adds_fp,permanent_water,all,50,Built-up,3601,0.004421893592122374,16,0.06837606837606838
+changed_errors,aef_adds_fp,permanent_water,all,60,Bare / sparse vegetation,59737,0.07335480630730748,34,0.1452991452991453
+changed_errors,aef_adds_fp,permanent_water,all,70,Snow and ice,1468,0.001802649206674714,1,0.004273504273504274
+changed_errors,aef_adds_fp,permanent_water,all,80,Permanent water,502584,0.6171543929750711,47,0.20085470085470086
+changed_errors,aef_adds_fp,permanent_water,all,90,Herbaceous wetland,15888,0.019509870977961755,17,0.07264957264957266
+changed_errors,aef_adds_fp,permanent_water,all,95,Mangroves,109635,0.1346276878567999,5,0.021367521367521368
+changed_errors,aef_adds_fp,permanent_water,all,100,Moss and lichen,58,7.122183514109905e-05,3,0.01282051282051282
+changed_errors,aef_adds_fp,permanent_water,neutral,10,Tree cover,31902,0.07740611154516205,16,0.14953271028037382
+changed_errors,aef_adds_fp,permanent_water,neutral,20,Shrubland,6124,0.014859100592519981,5,0.04672897196261682
+changed_errors,aef_adds_fp,permanent_water,neutral,30,Grassland,7509,0.018219625465256784,16,0.14953271028037382
+changed_errors,aef_adds_fp,permanent_water,neutral,40,Cropland,3353,0.00813562447529711,8,0.07476635514018691
+changed_errors,aef_adds_fp,permanent_water,neutral,50,Built-up,2610,0.006332830265590651,9,0.08411214953271028
+changed_errors,aef_adds_fp,permanent_water,neutral,60,Bare / sparse vegetation,19405,0.04708374379455425,14,0.1308411214953271
+changed_errors,aef_adds_fp,permanent_water,neutral,70,Snow and ice,1468,0.003561913727926083,1,0.009345794392523364
+changed_errors,aef_adds_fp,permanent_water,neutral,80,Permanent water,264868,0.6426682324852355,22,0.205607476635514
+changed_errors,aef_adds_fp,permanent_water,neutral,90,Herbaceous wetland,13952,0.0338527386457934,10,0.09345794392523364
+changed_errors,aef_adds_fp,permanent_water,neutral,95,Mangroves,60894,0.14775148129995294,4,0.037383177570093455
+changed_errors,aef_adds_fp,permanent_water,neutral,100,Moss and lichen,53,0.0001285977027112278,2,0.018691588785046728
+changed_errors,aef_fixes_s1_fn,all,aef_helps,10,Tree cover,21454,0.02015726310705974,17,0.1574074074074074
+changed_errors,aef_fixes_s1_fn,all,aef_helps,20,Shrubland,5665,0.005322592313857249,6,0.05555555555555555
+changed_errors,aef_fixes_s1_fn,all,aef_helps,30,Grassland,16138,0.015162576303800227,21,0.19444444444444445
+changed_errors,aef_fixes_s1_fn,all,aef_helps,40,Cropland,13225,0.012425645781246624,8,0.07407407407407407
+changed_errors,aef_fixes_s1_fn,all,aef_helps,50,Built-up,1619,0.0015211433285321953,6,0.05555555555555555
+changed_errors,aef_fixes_s1_fn,all,aef_helps,60,Bare / sparse vegetation,51024,0.04793997356085654,19,0.17592592592592593
+changed_errors,aef_fixes_s1_fn,all,aef_helps,80,Permanent water,796862,0.7486975386416443,23,0.21296296296296297
+changed_errors,aef_fixes_s1_fn,all,aef_helps,90,Herbaceous wetland,2047,0.0019232738687494774,6,0.05555555555555555
+changed_errors,aef_fixes_s1_fn,all,aef_helps,95,Mangroves,156296,0.14684905353691663,1,0.009259259259259259
+changed_errors,aef_fixes_s1_fn,all,aef_helps,100,Moss and lichen,1,9.395573369562664e-07,1,0.009259259259259259
+changed_errors,aef_fixes_s1_fn,all,aef_hurts,10,Tree cover,446,0.06987310042299859,2,0.3333333333333333
+changed_errors,aef_fixes_s1_fn,all,aef_hurts,20,Shrubland,18,0.0028199906000313333,1,0.16666666666666666
+changed_errors,aef_fixes_s1_fn,all,aef_hurts,80,Permanent water,5919,0.9273069089769701,3,0.5
+changed_errors,aef_fixes_s1_fn,all,all,10,Tree cover,30618,0.022162657897536974,34,0.17
+changed_errors,aef_fixes_s1_fn,all,all,20,Shrubland,5797,0.004196124104514399,9,0.045
+changed_errors,aef_fixes_s1_fn,all,all,30,Grassland,17579,0.012724454999699604,33,0.165
+changed_errors,aef_fixes_s1_fn,all,all,40,Cropland,14050,0.010170009257965722,12,0.06
+changed_errors,aef_fixes_s1_fn,all,all,50,Built-up,2106,0.0015244156225819084,11,0.055
+changed_errors,aef_fixes_s1_fn,all,all,60,Bare / sparse vegetation,52715,0.03815744042944221,31,0.155
+changed_errors,aef_fixes_s1_fn,all,all,70,Snow and ice,527,0.0003814658276831271,1,0.005
+changed_errors,aef_fixes_s1_fn,all,all,80,Permanent water,1067274,0.7725399616217872,49,0.245
+changed_errors,aef_fixes_s1_fn,all,all,90,Herbaceous wetland,8056,0.005831287870617215,13,0.065
+changed_errors,aef_fixes_s1_fn,all,all,95,Mangroves,182789,0.1323107346800211,5,0.025
+changed_errors,aef_fixes_s1_fn,all,all,100,Moss and lichen,2,1.4476881506001029e-06,2,0.01
+changed_errors,aef_fixes_s1_fn,all,neutral,10,Tree cover,8718,0.028050283302069826,15,0.1744186046511628
+changed_errors,aef_fixes_s1_fn,all,neutral,20,Shrubland,114,0.0003667965469644368,2,0.023255813953488372
+changed_errors,aef_fixes_s1_fn,all,neutral,30,Grassland,1441,0.004636437054173276,12,0.13953488372093023
+changed_errors,aef_fixes_s1_fn,all,neutral,40,Cropland,825,0.002654448695137372,4,0.046511627906976744
+changed_errors,aef_fixes_s1_fn,all,neutral,50,Built-up,487,0.0015669291085235152,5,0.05813953488372093
+changed_errors,aef_fixes_s1_fn,all,neutral,60,Bare / sparse vegetation,1691,0.0054408154466391466,12,0.13953488372093023
+changed_errors,aef_fixes_s1_fn,all,neutral,70,Snow and ice,527,0.0016956296513180545,1,0.011627906976744186
+changed_errors,aef_fixes_s1_fn,all,neutral,80,Permanent water,264493,0.8510098166339016,23,0.26744186046511625
+changed_errors,aef_fixes_s1_fn,all,neutral,90,Herbaceous wetland,6009,0.019334039041309658,7,0.08139534883720931
+changed_errors,aef_fixes_s1_fn,all,neutral,95,Mangroves,26493,0.0852415870063932,4,0.046511627906976744
+changed_errors,aef_fixes_s1_fn,all,neutral,100,Moss and lichen,1,3.2175135698634807e-06,1,0.011627906976744186
+changed_errors,aef_fixes_s1_fn,permanent_water,aef_helps,10,Tree cover,21454,0.02015726310705974,17,0.1574074074074074
+changed_errors,aef_fixes_s1_fn,permanent_water,aef_helps,20,Shrubland,5665,0.005322592313857249,6,0.05555555555555555
+changed_errors,aef_fixes_s1_fn,permanent_water,aef_helps,30,Grassland,16138,0.015162576303800227,21,0.19444444444444445
+changed_errors,aef_fixes_s1_fn,permanent_water,aef_helps,40,Cropland,13225,0.012425645781246624,8,0.07407407407407407
+changed_errors,aef_fixes_s1_fn,permanent_water,aef_helps,50,Built-up,1619,0.0015211433285321953,6,0.05555555555555555
+changed_errors,aef_fixes_s1_fn,permanent_water,aef_helps,60,Bare / sparse vegetation,51024,0.04793997356085654,19,0.17592592592592593
+changed_errors,aef_fixes_s1_fn,permanent_water,aef_helps,80,Permanent water,796862,0.7486975386416443,23,0.21296296296296297
+changed_errors,aef_fixes_s1_fn,permanent_water,aef_helps,90,Herbaceous wetland,2047,0.0019232738687494774,6,0.05555555555555555
+changed_errors,aef_fixes_s1_fn,permanent_water,aef_helps,95,Mangroves,156296,0.14684905353691663,1,0.009259259259259259
+changed_errors,aef_fixes_s1_fn,permanent_water,aef_helps,100,Moss and lichen,1,9.395573369562664e-07,1,0.009259259259259259
+changed_errors,aef_fixes_s1_fn,permanent_water,aef_hurts,10,Tree cover,446,0.06987310042299859,2,0.3333333333333333
+changed_errors,aef_fixes_s1_fn,permanent_water,aef_hurts,20,Shrubland,18,0.0028199906000313333,1,0.16666666666666666
+changed_errors,aef_fixes_s1_fn,permanent_water,aef_hurts,80,Permanent water,5919,0.9273069089769701,3,0.5
+changed_errors,aef_fixes_s1_fn,permanent_water,all,10,Tree cover,30618,0.022162657897536974,34,0.17
+changed_errors,aef_fixes_s1_fn,permanent_water,all,20,Shrubland,5797,0.004196124104514399,9,0.045
+changed_errors,aef_fixes_s1_fn,permanent_water,all,30,Grassland,17579,0.012724454999699604,33,0.165
+changed_errors,aef_fixes_s1_fn,permanent_water,all,40,Cropland,14050,0.010170009257965722,12,0.06
+changed_errors,aef_fixes_s1_fn,permanent_water,all,50,Built-up,2106,0.0015244156225819084,11,0.055
+changed_errors,aef_fixes_s1_fn,permanent_water,all,60,Bare / sparse vegetation,52715,0.03815744042944221,31,0.155
+changed_errors,aef_fixes_s1_fn,permanent_water,all,70,Snow and ice,527,0.0003814658276831271,1,0.005
+changed_errors,aef_fixes_s1_fn,permanent_water,all,80,Permanent water,1067274,0.7725399616217872,49,0.245
+changed_errors,aef_fixes_s1_fn,permanent_water,all,90,Herbaceous wetland,8056,0.005831287870617215,13,0.065
+changed_errors,aef_fixes_s1_fn,permanent_water,all,95,Mangroves,182789,0.1323107346800211,5,0.025
+changed_errors,aef_fixes_s1_fn,permanent_water,all,100,Moss and lichen,2,1.4476881506001029e-06,2,0.01
+changed_errors,aef_fixes_s1_fn,permanent_water,neutral,10,Tree cover,8718,0.028050283302069826,15,0.1744186046511628
+changed_errors,aef_fixes_s1_fn,permanent_water,neutral,20,Shrubland,114,0.0003667965469644368,2,0.023255813953488372
+changed_errors,aef_fixes_s1_fn,permanent_water,neutral,30,Grassland,1441,0.004636437054173276,12,0.13953488372093023
+changed_errors,aef_fixes_s1_fn,permanent_water,neutral,40,Cropland,825,0.002654448695137372,4,0.046511627906976744
+changed_errors,aef_fixes_s1_fn,permanent_water,neutral,50,Built-up,487,0.0015669291085235152,5,0.05813953488372093
+changed_errors,aef_fixes_s1_fn,permanent_water,neutral,60,Bare / sparse vegetation,1691,0.0054408154466391466,12,0.13953488372093023
+changed_errors,aef_fixes_s1_fn,permanent_water,neutral,70,Snow and ice,527,0.0016956296513180545,1,0.011627906976744186
+changed_errors,aef_fixes_s1_fn,permanent_water,neutral,80,Permanent water,264493,0.8510098166339016,23,0.26744186046511625
+changed_errors,aef_fixes_s1_fn,permanent_water,neutral,90,Herbaceous wetland,6009,0.019334039041309658,7,0.08139534883720931
+changed_errors,aef_fixes_s1_fn,permanent_water,neutral,95,Mangroves,26493,0.0852415870063932,4,0.046511627906976744
+changed_errors,aef_fixes_s1_fn,permanent_water,neutral,100,Moss and lichen,1,3.2175135698634807e-06,1,0.011627906976744186
+changed_errors,aef_fixes_s1_fp,all,aef_helps,10,Tree cover,108751,0.3071931980283321,18,0.18
+changed_errors,aef_fixes_s1_fp,all,aef_helps,20,Shrubland,18177,0.051345281979577134,6,0.06
+changed_errors,aef_fixes_s1_fp,all,aef_helps,30,Grassland,46150,0.13036170783723852,23,0.23
+changed_errors,aef_fixes_s1_fp,all,aef_helps,40,Cropland,1642,0.004638221544284847,6,0.06
+changed_errors,aef_fixes_s1_fp,all,aef_helps,50,Built-up,3083,0.008708670536559186,9,0.09
+changed_errors,aef_fixes_s1_fp,all,aef_helps,60,Bare / sparse vegetation,155425,0.4390350691354886,14,0.14
+changed_errors,aef_fixes_s1_fp,all,aef_helps,80,Permanent water,13994,0.03952939847181616,17,0.17
+changed_errors,aef_fixes_s1_fp,all,aef_helps,90,Herbaceous wetland,4585,0.012951428611781987,5,0.05
+changed_errors,aef_fixes_s1_fp,all,aef_helps,95,Mangroves,120,0.0003389686877674675,1,0.01
+changed_errors,aef_fixes_s1_fp,all,aef_helps,100,Moss and lichen,2088,0.005898055167153934,1,0.01
+changed_errors,aef_fixes_s1_fp,all,aef_hurts,10,Tree cover,85,0.027642276422764227,2,0.2
+changed_errors,aef_fixes_s1_fp,all,aef_hurts,20,Shrubland,606,0.19707317073170733,2,0.2
+changed_errors,aef_fixes_s1_fp,all,aef_hurts,30,Grassland,1479,0.48097560975609754,2,0.2
+changed_errors,aef_fixes_s1_fp,all,aef_hurts,40,Cropland,101,0.03284552845528455,2,0.2
+changed_errors,aef_fixes_s1_fp,all,aef_hurts,60,Bare / sparse vegetation,796,0.25886178861788617,1,0.1
+changed_errors,aef_fixes_s1_fp,all,aef_hurts,80,Permanent water,8,0.0026016260162601626,1,0.1
+changed_errors,aef_fixes_s1_fp,all,all,10,Tree cover,169470,0.20089309528522978,36,0.16901408450704225
+changed_errors,aef_fixes_s1_fp,all,all,20,Shrubland,23887,0.028316123013384577,15,0.07042253521126761
+changed_errors,aef_fixes_s1_fp,all,all,30,Grassland,83665,0.09917814844538118,42,0.19718309859154928
+changed_errors,aef_fixes_s1_fp,all,all,40,Cropland,10154,0.012036752755804705,16,0.07511737089201878
+changed_errors,aef_fixes_s1_fp,all,all,50,Built-up,8204,0.009725184125332065,20,0.09389671361502347
+changed_errors,aef_fixes_s1_fp,all,all,60,Bare / sparse vegetation,500358,0.5931342855415531,27,0.1267605633802817
+changed_errors,aef_fixes_s1_fp,all,all,80,Permanent water,34314,0.04067649537745545,36,0.16901408450704225
+changed_errors,aef_fixes_s1_fp,all,all,90,Herbaceous wetland,9949,0.011793741694652452,13,0.06103286384976526
+changed_errors,aef_fixes_s1_fp,all,all,95,Mangroves,1224,0.0014509538480505179,4,0.018779342723004695
+changed_errors,aef_fixes_s1_fp,all,all,100,Moss and lichen,2358,0.0027952199131561447,4,0.018779342723004695
+changed_errors,aef_fixes_s1_fp,all,neutral,10,Tree cover,60634,0.12463488683290407,16,0.1553398058252427
+changed_errors,aef_fixes_s1_fp,all,neutral,20,Shrubland,5104,0.010491415087164667,7,0.06796116504854369
+changed_errors,aef_fixes_s1_fp,all,neutral,30,Grassland,36036,0.07407300824472295,17,0.1650485436893204
+changed_errors,aef_fixes_s1_fp,all,neutral,40,Cropland,8411,0.017289046296657916,8,0.07766990291262135
+changed_errors,aef_fixes_s1_fp,all,neutral,50,Built-up,5121,0.010526359063748091,11,0.10679611650485436
+changed_errors,aef_fixes_s1_fp,all,neutral,60,Bare / sparse vegetation,344137,0.7073832511464707,12,0.11650485436893204
+changed_errors,aef_fixes_s1_fp,all,neutral,80,Permanent water,20312,0.041751885433089476,18,0.17475728155339806
+changed_errors,aef_fixes_s1_fp,all,neutral,90,Herbaceous wetland,5364,0.01102585237608763,8,0.07766990291262135
+changed_errors,aef_fixes_s1_fp,all,neutral,95,Mangroves,1104,0.002269302949888282,3,0.02912621359223301
+changed_errors,aef_fixes_s1_fp,all,neutral,100,Moss and lichen,270,0.0005549925692661559,3,0.02912621359223301
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_helps,10,Tree cover,108751,0.3071931980283321,18,0.18
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_helps,20,Shrubland,18177,0.051345281979577134,6,0.06
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_helps,30,Grassland,46150,0.13036170783723852,23,0.23
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_helps,40,Cropland,1642,0.004638221544284847,6,0.06
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_helps,50,Built-up,3083,0.008708670536559186,9,0.09
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_helps,60,Bare / sparse vegetation,155425,0.4390350691354886,14,0.14
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_helps,80,Permanent water,13994,0.03952939847181616,17,0.17
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_helps,90,Herbaceous wetland,4585,0.012951428611781987,5,0.05
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_helps,95,Mangroves,120,0.0003389686877674675,1,0.01
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_helps,100,Moss and lichen,2088,0.005898055167153934,1,0.01
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_hurts,10,Tree cover,85,0.027642276422764227,2,0.2
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_hurts,20,Shrubland,606,0.19707317073170733,2,0.2
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_hurts,30,Grassland,1479,0.48097560975609754,2,0.2
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_hurts,40,Cropland,101,0.03284552845528455,2,0.2
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_hurts,60,Bare / sparse vegetation,796,0.25886178861788617,1,0.1
+changed_errors,aef_fixes_s1_fp,permanent_water,aef_hurts,80,Permanent water,8,0.0026016260162601626,1,0.1
+changed_errors,aef_fixes_s1_fp,permanent_water,all,10,Tree cover,169470,0.20089309528522978,36,0.16901408450704225
+changed_errors,aef_fixes_s1_fp,permanent_water,all,20,Shrubland,23887,0.028316123013384577,15,0.07042253521126761
+changed_errors,aef_fixes_s1_fp,permanent_water,all,30,Grassland,83665,0.09917814844538118,42,0.19718309859154928
+changed_errors,aef_fixes_s1_fp,permanent_water,all,40,Cropland,10154,0.012036752755804705,16,0.07511737089201878
+changed_errors,aef_fixes_s1_fp,permanent_water,all,50,Built-up,8204,0.009725184125332065,20,0.09389671361502347
+changed_errors,aef_fixes_s1_fp,permanent_water,all,60,Bare / sparse vegetation,500358,0.5931342855415531,27,0.1267605633802817
+changed_errors,aef_fixes_s1_fp,permanent_water,all,80,Permanent water,34314,0.04067649537745545,36,0.16901408450704225
+changed_errors,aef_fixes_s1_fp,permanent_water,all,90,Herbaceous wetland,9949,0.011793741694652452,13,0.06103286384976526
+changed_errors,aef_fixes_s1_fp,permanent_water,all,95,Mangroves,1224,0.0014509538480505179,4,0.018779342723004695
+changed_errors,aef_fixes_s1_fp,permanent_water,all,100,Moss and lichen,2358,0.0027952199131561447,4,0.018779342723004695
+changed_errors,aef_fixes_s1_fp,permanent_water,neutral,10,Tree cover,60634,0.12463488683290407,16,0.1553398058252427
+changed_errors,aef_fixes_s1_fp,permanent_water,neutral,20,Shrubland,5104,0.010491415087164667,7,0.06796116504854369
+changed_errors,aef_fixes_s1_fp,permanent_water,neutral,30,Grassland,36036,0.07407300824472295,17,0.1650485436893204
+changed_errors,aef_fixes_s1_fp,permanent_water,neutral,40,Cropland,8411,0.017289046296657916,8,0.07766990291262135
+changed_errors,aef_fixes_s1_fp,permanent_water,neutral,50,Built-up,5121,0.010526359063748091,11,0.10679611650485436
+changed_errors,aef_fixes_s1_fp,permanent_water,neutral,60,Bare / sparse vegetation,344137,0.7073832511464707,12,0.11650485436893204
+changed_errors,aef_fixes_s1_fp,permanent_water,neutral,80,Permanent water,20312,0.041751885433089476,18,0.17475728155339806
+changed_errors,aef_fixes_s1_fp,permanent_water,neutral,90,Herbaceous wetland,5364,0.01102585237608763,8,0.07766990291262135
+changed_errors,aef_fixes_s1_fp,permanent_water,neutral,95,Mangroves,1104,0.002269302949888282,3,0.02912621359223301
+changed_errors,aef_fixes_s1_fp,permanent_water,neutral,100,Moss and lichen,270,0.0005549925692661559,3,0.02912621359223301

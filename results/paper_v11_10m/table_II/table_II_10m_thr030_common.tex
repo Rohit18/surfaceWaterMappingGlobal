@@ -1,0 +1,26 @@
+\begin{table}[!t]
+\centering
+\caption{Ablations on the 53 PlanetScope reference scenes with inference at 10\,m: per-scene water IoU and pooled recall on the common valid pixels, mean\,$\pm$\,SD over three seeds, threshold 0.30.}
+\label{tab:ablations030}
+\footnotesize
+\begin{tabular}{lcc}
+\toprule
+Configuration & Water IoU & Recall \\
+\midrule
+\multicolumn{3}{l}{\textit{(a) AEF width $k$, full training set}} \\
+S1 only ($k=0$) & 0.624\,$\pm$\,0.006 & 0.867\,$\pm$\,0.012 \\
+$k=1$ & 0.730\,$\pm$\,0.005 & 0.940\,$\pm$\,0.005 \\
+$k=2$ & 0.737\,$\pm$\,0.002 & 0.948\,$\pm$\,0.002 \\
+$k=3$ & 0.741\,$\pm$\,0.004 & 0.950\,$\pm$\,0.002 \\
+$k=4$ & 0.741\,$\pm$\,0.002 & 0.950\,$\pm$\,0.002 \\
+$k=8$ & 0.743\,$\pm$\,0.001 & 0.951\,$\pm$\,0.001 \\
+\textbf{$k=16$ (ours)} & \textbf{0.741\,$\pm$\,0.001} & \textbf{0.951\,$\pm$\,0.000} \\
+\midrule
+\multicolumn{3}{l}{\textit{(b) Training tiles, $k=16$}} \\
+1{,}000 tiles & 0.666\,$\pm$\,0.009 & 0.899\,$\pm$\,0.009 \\
+2{,}000 tiles & 0.740\,$\pm$\,0.001 & 0.951\,$\pm$\,0.003 \\
+3{,}000 tiles & 0.742\,$\pm$\,0.002 & 0.951\,$\pm$\,0.002 \\
+4{,}222 (full training split) & 0.741\,$\pm$\,0.001 & 0.951\,$\pm$\,0.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
