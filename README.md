@@ -24,7 +24,7 @@ World supplies weak supervision during training only.
   ablations, figures and the resolution-matched OPERA comparison (`scripts/eval_10m/`,
   `jobs/eval_10m/`).
 - Paper-level and training-run results (`results/`). The manuscript's numbers are in
-  `results/paper_v11_10m/`.
+  `results/paper/`.
 - Three trained checkpoints with their normalization statistics, validation summaries and
   thresholds on [Hugging Face](https://huggingface.co/rohitm9/surfaceWaterGlobal), tag
   `v2-labelclass`: the primary S1+AEF model, the matched S1-only control, and the
@@ -101,7 +101,7 @@ also holds `MODEL_INFO.json` (inputs, band order, thresholds, hashes), `aef_bott
 and the exact `src/train.py` that produced the weights (SHA-1
 `cd991e7424ae8d74c4737bd339f1ca66e563e506`). Download them with `huggingface_hub` or from the
 Hugging Face web page. The evaluation tables and numbers on the Hugging Face tag come from the
-earlier 3 m-input protocol; the manuscript's numbers are in `results/paper_v11_10m/`.
+earlier 3 m-input protocol; the manuscript's numbers are in `results/paper/`.
 The `v1-mixed-labels` checkpoint (training run `train_53123937`,
 `results/released_model_training.json`) is superseded and is not used for any number in the paper.
 
@@ -294,7 +294,7 @@ The runs behind `results/paper_retrain_openwater_v1/` resolved about 65% of thei
 binarized Dynamic World water probability rather than the `label` band. All 33 runs were repeated
 with the `label` class only, keeping the same chips, split, seeds and hyperparameters. Those runs
 produced the released checkpoints. `results/paper_labelclass_v1/58321212/` holds their evaluation under
-the earlier 3 m-input protocol, which is superseded by the 10 m protocol of manuscript v11 (see
+the earlier 3 m-input protocol, which is superseded by the 10 m protocol of the paper (see
 [Results](#results)). The 3 m-input analyses accept either run set:
 
 ```bash
@@ -305,8 +305,8 @@ python scripts/make_figure3_iou_distribution.py --run-set labelclass_v1 --out-di
 
 ## Results
 
-All values are from manuscript v11 (29 September 2026). Every number, and the file and field it comes
-from, is listed in [`results/paper_v11_10m/README.md`](results/paper_v11_10m/README.md).
+All values are those of the paper. Every number, and the file and field it comes
+from, is listed in [`results/paper/README.md`](results/paper/README.md).
 
 Independent 53-scene PlanetScope (GSWD) reference set. Inference at 10 m, probabilities resampled
 bilinearly to the 3 m reference grid, threshold 0.30, seed 42, common valid pixels (valid in the
@@ -327,7 +327,7 @@ in 36 (Wilcoxon signed-rank p = 8.4e-7, 7.4e-10 and 0.015).
 (0.734 [0.663, 0.800]).
 
 **Ablations** (Table II; per-scene IoU, threshold 0.30, common valid pixels, mean +/- sample SD over
-three seeds; `results/paper_v11_10m/table_II/`):
+three seeds; `results/paper/table_II/`):
 
 | AEF width k | 0 (S1 only) | 1 | 2 | 3 | 4 | 8 | 16 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -354,7 +354,7 @@ On the 53 GSWD scenes the S1 + AEF - OPERA difference in pooled IoU is 0.104 und
 0.106 with both scored at 30 m (model probabilities area-averaged from 10 m), 0.095 when the model is
 given OPERA's treatment (a binary 30 m map scored at 3 m), 0.091 on 30 m cells that are entirely water
 or entirely land, and 0.103 on OPERA's native grid (46 scenes). Values and the per-scene OPERA grid
-offsets are in `results/paper_v11_10m/table_S2/`.
+offsets are in `results/paper/table_S2/`.
 
 ### Superseded (3 m-input protocol)
 
@@ -410,7 +410,7 @@ variables they need, are in [`scripts/eval_10m/README.md`](scripts/eval_10m/READ
 | `jobs/` | Slurm job scripts for the training, inference and evaluation chain |
 | `metadata/` | Training and independent-evaluation sampling metadata |
 | `scripts/build_training_centroids.py` | Write `metadata/training_sample_centroids.geojson` |
-| `results/paper_v11_10m/` | Machine-readable values of manuscript v11 |
+| `results/paper/` | Machine-readable values of the paper |
 | `results/` | Earlier (superseded) paper and training-run summaries; see `results/README.md` |
 | `models/model_registry.json` | Model locations, filenames, and checksums |
 

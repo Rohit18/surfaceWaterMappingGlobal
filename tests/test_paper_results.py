@@ -4,15 +4,15 @@ import unittest
 from pathlib import Path
 
 
-RESULTS = Path(__file__).resolve().parents[1] / "results" / "paper_v11_10m"
+RESULTS = Path(__file__).resolve().parents[1] / "results" / "paper"
 
 
 def load(relative):
     return json.loads((RESULTS / relative).read_text())
 
 
-class PaperV11ResultsTest(unittest.TestCase):
-    """Manuscript v11 values (10 m inference, threshold 0.30, common valid mask), to three decimals."""
+class PaperResultsTest(unittest.TestCase):
+    """Paper values (10 m inference, threshold 0.30, common valid mask), to three decimals."""
 
     @classmethod
     def setUpClass(cls):

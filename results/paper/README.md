@@ -1,6 +1,6 @@
-# Manuscript v11 results (10 m inference)
+# Paper results (10 m inference)
 
-Machine-readable values behind manuscript v11 (29 September 2026). The files are copies of the check-run outputs of
+Machine-readable values behind the paper. The files are copies of the check-run outputs of
 28-29 September 2026 on NERSC and were not recomputed for this folder. The scripts that produced them are in
 [`scripts/eval_10m/`](../../scripts/eval_10m/README.md). Rerunning those scripts from the repository against the same
 predictions gave the same values; that README lists the comparison for each step.
@@ -63,9 +63,9 @@ Protocol: 10 m inference -> bilinear resampling to the 3 m label grid -> thresho
 
 **Standard deviation convention.** `ablation_10m_summary.json` (`*_std` fields), `table_II_10m.tex`,
 `table_II_10m_thr030_common.tex` and `table_II_3m_vs_10m.md` give the population SD (`statistics.pstdev`), which is
-what `aggregate_ablations.py` writes. Manuscript v11 uses the sample SD. The two differ at three decimals for k = 0
+what `aggregate_ablations.py` writes. The paper uses the sample SD. The two differ at three decimals for k = 0
 (0.006 population, 0.007 sample), k = 1 (0.005, 0.006) and 1,000 tiles (0.009, 0.011). The seed values are stored,
-so either SD can be computed from them. `tests/test_paper_v11_results.py` checks the sample SD.
+so either SD can be computed from them. `tests/test_paper_results.py` checks the sample SD.
 
 ## Not included
 

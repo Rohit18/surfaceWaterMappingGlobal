@@ -1,9 +1,9 @@
-# 10 m evaluation protocol (manuscript v11)
+# 10 m evaluation protocol
 
-These scripts produced every number of manuscript v11 (29 September 2026) that is computed on the 53 PlanetScope
+These scripts produced every number of the paper that is computed on the 53 PlanetScope
 (GSWD) reference scenes: Table I and its paired tests, Table II (width and training-size ablations), the Fig. 1B panel
 values, the WorldCover error analysis, and the resolution-matched comparison with OPERA DSWx-S1 (Supplementary
-Table S2). The numbers are in [`results/paper_v11_10m/`](../../results/paper_v11_10m/README.md).
+Table S2). The numbers are in [`results/paper/`](../../results/paper/README.md).
 
 ## Protocol
 
@@ -27,7 +27,7 @@ Table S2). The numbers are in [`results/paper_v11_10m/`](../../results/paper_v11
    ties are counted from the sign of the per-scene IoU difference.
 7. **Seeds.** Seed means are reported with the sample SD (n - 1) over seeds 42, 43 and 44. The `*_std` fields
    written by `aggregate_ablations.py` and the `table_II_10m*.tex` files use the population SD (`statistics.pstdev`,
-   as in `scripts/aggregate_paper_retrain.py`). Manuscript v11 Table II uses the sample SD. The two agree to three
+   as in `scripts/aggregate_paper_retrain.py`). The paper's Table II uses the sample SD. The two agree to three
    decimals except for k = 0, k = 1 and 1,000 tiles.
 
 The earlier protocol ran the networks on 3 m inputs (the S1 and AEF layers resampled to the label grid). Its results
