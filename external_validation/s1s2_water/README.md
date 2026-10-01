@@ -61,7 +61,7 @@ Source: `results/s1s2water_summary.json` (`models.s1_aef_t030`, `models.s1_only_
 `results/s1s2water_per_scene_all_methods.csv`.
 
 The resolution-matched rescoring (Supplementary Table S2; scripts in `scripts/eval_10m/s1s2_rescore.py` and
-`s1s2_summary.py`) is in `results/paper_v11_10m/table_S2/s1s2water/`. It also records two details of the OPERA
+`s1s2_summary.py`) is in `results/paper/table_S2/s1s2water/`. It also records two details of the OPERA
 products used here: the DSWx-S1 outputs are on MGRS tiles offset by 0, 10 or 20 m from the frozen grid (only the
 RTC-S1 products are on the frozen grid), and overlapping DSWx-S1 tiles are combined in sorted file order, each
 covered pixel overwriting the previous value (`evaluation/evaluate_intercomparison.py`, `opera_prediction`), not by
